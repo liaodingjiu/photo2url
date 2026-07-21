@@ -22,7 +22,6 @@ const plans = [
       "Files never expire",
       "Priority support",
     ],
-    variantIdEnv: "NEXT_PUBLIC_LEMON_SQUEEZY_ENTERPRISE_VARIANT_ID",
     cta: "Subscribe Now",
   },
   {
@@ -39,7 +38,6 @@ const plans = [
       "PNG, JPG, WEBP, GIF",
       "Files never expire",
     ],
-    variantIdEnv: "NEXT_PUBLIC_LEMON_SQUEEZY_PLUS_VARIANT_ID",
     cta: "Subscribe Now",
   },
   {
@@ -57,7 +55,6 @@ const plans = [
       "30-day auto cleanup",
       "No sign-up required",
     ],
-    variantIdEnv: null,
     cta: "Start for Free",
   },
 ];
@@ -66,39 +63,37 @@ export default function PricingSection() {
   const { isSignedIn } = useAuth();
   const router = useRouter();
 
-  const handleSubscribe = (plan: string, variantIdEnv: string | null) => {
+  // Static env lookup — dynamic process.env[key] doesn't work in Next.js client
+  const VARIANT_IDS: Record<string, string | undefined> = {
+    Plus: process.env.NEXT_PUBLIC_LEMON_SQUEEZY_PLUS_VARIANT_ID,
+    Enterprise: process.env.NEXT_PUBLIC_LEMON_SQUEEZY_ENTERPRISE_VARIANT_ID,
+  };
+  const STORE_ID = process.env.NEXT_PUBLIC_LEMON_SQUEEZY_STORE_ID;
+
+  const handleSubscribe = (plan: string) => {
     if (!isSignedIn) {
       router.push("/sign-in");
       return;
     }
 
-    if (!variantIdEnv) {
-      // Free plan — scroll to upload
+    if (plan === "Free") {
       document
         .getElementById("upload-zone")
         ?.scrollIntoView({ behavior: "smooth" });
       return;
     }
 
-    // Use Lemon Squeezy for paid plans
-    // This is a placeholder — in production, use createCheckout from @lemonsqueezy/lemonsqueezy.js
-    const variantId = process.env[variantIdEnv];
-    if (!variantId) {
+    const variantId = VARIANT_IDS[plan];
+    if (!variantId || !STORE_ID) {
       alert("Payment integration coming soon. Please check back later.");
       return;
     }
 
-    // Dynamically import and create checkout
     import("@lemonsqueezy/lemonsqueezy.js").then((ls) => {
-      const storeId = process.env.NEXT_PUBLIC_LEMON_SQUEEZY_STORE_ID;
-      if (!storeId) {
-        alert("Payment integration coming soon. Please check back later.");
-        return;
-      }
-      ls.createCheckout(storeId, variantId, {
+      ls.createCheckout(STORE_ID, variantId, {
         checkoutData: {
           custom: {
-            // user_id will be injected by checkout overlay
+            // user_id will be set by the checkout overlay
           },
         },
       });
@@ -157,7 +152,7 @@ export default function PricingSection() {
                   className="w-full"
                   variant={plan.highlight ? "default" : "outline"}
                   size="lg"
-                  onClick={() => handleSubscribe(plan.name, plan.variantIdEnv)}
+                  onClick={() => handleSubscribe(plan.name)}
                 >
                   {plan.cta}
                 </Button>
