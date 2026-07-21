@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import { v4 as uuidv4 } from "uuid";
 import {
   ALLOWED_MIME_TYPES,
@@ -54,10 +55,13 @@ export async function POST(request: NextRequest) {
     // ================================================================
     // 3. Get user info (authenticated or guest)
     // ================================================================
-    // In Edge runtime on CF Pages, Clerk auth works via request headers
-    // For MVP simplicity: check if user is logged in via Clerk
-    // We read userId from request — it's set by Clerk middleware
-    const clerkUserId = (request as any).auth?.userId;
+    let clerkUserId: string | null = null;
+    try {
+      const { userId } = await auth();
+      clerkUserId = userId ?? null;
+    } catch {
+      // Clerk not configured or auth failed — continue as guest
+    }
 
     // Determine plan type and quota
     const planType = clerkUserId ? await getUserPlanType(clerkUserId) : "free";
@@ -286,16 +290,29 @@ export async function POST(request: NextRequest) {
 // ================================================================
 
 async function getUserPlanType(userId: string): Promise<string> {
-  // In production: D1 query on users table
-  // For MVP with Clerk: default to 'free' until webhook sync
   try {
     const db = (process.env as any).DB;
     if (!db) return "free";
+
+    // Try to find existing user
     const result = await db
       .prepare("SELECT plan_type FROM users WHERE id = ?")
       .bind(userId)
       .first();
-    return result?.plan_type || "free";
+
+    if (result) {
+      return result.plan_type || "free";
+    }
+
+    // User not found — lazy sync from Clerk to D1
+    await db
+      .prepare(
+        "INSERT OR IGNORE INTO users (id, email, plan_type, storage_used) VALUES (?, ?, 'free', 0)"
+      )
+      .bind(userId, `clerk_${userId}@placeholder`)
+      .run();
+
+    return "free";
   } catch {
     return "free";
   }
