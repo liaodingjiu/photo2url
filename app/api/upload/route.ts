@@ -356,7 +356,7 @@ async function getTodayUploadCount(
 }
 
 async function getCurrentStorage(
-  userId: string | undefined,
+  userId: string | null,
   cookieId: string
 ): Promise<number> {
   try {
