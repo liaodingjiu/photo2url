@@ -29,47 +29,11 @@ export default function UploadZone() {
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const turnstileRef = useRef<string | null>(null);
   const turnstileWidgetId = useRef<string | null>(null);
-
-  // Load Turnstile script dynamically
-  useEffect(() => {
-    if (showTurnstile && !turnstileRef.current) {
-      const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-      if (!siteKey) return;
-
-      // Load Turnstile script
-      const script = document.createElement("script");
-      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
-      script.async = true;
-      script.onload = () => {
-        if (window.turnstile) {
-          turnstileWidgetId.current = window.turnstile.render(
-            "#turnstile-container",
-            {
-              sitekey: siteKey,
-              callback: (token: string) => {
-                setTurnstileToken(token);
-                // Auto-trigger upload if we have a pending file
-                if (pendingFile) {
-                  doUpload(pendingFile, token);
-                }
-              },
-            }
-          );
-        }
-      };
-      document.body.appendChild(script);
-      turnstileRef.current = "loaded";
-    }
-  }, [showTurnstile, pendingFile]);
-
-  // Cleanup Turnstile widget
-  useEffect(() => {
-    return () => {
-      if (turnstileWidgetId.current && window.turnstile) {
-        window.turnstile.remove(turnstileWidgetId.current);
-      }
-    };
-  }, []);
+  // Refs to keep latest values accessible in stale closures (e.g. Turnstile callback)
+  const uploadCountRef = useRef(uploadCount);
+  uploadCountRef.current = uploadCount;
+  const pendingFileRef = useRef(pendingFile);
+  pendingFileRef.current = pendingFile;
 
   const doUpload = useCallback(
     async (file: File, tToken?: string) => {
@@ -113,13 +77,74 @@ export default function UploadZone() {
         }
       }
     },
-    [uploadCount]
+    []
   );
+
+  // Load Turnstile script dynamically
+  useEffect(() => {
+    if (showTurnstile) {
+      const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+      if (!siteKey) return;
+
+      // Destroy previous widget if exists
+      if (turnstileWidgetId.current && window.turnstile) {
+        window.turnstile.remove(turnstileWidgetId.current);
+        turnstileWidgetId.current = null;
+      }
+
+      // If script already loaded, just render
+      if (window.turnstile) {
+        turnstileWidgetId.current = window.turnstile.render(
+          "#turnstile-container",
+          {
+            sitekey: siteKey,
+            callback: (token: string) => {
+              setTurnstileToken(token);
+              const file = pendingFileRef.current;
+              if (file) doUpload(file, token);
+            },
+          }
+        );
+        return;
+      }
+
+      // Load script fresh
+      const script = document.createElement("script");
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+      script.async = true;
+      script.onload = () => {
+        if (window.turnstile) {
+          turnstileWidgetId.current = window.turnstile.render(
+            "#turnstile-container",
+            {
+              sitekey: siteKey,
+              callback: (token: string) => {
+                setTurnstileToken(token);
+                const file = pendingFileRef.current;
+                if (file) doUpload(file, token);
+              },
+            }
+          );
+        }
+      };
+      document.body.appendChild(script);
+      turnstileRef.current = "loaded";
+    }
+  }, [showTurnstile, doUpload]);
+
+  // Cleanup Turnstile widget
+  useEffect(() => {
+    return () => {
+      if (turnstileWidgetId.current && window.turnstile) {
+        window.turnstile.remove(turnstileWidgetId.current);
+      }
+    };
+  }, []);
 
   const handleFile = useCallback(
     async (file: File) => {
       // Check if Turnstile is needed (after 5 free uploads)
-      if (uploadCount >= 5) {
+      if (uploadCountRef.current >= 5) {
         setShowTurnstile(true);
         setPendingFile(file);
         return; // Wait for Turnstile callback
@@ -127,7 +152,7 @@ export default function UploadZone() {
 
       await doUpload(file);
     },
-    [uploadCount, doUpload]
+    [doUpload]
   );
 
   // Drag handlers
@@ -165,7 +190,10 @@ export default function UploadZone() {
     input.click();
   };
 
-  // Paste handler
+  // Paste handler — use ref for handleFile to avoid re-registering listener
+  const handleFileRef = useRef(handleFile);
+  handleFileRef.current = handleFile;
+
   useEffect(() => {
     const onPaste = (e: ClipboardEvent) => {
       const items = e.clipboardData?.items;
@@ -175,7 +203,7 @@ export default function UploadZone() {
         if (item.type.startsWith("image/")) {
           e.preventDefault();
           const file = item.getAsFile();
-          if (file) handleFile(file);
+          if (file) handleFileRef.current(file);
           break;
         }
       }
@@ -183,7 +211,7 @@ export default function UploadZone() {
 
     document.addEventListener("paste", onPaste);
     return () => document.removeEventListener("paste", onPaste);
-  }, [handleFile]);
+  }, []); // Only attach once — use ref to always get latest handleFile
 
   return (
     <div className="w-full max-w-5xl mx-auto">
