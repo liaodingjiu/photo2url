@@ -42,6 +42,34 @@ const CHECKOUT_URLS: Record<string, string> = {
   Enterprise: "https://photo2url.lemonsqueezy.com/checkout/buy/adfbbc5a-e7ff-4f48-a9c3-718e0ebbc7bb",
 };
 
+function buildCheckoutUrl(planName: string, userId: string, user?: { email?: string; name?: string }): string | null {
+  const base = CHECKOUT_URLS[planName];
+  if (!base) return null;
+
+  const params = new URLSearchParams();
+  params.set("lang", "en");
+  params.set("checkout[custom][user_id]", userId);
+
+  // Pre-fill user info
+  if (user?.email) params.set("checkout[email]", user.email);
+  if (user?.name) params.set("checkout[name]", user.name);
+
+  // Auto-detect country
+  if (typeof navigator !== "undefined") {
+    const parts = navigator.language.split("-");
+    if (parts.length === 2) {
+      params.set("checkout[billing_address][country]", parts[1].toUpperCase());
+    }
+  }
+
+  params.set(
+    "checkout[success_url]",
+    `${window.location.origin}/dashboard?checkout=success`
+  );
+
+  return `${base}?${params.toString()}`;
+}
+
 const BILLING_PLANS = [
   {
     name: "Enterprise",
@@ -294,19 +322,14 @@ function BillingTab({
   storagePct: number;
   userId: string;
 }) {
+  const { user } = useUser();
+
   const handleUpgrade = (planName: string) => {
-    const base = CHECKOUT_URLS[planName];
-    if (!base) return;
-
-    const params = new URLSearchParams();
-    params.set("lang", "en");
-    params.set("checkout[custom][user_id]", userId);
-    params.set(
-      "checkout[success_url]",
-      `${window.location.origin}/dashboard?checkout=success`
-    );
-
-    window.location.href = `${base}?${params.toString()}`;
+    const url = buildCheckoutUrl(planName, userId, {
+      email: user?.primaryEmailAddress?.emailAddress,
+      name: user?.fullName ?? undefined,
+    });
+    if (url) window.location.href = url;
   };
   return (
     <div>

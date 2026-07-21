@@ -3,7 +3,7 @@
 import { Check, Zap, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 
 const plans = [
   {
@@ -58,13 +58,22 @@ const plans = [
   },
 ];
 
-const CHECKOUT_BASE: Record<string, string> = {
+const CHECKOUT_URLS: Record<string, string> = {
   Plus: "https://photo2url.lemonsqueezy.com/checkout/buy/a29b1d30-70b5-4a72-a467-99f2cc42cbdb",
   Enterprise: "https://photo2url.lemonsqueezy.com/checkout/buy/adfbbc5a-e7ff-4f48-a9c3-718e0ebbc7bb",
 };
 
+/** Detect user's country from browser locale (e.g. "zh-CN" → "CN") */
+function detectCountry(): string | null {
+  if (typeof navigator === "undefined") return null;
+  const parts = navigator.language.split("-");
+  if (parts.length === 2) return parts[1].toUpperCase();
+  return null;
+}
+
 export default function PricingSection() {
   const { isSignedIn, userId } = useAuth();
+  const { user } = useUser();
 
   const handleSubscribe = (plan: string) => {
     if (plan === "Free") {
@@ -74,13 +83,23 @@ export default function PricingSection() {
       return;
     }
 
-    // Build checkout URL — no auth gate, go straight to Lemon Squeezy
+    const base = CHECKOUT_URLS[plan];
     const params = new URLSearchParams();
     params.set("lang", "en");
 
-    // Logged-in user: pass user_id for precise webhook matching
+    // Logged-in user: pre-fill email, name, and user_id
     if (isSignedIn && userId) {
       params.set("checkout[custom][user_id]", userId);
+      const email = user?.primaryEmailAddress?.emailAddress;
+      if (email) params.set("checkout[email]", email);
+      const name = user?.fullName;
+      if (name) params.set("checkout[name]", name);
+    }
+
+    // Auto-detect country to avoid US address format validation
+    const country = detectCountry();
+    if (country) {
+      params.set("checkout[billing_address][country]", country);
     }
 
     // Return to dashboard after successful payment
@@ -89,7 +108,7 @@ export default function PricingSection() {
       `${window.location.origin}/dashboard?checkout=success`
     );
 
-    window.location.href = `${CHECKOUT_BASE[plan]}?${params.toString()}`;
+    window.location.href = `${base}?${params.toString()}`;
   };
 
   return (
