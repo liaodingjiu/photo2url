@@ -85,19 +85,17 @@ export default function PricingSection() {
 
     const variantId = VARIANT_IDS[plan];
     if (!variantId || !STORE_ID) {
-      alert("Payment integration coming soon. Please check back later.");
+      alert("env missing: store=" + STORE_ID + " variant=" + variantId);
       return;
     }
 
-    import("@lemonsqueezy/lemonsqueezy.js").then((ls) => {
-      ls.createCheckout(STORE_ID, variantId, {
-        checkoutData: {
-          custom: {
-            // user_id will be set by the checkout overlay
-          },
-        },
+    import("@lemonsqueezy/lemonsqueezy.js")
+      .then((ls) => {
+        ls.createCheckout(STORE_ID, variantId);
+      })
+      .catch((err) => {
+        alert("Checkout failed: " + err.message);
       });
-    });
   };
 
   return (
