@@ -3,7 +3,8 @@
 import { Check, Zap, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { useAuth, SignInButton } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const plans = [
   {
@@ -63,14 +64,11 @@ const plans = [
 
 export default function PricingSection() {
   const { isSignedIn } = useAuth();
+  const router = useRouter();
 
   const handleSubscribe = (plan: string, variantIdEnv: string | null) => {
     if (!isSignedIn) {
-      // Trigger Clerk sign-in modal
-      const signInBtn = document.querySelector<HTMLButtonElement>(
-        '[data-clerk-sign-in]'
-      );
-      signInBtn?.click();
+      router.push("/sign-in");
       return;
     }
 
@@ -167,11 +165,6 @@ export default function PricingSection() {
             </Card>
           ))}
         </div>
-      </div>
-
-      {/* Hidden Clerk sign-in trigger for pricing */}
-      <div className="hidden">
-        <SignInButton mode="modal" />
       </div>
     </section>
   );

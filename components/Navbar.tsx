@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { useAuth, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -65,14 +65,12 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="ml-2 flex items-center gap-2">
-              <SignInButton mode="modal">
-                <Button variant="ghost" size="sm">
-                  Login
-                </Button>
-              </SignInButton>
-              <SignUpButton mode="modal">
+              <Link href="/sign-in">
+                <Button variant="ghost" size="sm">Login</Button>
+              </Link>
+              <Link href="/sign-up">
                 <Button size="sm">Sign Up</Button>
-              </SignUpButton>
+              </Link>
             </div>
           )}
         </div>
