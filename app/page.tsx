@@ -16,11 +16,10 @@ export default function HomePage() {
         <section className="py-16 lg:py-24">
           <div className="mx-auto max-w-6xl px-4 text-center">
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-              Free Image to URL Converter
+              Instant Photo To URL
             </h1>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Upload images and get instant shareable links. No sign-up required.
-              Perfect for Notion, Reddit, GitHub, Jira, and everywhere else.
+              No sign-up required. Upload → Get Link → Embed anywhere.
             </p>
           </div>
           <div id="upload-zone" className="mt-10 px-4">

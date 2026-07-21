@@ -16,19 +16,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "photo2url — Free Image to URL Converter",
+  title: "photo2url — Instant Photo To URL",
   description:
-    "Upload images and get instant URLs for embedding in Notion, Reddit, GitHub, Jira, and more. Free, fast, no sign-up required.",
+    "No sign-up required. Upload → Get Link → Embed anywhere. Fast, free image hosting for Notion, Reddit, GitHub, and more.",
   keywords: [
     "image hosting",
     "image to url",
     "free image upload",
-    "image hosting for notion",
+    "photo to url",
+    "instant image link",
     "markdown image",
   ],
   openGraph: {
-    title: "photo2url — Free Image to URL Converter",
-    description: "Upload images, get URLs instantly. Free forever plan.",
+    title: "photo2url — Instant Photo To URL",
+    description: "No sign-up required. Upload → Get Link → Embed anywhere.",
     url: "https://photo2url.com",
     siteName: "photo2url",
     type: "website",
