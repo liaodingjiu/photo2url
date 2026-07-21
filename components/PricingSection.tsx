@@ -4,59 +4,7 @@ import { Check, Zap, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useAuth, useUser } from "@clerk/nextjs";
-
-const plans = [
-  {
-    name: "Enterprise",
-    price: "$94.90",
-    period: "/year",
-    icon: Crown,
-    highlight: true,
-    badge: "Best Value",
-    features: [
-      "256 MB file size limit",
-      "Unlimited daily uploads",
-      "200 GB permanent storage",
-      "PNG, JPG, WEBP, GIF",
-      "Files never expire",
-      "Priority support",
-    ],
-    cta: "Subscribe Now",
-  },
-  {
-    name: "Plus",
-    price: "$9.90",
-    period: "/month",
-    icon: Zap,
-    highlight: false,
-    badge: null,
-    features: [
-      "50 MB file size limit",
-      "1,000 uploads/day",
-      "100 GB permanent storage",
-      "PNG, JPG, WEBP, GIF",
-      "Files never expire",
-    ],
-    cta: "Subscribe Now",
-  },
-  {
-    name: "Free",
-    price: "$0",
-    period: "",
-    icon: null,
-    highlight: false,
-    badge: null,
-    features: [
-      "2 MB file size limit",
-      "10 uploads/day",
-      "200 MB total storage",
-      "PNG, JPG, WEBP, GIF",
-      "30-day auto cleanup",
-      "No sign-up required",
-    ],
-    cta: "Start for Free",
-  },
-];
+import type { Dictionary } from "@/lib/i18n";
 
 const CHECKOUT_URLS: Record<string, string> = {
   Plus: "https://photo2url.lemonsqueezy.com/checkout/buy/a29b1d30-70b5-4a72-a467-99f2cc42cbdb",
@@ -71,19 +19,56 @@ function detectCountry(): string | null {
   return null;
 }
 
-export default function PricingSection() {
+export default function PricingSection({ dict }: { dict: Dictionary }) {
   const { isSignedIn, userId } = useAuth();
   const { user } = useUser();
+  const t = dict.pricing;
 
-  const handleSubscribe = (plan: string) => {
-    if (plan === "Free") {
+  const plans = [
+    {
+      key: "Enterprise",
+      price: "$94.90",
+      period: "/year",
+      icon: Crown,
+      highlight: true,
+      badge: t.plans.enterprise.badge,
+      features: t.plans.enterprise.features,
+      cta: t.plans.enterprise.cta,
+      name: t.plans.enterprise.name,
+    },
+    {
+      key: "Plus",
+      price: "$9.90",
+      period: "/month",
+      icon: Zap,
+      highlight: false,
+      badge: null,
+      features: t.plans.plus.features,
+      cta: t.plans.plus.cta,
+      name: t.plans.plus.name,
+    },
+    {
+      key: "Free",
+      price: "$0",
+      period: "",
+      icon: null,
+      highlight: false,
+      badge: null,
+      features: t.plans.free.features,
+      cta: t.plans.free.cta,
+      name: t.plans.free.name,
+    },
+  ];
+
+  const handleSubscribe = (planKey: string) => {
+    if (planKey === "Free") {
       document
         .getElementById("upload-zone")
         ?.scrollIntoView({ behavior: "smooth" });
       return;
     }
 
-    const base = CHECKOUT_URLS[plan];
+    const base = CHECKOUT_URLS[planKey];
     const params = new URLSearchParams();
     params.set("lang", "en");
 
@@ -115,16 +100,16 @@ export default function PricingSection() {
     <section id="pricing" className="py-20 bg-muted/30">
       <div className="mx-auto max-w-6xl px-4">
         <h2 className="text-center text-3xl font-bold mb-4">
-          Simple Pricing
+          {t.title}
         </h2>
         <p className="text-center text-muted-foreground mb-12">
-          Start free. Upgrade when you need more.
+          {t.subtitle}
         </p>
 
         <div className="grid gap-6 lg:grid-cols-3 items-start">
           {plans.map((plan) => (
             <Card
-              key={plan.name}
+              key={plan.key}
               className={`relative ${
                 plan.highlight
                   ? "border-primary shadow-lg ring-1 ring-primary scale-[1.02]"
@@ -163,7 +148,7 @@ export default function PricingSection() {
                   className="w-full"
                   variant={plan.highlight ? "default" : "outline"}
                   size="lg"
-                  onClick={() => handleSubscribe(plan.name)}
+                  onClick={() => handleSubscribe(plan.key)}
                 >
                   {plan.cta}
                 </Button>

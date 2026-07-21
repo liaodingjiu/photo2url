@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "photo2url — 图片秒转链接",
+    "description": "无需注册。上传 → 获取链接 → 嵌入任意位置。快速、免费的图片托管服务。"
+  },
+  "site": { "name": "photo2url", "tagline": "图片秒转链接" },
+  "hero": {
+    "title": "图片秒转链接",
+    "subtitle": "无需注册。上传 → 获取链接 → 嵌入任意位置。"
+  },
+  "upload": {
+    "title": "免费图片转链接工具",
+    "dragDrop": "拖拽、点击或粘贴截图",
+    "pasteHint": "即可粘贴",
+    "formats": "PNG、JPG、WEBP、GIF",
+    "maxSize": "最大 2 MB（免费版）",
+    "uploading": "上传中...",
+    "success": "上传成功！",
+    "failed": "上传失败",
+    "verify": "请验证您是真人后继续上传"
+  },
+  "howItWorks": {
+    "title": "使用步骤",
+    "step1": { "title": "1. 上传", "desc": "拖拽、点击或粘贴任意图片，无需注册。" },
+    "step2": { "title": "2. 获取链接", "desc": "即刻获得图片的可分享链接。" },
+    "step3": { "title": "3. 嵌入", "desc": "将链接粘贴到 Notion、Reddit、GitHub、Jira 等任意平台。" }
+  },
+  "useCases": {
+    "title": "应用场景",
+    "items": [
+      { "title": "Notion", "desc": "直接将图片嵌入 Notion 页面，告别繁琐上传。" },
+      { "title": "GitHub", "desc": "即时托管 README 截图和 Issue 附件。" },
+      { "title": "Reddit", "desc": "在评论和帖子中直接分享图片链接。" },
+      { "title": "Jira / Linear", "desc": "在工单中附加截图，不占用项目存储空间。" },
+      { "title": "博客与文档", "desc": "在 Markdown 文件、文档和博文中嵌入图片。" },
+      { "title": "邮件与聊天", "desc": "在 Slack、Discord、邮件中分享图片，不受附件大小限制。" }
+    ]
+  },
+  "pricing": {
+    "title": "简单定价",
+    "subtitle": "免费开始，需要更多时再升级。",
+    "cta": "立即订阅",
+    "plans": {
+      "enterprise": {
+        "name": "企业版",
+        "badge": "最超值",
+        "features": ["256 MB 单文件限制", "每日无限上传", "200 GB 永久存储", "PNG、JPG、WEBP、GIF", "文件永不过期", "优先支持"],
+        "cta": "立即订阅"
+      },
+      "plus": {
+        "name": "Plus",
+        "features": ["50 MB 单文件限制", "每日 1,000 次上传", "100 GB 永久存储", "PNG、JPG、WEBP、GIF", "文件永不过期"],
+        "cta": "立即订阅"
+      },
+      "free": {
+        "name": "免费版",
+        "features": ["2 MB 单文件限制", "每日 10 次上传", "200 MB 总存储", "PNG、JPG、WEBP、GIF", "30 天自动清理", "无需注册"],
+        "cta": "免费开始"
+      }
+    }
+  },
+  "partners": { "title": "全球团队的信赖" },
+  "footer": {
+    "brand": { "description": "上传图片并获取即时分享链接。无需注册。完美适用于 Notion、Reddit、GitHub 等平台。" },
+    "product": { "title": "产品", "pricing": "定价", "upload": "上传" },
+    "legal": { "title": "法律", "privacy": "隐私政策", "terms": "服务条款", "refund": "退款政策" },
+    "contact": { "title": "联系我们" },
+    "copyright": "© {year} photo2url. 保留所有权利。"
+  },
+  "nav": { "tools": "工具", "pricing": "定价", "login": "登录", "signup": "注册", "dashboard": "控制台" },
+  "language": { "selectRegion": "选择地区", "chooseLang": "选择您偏好的语言和地区" },
+  "privacy": { "title": "隐私政策", "content": "我们收集最少量的数据以提供服务。上传的文件安全存储在 Cloudflare R2 上。我们不会出售或与第三方分享您的个人数据。免费用户的文件将在 30 天后自动删除。付费用户的文件将保留至取消订阅。我们使用 Cookie 进行身份验证和安全保护。使用本服务即表示您同意本隐私政策。" },
+  "terms": { "title": "服务条款", "content": "使用 photo2url 即表示您同意不上传非法、有害或未经授权的版权内容。我们保留删除任何违反本条款内容的权利。本服务按「原样」提供，不附带任何保证。我们对因使用本服务而产生的任何损害不承担责任。免费用户受每日上传限制和 30 天自动清理的约束。付费计划受我们的支付服务商 Lemon Squeezy 的条款约束。" },
+  "refund": { "title": "退款政策", "content": "如果您对已付费的订阅不满意，可在购买后 7 天内申请退款。退款通过我们的支付服务商 Lemon Squeezy 处理。请发送邮件至 support@photo2url.com 并附上订单详情申请退款。超过 7 天的订阅不予退款。取消订阅将停止未来的收费，但不退还当前计费周期的费用。" }
+}

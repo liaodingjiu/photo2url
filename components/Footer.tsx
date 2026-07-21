@@ -1,7 +1,15 @@
 import Link from "next/link";
 import { Shield, Mail } from "lucide-react";
+import type { Dictionary, Locale } from "@/lib/i18n";
 
-export default function Footer() {
+export default function Footer({
+  dict,
+  locale,
+}: {
+  dict: Dictionary;
+  locale: Locale;
+}) {
+  const f = dict.footer;
   return (
     <footer className="border-t py-12 bg-muted/20">
       <div className="mx-auto max-w-6xl px-4">
@@ -10,7 +18,7 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-2">photo2url</h3>
             <p className="text-sm text-muted-foreground">
-              Free image to URL converter. Fast, simple, no sign-up required.
+              {f.brand.description}
             </p>
             <div className="mt-3 flex items-center gap-1 text-xs text-muted-foreground">
               <Shield className="h-3 w-3" />
@@ -20,16 +28,22 @@ export default function Footer() {
 
           {/* Product */}
           <div>
-            <h4 className="font-medium mb-3">Product</h4>
+            <h4 className="font-medium mb-3">{f.product.title}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/#pricing" className="hover:text-foreground transition-colors">
-                  Pricing
+                <Link
+                  href={`/${locale}/#pricing`}
+                  className="hover:text-foreground transition-colors"
+                >
+                  {f.product.pricing}
                 </Link>
               </li>
               <li>
-                <Link href="/#upload-zone" className="hover:text-foreground transition-colors">
-                  Upload
+                <Link
+                  href={`/${locale}/#upload-zone`}
+                  className="hover:text-foreground transition-colors"
+                >
+                  {f.product.upload}
                 </Link>
               </li>
             </ul>
@@ -37,21 +51,30 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="font-medium mb-3">Legal</h4>
+            <h4 className="font-medium mb-3">{f.legal.title}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/privacy" className="hover:text-foreground transition-colors">
-                  Privacy Policy
+                <Link
+                  href={`/${locale}/privacy`}
+                  className="hover:text-foreground transition-colors"
+                >
+                  {f.legal.privacy}
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-foreground transition-colors">
-                  Terms of Service
+                <Link
+                  href={`/${locale}/terms`}
+                  className="hover:text-foreground transition-colors"
+                >
+                  {f.legal.terms}
                 </Link>
               </li>
               <li>
-                <Link href="/refund" className="hover:text-foreground transition-colors">
-                  Refund Policy
+                <Link
+                  href={`/${locale}/refund`}
+                  className="hover:text-foreground transition-colors"
+                >
+                  {f.legal.refund}
                 </Link>
               </li>
             </ul>
@@ -59,7 +82,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-medium mb-3">Contact</h4>
+            <h4 className="font-medium mb-3">{f.contact.title}</h4>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Mail className="h-4 w-4" />
               <a
@@ -73,7 +96,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 border-t pt-6 text-center text-xs text-muted-foreground">
-          &copy; {new Date().getFullYear()} photo2url.com. All rights reserved.
+          {f.copyright.replace("{year}", String(new Date().getFullYear()))}
         </div>
       </div>
     </footer>

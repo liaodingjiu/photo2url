@@ -10,9 +10,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Image, ChevronDown, Wrench } from "lucide-react";
+import type { Dictionary } from "@/lib/i18n";
 
-export default function Navbar() {
+export default function Navbar({ dict }: { dict?: Dictionary }) {
   const { isSignedIn } = useAuth();
+  const n = dict?.nav;
 
   return (
     <nav className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -30,7 +32,7 @@ export default function Navbar() {
             <DropdownMenuTrigger>
               <Button variant="ghost" size="sm" className="gap-1">
                 <Wrench className="h-4 w-4" />
-                Tools
+                {n?.tools ?? "Tools"}
                 <ChevronDown className="h-3 w-3" />
               </Button>
             </DropdownMenuTrigger>
@@ -49,7 +51,7 @@ export default function Navbar() {
 
           <Link href="/#pricing">
             <Button variant="ghost" size="sm">
-              Pricing
+              {n?.pricing ?? "Pricing"}
             </Button>
           </Link>
 
@@ -58,7 +60,7 @@ export default function Navbar() {
             <div className="ml-2 flex items-center gap-2">
               <Link href="/dashboard">
                 <Button variant="outline" size="sm">
-                  Dashboard
+                  {n?.dashboard ?? "Dashboard"}
                 </Button>
               </Link>
               <UserButton />
@@ -66,10 +68,10 @@ export default function Navbar() {
           ) : (
             <div className="ml-2 flex items-center gap-2">
               <Link href="/sign-in">
-                <Button variant="ghost" size="sm">Login</Button>
+                <Button variant="ghost" size="sm">{n?.login ?? "Login"}</Button>
               </Link>
               <Link href="/sign-up">
-                <Button size="sm">Sign Up</Button>
+                <Button size="sm">{n?.signup ?? "Sign Up"}</Button>
               </Link>
             </div>
           )}

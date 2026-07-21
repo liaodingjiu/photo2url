@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { headers } from "next/headers";
 import { Toaster } from "@/components/ui/sonner";
 import ClerkListener from "@/components/ClerkListener";
 import "./globals.css";
@@ -18,7 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "photo2url — Instant Photo To URL",
   description:
-    "No sign-up required. Upload → Get Link → Embed anywhere. Fast, free image hosting for Notion, Reddit, GitHub, and more.",
+    "No sign-up required. Upload → Get Link → Embed anywhere. Fast, free image hosting.",
   keywords: [
     "image hosting",
     "image to url",
@@ -36,15 +37,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Read locale from middleware-set header for dynamic html lang
+  let lang = "en";
+  try {
+    const headersList = await headers();
+    lang = headersList.get("x-locale") || "en";
+  } catch {
+    // headers() may not be available in all contexts
+  }
+
   return (
     <ClerkProvider>
       <html
-        lang="en"
+        lang={lang}
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       >
         <body className="min-h-full flex flex-col">

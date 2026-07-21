@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "title": "photo2url — Instant Photo To URL",
+    "description": "No sign-up required. Upload → Get Link → Embed anywhere. Fast, free image hosting."
+  },
+  "site": {
+    "name": "photo2url",
+    "tagline": "Instant Photo To URL"
+  },
+  "hero": {
+    "title": "Instant Photo To URL",
+    "subtitle": "No sign-up required. Upload → Get Link → Embed anywhere."
+  },
+  "upload": {
+    "title": "Free Image to URL Converter",
+    "dragDrop": "Drag & drop, click, or paste screenshot",
+    "pasteHint": "to paste · PNG, JPG, WEBP, GIF",
+    "formats": "PNG, JPG, WEBP, GIF",
+    "maxSize": "Max 2 MB (Free)",
+    "uploading": "Uploading...",
+    "success": "Upload successful!",
+    "failed": "Upload failed",
+    "verify": "Please verify you're human to continue uploading"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "step1": { "title": "1. Upload", "desc": "Drag & drop, click, or paste any image. No sign-up required." },
+    "step2": { "title": "2. Get Link", "desc": "Instantly receive a shareable URL for your image." },
+    "step3": { "title": "3. Embed", "desc": "Paste the link anywhere — Notion, Reddit, GitHub, Jira, and more." }
+  },
+  "useCases": {
+    "title": "Use Cases",
+    "items": [
+      { "title": "Notion", "desc": "Embed images directly in your Notion pages without clunky uploads." },
+      { "title": "GitHub", "desc": "Host README screenshots and issue attachments instantly." },
+      { "title": "Reddit", "desc": "Share images in comments and posts with a direct link." },
+      { "title": "Jira / Linear", "desc": "Attach screenshots to tickets without bloating your project storage." },
+      { "title": "Blogs & Docs", "desc": "Embed images in Markdown files, documentation, and blog posts." },
+      { "title": "Email & Chat", "desc": "Share images in Slack, Discord, email without attachment limits." }
+    ]
+  },
+  "pricing": {
+    "title": "Simple Pricing",
+    "subtitle": "Start free. Upgrade when you need more.",
+    "cta": "Subscribe Now",
+    "plans": {
+      "enterprise": {
+        "name": "Enterprise",
+        "badge": "Best Value",
+        "features": [
+          "256 MB file size limit",
+          "Unlimited daily uploads",
+          "200 GB permanent storage",
+          "PNG, JPG, WEBP, GIF",
+          "Files never expire",
+          "Priority support"
+        ],
+        "cta": "Subscribe Now"
+      },
+      "plus": {
+        "name": "Plus",
+        "features": [
+          "50 MB file size limit",
+          "1,000 uploads/day",
+          "100 GB permanent storage",
+          "PNG, JPG, WEBP, GIF",
+          "Files never expire"
+        ],
+        "cta": "Subscribe Now"
+      },
+      "free": {
+        "name": "Free",
+        "features": [
+          "2 MB file size limit",
+          "10 uploads/day",
+          "200 MB total storage",
+          "PNG, JPG, WEBP, GIF",
+          "30-day auto cleanup",
+          "No sign-up required"
+        ],
+        "cta": "Start for Free"
+      }
+    }
+  },
+  "partners": {
+    "title": "Trusted by teams worldwide"
+  },
+  "footer": {
+    "brand": {
+      "description": "Upload images and get instant shareable links. No sign-up required. Perfect for embedding in Notion, Reddit, GitHub, and everywhere else."
+    },
+    "product": {
+      "title": "Product",
+      "pricing": "Pricing",
+      "upload": "Upload"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "refund": "Refund Policy"
+    },
+    "contact": {
+      "title": "Contact"
+    },
+    "copyright": "© {year} photo2url. All rights reserved."
+  },
+  "nav": {
+    "tools": "Tools",
+    "pricing": "Pricing",
+    "login": "Login",
+    "signup": "Sign Up",
+    "dashboard": "Dashboard"
+  },
+  "language": {
+    "selectRegion": "Select Region",
+    "chooseLang": "Choose your preferred language and region"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "content": "We collect minimal data to provide our service. Uploaded files are stored securely on Cloudflare R2. We do not sell or share your personal data with third parties. For free users, files are automatically removed after 30 days. Paid users retain their files until they cancel their subscription. We use cookies for authentication and security purposes. By using this service, you agree to this privacy policy."
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "content": "By using photo2url, you agree not to upload illegal, harmful, or copyrighted content without permission. We reserve the right to remove any content that violates these terms. The service is provided 'as is' without warranty. We are not liable for any damages resulting from the use of our service. Free tier users are subject to daily upload limits and automatic file cleanup after 30 days. Paid plans are governed by the terms of our payment provider, Lemon Squeezy."
+  },
+  "refund": {
+    "title": "Refund Policy",
+    "content": "If you are not satisfied with your paid subscription, you may request a refund within 7 days of purchase. Refunds are processed through Lemon Squeezy, our payment provider. To request a refund, please contact support at support@photo2url.com with your order details. After the 7-day window, subscriptions are non-refundable. Canceling a subscription stops future charges but does not refund the current billing period."
+  }
+}

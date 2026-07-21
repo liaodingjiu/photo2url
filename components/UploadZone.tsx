@@ -18,7 +18,10 @@ interface UploadResult {
   };
 }
 
-export default function UploadZone() {
+import type { Dictionary } from "@/lib/i18n";
+
+export default function UploadZone({ dict }: { dict: Dictionary }) {
+  const u = dict.upload;
   const [dragActive, setDragActive] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [result, setResult] = useState<UploadResult | null>(null);
@@ -231,7 +234,7 @@ export default function UploadZone() {
             {uploading ? (
               <div className="flex flex-col items-center gap-3">
                 <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-                <p className="text-muted-foreground">Uploading...</p>
+                <p className="text-muted-foreground">{u.uploading}</p>
               </div>
             ) : (
               <div className="flex flex-col items-center gap-3">
@@ -240,7 +243,7 @@ export default function UploadZone() {
                 </div>
                 <div>
                   <p className="font-medium">
-                    Drag & drop, click, or paste screenshot
+                    {u.dragDrop}
                   </p>
                   <p className="text-sm text-muted-foreground mt-1">
                     <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">
@@ -250,7 +253,7 @@ export default function UploadZone() {
                     <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">
                       Cmd+V
                     </kbd>{" "}
-                    to paste · PNG, JPG, WEBP, GIF · Max 2 MB (Free)
+                    {u.pasteHint} · {u.maxSize}
                   </p>
                 </div>
                 <ClipboardPaste className="h-5 w-5 text-muted-foreground/50 mt-1" />
