@@ -87,18 +87,13 @@ export default function PricingSection() {
     const storeId = STORE_ID;
 
     if (!variantId || !storeId) {
-      alert("step1: store=" + storeId + " plan=" + plan + " variant=" + variantId);
+      alert("Payment not configured yet.");
       return;
     }
 
-    import("@lemonsqueezy/lemonsqueezy.js")
-      .then((ls) => {
-        alert("step2: imported, calling createCheckout: store=" + storeId + " variant=" + variantId);
-        ls.createCheckout(storeId, variantId);
-      })
-      .catch((err) => {
-        alert("step3: import failed: " + err.message);
-      });
+    // Direct checkout URL redirect
+    window.location.href = `https://photo2url.lemonsqueezy.com/checkout/buy/${variantId}`;
+
 
   };
 
