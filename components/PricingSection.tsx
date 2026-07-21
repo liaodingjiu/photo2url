@@ -64,8 +64,8 @@ export default function PricingSection() {
   const router = useRouter();
 
   const CHECKOUT_URLS: Record<string, string> = {
-    Plus: "https://photo2url.lemonsqueezy.com/checkout/buy/a29b1d30-70b5-4a72-a467-99f2cc42cbdb",
-    Enterprise: "https://photo2url.lemonsqueezy.com/checkout/buy/adfbbc5a-e7ff-4f48-a9c3-718e0ebbc7bb",
+    Plus: "https://photo2url.lemonsqueezy.com/checkout/buy/a29b1d30-70b5-4a72-a467-99f2cc42cbdb?lang=en",
+    Enterprise: "https://photo2url.lemonsqueezy.com/checkout/buy/adfbbc5a-e7ff-4f48-a9c3-718e0ebbc7bb?lang=en",
   };
 
   const handleSubscribe = (plan: string) => {
