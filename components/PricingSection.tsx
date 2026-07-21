@@ -63,12 +63,10 @@ export default function PricingSection() {
   const { isSignedIn } = useAuth();
   const router = useRouter();
 
-  // Static env lookup — dynamic process.env[key] doesn't work in Next.js client
-  const VARIANT_IDS: Record<string, string | undefined> = {
-    Plus: process.env.NEXT_PUBLIC_LEMON_SQUEEZY_PLUS_VARIANT_ID,
-    Enterprise: process.env.NEXT_PUBLIC_LEMON_SQUEEZY_ENTERPRISE_VARIANT_ID,
+  const CHECKOUT_URLS: Record<string, string> = {
+    Plus: "https://photo2url.lemonsqueezy.com/checkout/buy/a29b1d30-70b5-4a72-a467-99f2cc42cbdb",
+    Enterprise: "https://photo2url.lemonsqueezy.com/checkout/buy/adfbbc5a-e7ff-4f48-a9c3-718e0ebbc7bb",
   };
-  const STORE_ID = process.env.NEXT_PUBLIC_LEMON_SQUEEZY_STORE_ID;
 
   const handleSubscribe = (plan: string) => {
     if (!isSignedIn) {
@@ -83,16 +81,7 @@ export default function PricingSection() {
       return;
     }
 
-    const variantId = VARIANT_IDS[plan];
-    const storeId = STORE_ID;
-
-    if (!variantId || !storeId) {
-      alert("Payment not configured yet.");
-      return;
-    }
-
-    // Direct checkout URL redirect
-    window.location.href = `https://photo2url.lemonsqueezy.com/checkout/buy/${variantId}`;
+    window.location.href = CHECKOUT_URLS[plan];
 
 
   };
