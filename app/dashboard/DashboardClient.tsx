@@ -37,6 +37,11 @@ const PLAN_LIMITS: Record<string, { storage: number; daily: number; label: strin
   enterprise: { storage: 200 * 1024 * 1024 * 1024, daily: Infinity, label: "Enterprise" },
 };
 
+const CHECKOUT_URLS: Record<string, string> = {
+  Plus: "https://photo2url.lemonsqueezy.com/checkout/buy/a29b1d30-70b5-4a72-a467-99f2cc42cbdb",
+  Enterprise: "https://photo2url.lemonsqueezy.com/checkout/buy/adfbbc5a-e7ff-4f48-a9c3-718e0ebbc7bb",
+};
+
 const BILLING_PLANS = [
   {
     name: "Enterprise",
@@ -79,6 +84,7 @@ const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
 // =============== Main Component ===============
 
 export default function DashboardClient({
+  userId,
   data,
 }: {
   userId: string;
@@ -143,7 +149,7 @@ export default function DashboardClient({
       <main className="flex-1 p-6 pb-20 md:pb-6 overflow-auto">
         {tab === "overview" && <OverviewTab data={data} plan={plan} storagePct={storagePct} />}
         {tab === "profile" && <ProfileTab />}
-        {tab === "billing" && <BillingTab data={data} plan={plan} storagePct={storagePct} />}
+        {tab === "billing" && <BillingTab data={data} plan={plan} storagePct={storagePct} userId={userId} />}
       </main>
     </div>
   );
@@ -281,11 +287,27 @@ function BillingTab({
   data,
   plan,
   storagePct,
+  userId,
 }: {
   data: DashboardData | null;
   plan: { storage: number; daily: number; label: string };
   storagePct: number;
+  userId: string;
 }) {
+  const handleUpgrade = (planName: string) => {
+    const base = CHECKOUT_URLS[planName];
+    if (!base) return;
+
+    const params = new URLSearchParams();
+    params.set("lang", "en");
+    params.set("checkout[custom][user_id]", userId);
+    params.set(
+      "checkout[success_url]",
+      `${window.location.origin}/dashboard?checkout=success`
+    );
+
+    window.location.href = `${base}?${params.toString()}`;
+  };
   return (
     <div>
       <h1 className="text-2xl font-bold mb-2">Billing</h1>
@@ -359,7 +381,11 @@ function BillingTab({
                       </li>
                     ))}
                   </ul>
-                  <Button className="w-full" variant={p.highlight ? "default" : "outline"}>
+                  <Button
+                    className="w-full"
+                    variant={p.highlight ? "default" : "outline"}
+                    onClick={() => handleUpgrade(p.name)}
+                  >
                     Upgrade to {p.name} <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
                   </Button>
                 </CardContent>

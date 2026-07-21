@@ -4,7 +4,6 @@ import { Check, Zap, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useAuth } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
 
 const plans = [
   {
@@ -59,21 +58,15 @@ const plans = [
   },
 ];
 
-export default function PricingSection() {
-  const { isSignedIn } = useAuth();
-  const router = useRouter();
+const CHECKOUT_BASE: Record<string, string> = {
+  Plus: "https://photo2url.lemonsqueezy.com/checkout/buy/a29b1d30-70b5-4a72-a467-99f2cc42cbdb",
+  Enterprise: "https://photo2url.lemonsqueezy.com/checkout/buy/adfbbc5a-e7ff-4f48-a9c3-718e0ebbc7bb",
+};
 
-  const CHECKOUT_URLS: Record<string, string> = {
-    Plus: "https://photo2url.lemonsqueezy.com/checkout/buy/a29b1d30-70b5-4a72-a467-99f2cc42cbdb?lang=en",
-    Enterprise: "https://photo2url.lemonsqueezy.com/checkout/buy/adfbbc5a-e7ff-4f48-a9c3-718e0ebbc7bb?lang=en",
-  };
+export default function PricingSection() {
+  const { isSignedIn, userId } = useAuth();
 
   const handleSubscribe = (plan: string) => {
-    if (!isSignedIn) {
-      router.push("/sign-in");
-      return;
-    }
-
     if (plan === "Free") {
       document
         .getElementById("upload-zone")
@@ -81,9 +74,22 @@ export default function PricingSection() {
       return;
     }
 
-    window.location.href = CHECKOUT_URLS[plan];
+    // Build checkout URL — no auth gate, go straight to Lemon Squeezy
+    const params = new URLSearchParams();
+    params.set("lang", "en");
 
+    // Logged-in user: pass user_id for precise webhook matching
+    if (isSignedIn && userId) {
+      params.set("checkout[custom][user_id]", userId);
+    }
 
+    // Return to dashboard after successful payment
+    params.set(
+      "checkout[success_url]",
+      `${window.location.origin}/dashboard?checkout=success`
+    );
+
+    window.location.href = `${CHECKOUT_BASE[plan]}?${params.toString()}`;
   };
 
   return (

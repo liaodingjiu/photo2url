@@ -64,11 +64,7 @@ export async function POST(request: NextRequest) {
     const eventName = event.meta?.event_name;
     const customData = event.meta?.custom_data || {};
     const userId = customData.user_id;
-
-    if (!userId) {
-      console.warn("[lemon-webhook] No user_id in custom_data — skipping");
-      return NextResponse.json({ skipped: true });
-    }
+    const customerEmail = event.data?.attributes?.user_email || "";
 
     const db = (process.env as any).DB;
     if (!db) {
@@ -85,50 +81,83 @@ export async function POST(request: NextRequest) {
         const sub = event.data;
         const planType = mapVariantToPlan(sub.attributes.variant_id);
 
-        // Upsert user plan
-        await db
-          .prepare(
-            `INSERT INTO users (id, email, plan_type)
-             VALUES (?, ?, ?)
-             ON CONFLICT(id) DO UPDATE SET plan_type = ?`
-          )
-          .bind(userId, sub.attributes.user_email, planType, planType)
-          .run();
+        if (userId) {
+          // Path A: Logged-in user — direct upgrade by Clerk user ID
+          await db
+            .prepare(
+              `INSERT INTO users (id, email, plan_type)
+               VALUES (?, ?, ?)
+               ON CONFLICT(id) DO UPDATE SET plan_type = ?`
+            )
+            .bind(userId, customerEmail, planType, planType)
+            .run();
 
-        // Upsert subscription
-        await db
-          .prepare(
-            `INSERT INTO subscriptions (id, user_id, lemon_sub_id, status, current_period_end)
-             VALUES (?, ?, ?, ?, ?)
-             ON CONFLICT(id) DO UPDATE SET status = ?, current_period_end = ?`
-          )
-          .bind(
-            sub.id,
-            userId,
-            String(sub.id),
-            sub.attributes.status,
-            sub.attributes.ends_at || sub.attributes.renews_at || "",
-            sub.attributes.status,
-            sub.attributes.ends_at || sub.attributes.renews_at || ""
-          )
-          .run();
+          await db
+            .prepare(
+              `INSERT INTO subscriptions (id, user_id, lemon_sub_id, status, current_period_end)
+               VALUES (?, ?, ?, ?, ?)
+               ON CONFLICT(id) DO UPDATE SET status = ?, current_period_end = ?`
+            )
+            .bind(
+              sub.id,
+              userId,
+              String(sub.id),
+              sub.attributes.status,
+              sub.attributes.ends_at || sub.attributes.renews_at || "",
+              sub.attributes.status,
+              sub.attributes.ends_at || sub.attributes.renews_at || ""
+            )
+            .run();
 
-        console.log(
-          `[lemon-webhook] ${eventName}: user=${userId} plan=${planType}`
-        );
+          console.log(
+            `[lemon-webhook] ${eventName}: user=${userId} plan=${planType}`
+          );
+        } else if (customerEmail) {
+          // Path B: Guest checkout — store as pending, matched by email on sign-up
+          await db
+            .prepare(
+              `INSERT INTO pending_subscriptions (email, plan_type, lemon_sub_id, status)
+               VALUES (?, ?, ?, 'pending')`
+            )
+            .bind(customerEmail, planType, String(sub.id))
+            .run();
+
+          console.log(
+            `[lemon-webhook] ${eventName}: pending email=${customerEmail} plan=${planType}`
+          );
+        } else {
+          console.warn(
+            "[lemon-webhook] No user_id or customer_email — skipping"
+          );
+          return NextResponse.json({ skipped: true });
+        }
         break;
       }
 
       case "subscription_cancelled":
       case "subscription_expired": {
-        await db
-          .prepare("UPDATE users SET plan_type = 'free' WHERE id = ?")
-          .bind(userId)
-          .run();
+        if (userId) {
+          await db
+            .prepare("UPDATE users SET plan_type = 'free' WHERE id = ?")
+            .bind(userId)
+            .run();
 
-        console.log(
-          `[lemon-webhook] ${eventName}: user=${userId} reverted to free`
-        );
+          console.log(
+            `[lemon-webhook] ${eventName}: user=${userId} reverted to free`
+          );
+        } else if (customerEmail) {
+          // Clean up any pending subscription
+          await db
+            .prepare(
+              "UPDATE pending_subscriptions SET status = 'expired' WHERE email = ? AND plan_type = ?"
+            )
+            .bind(customerEmail, mapVariantToPlan(event.data?.attributes?.variant_id || ""))
+            .run();
+
+          console.log(
+            `[lemon-webhook] ${eventName}: expired pending for email=${customerEmail}`
+          );
+        }
         break;
       }
 

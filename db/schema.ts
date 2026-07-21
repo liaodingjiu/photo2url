@@ -33,6 +33,17 @@ export const subscriptions = sqliteTable("subscriptions", {
   createdAt: text("created_at").default("sql`(datetime('now'))`"),
 });
 
+// ==================== Pending Subscriptions ====================
+// Stores purchases from unauthenticated users, matched by email on sign-up
+export const pendingSubscriptions = sqliteTable("pending_subscriptions", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  email: text("email").notNull(),
+  planType: text("plan_type").notNull(), // 'plus' | 'enterprise'
+  lemonSubId: text("lemon_sub_id").notNull(),
+  status: text("status").notNull().default("pending"), // 'pending' | 'claimed' | 'expired'
+  createdAt: text("created_at").default("sql`(datetime('now'))`"),
+});
+
 // ==================== Upload Counts ====================
 export const uploadCounts = sqliteTable("upload_counts", {
   id: integer("id").primaryKey({ autoIncrement: true }),
