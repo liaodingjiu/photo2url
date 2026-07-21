@@ -84,18 +84,22 @@ export default function PricingSection() {
     }
 
     const variantId = VARIANT_IDS[plan];
-    if (!variantId || !STORE_ID) {
-      alert("env missing: store=" + STORE_ID + " variant=" + variantId);
+    const storeId = STORE_ID;
+
+    if (!variantId || !storeId) {
+      alert("step1: store=" + storeId + " plan=" + plan + " variant=" + variantId);
       return;
     }
 
     import("@lemonsqueezy/lemonsqueezy.js")
       .then((ls) => {
-        ls.createCheckout(STORE_ID, variantId);
+        alert("step2: imported, calling createCheckout: store=" + storeId + " variant=" + variantId);
+        ls.createCheckout(storeId, variantId);
       })
       .catch((err) => {
-        alert("Checkout failed: " + err.message);
+        alert("step3: import failed: " + err.message);
       });
+
   };
 
   return (
