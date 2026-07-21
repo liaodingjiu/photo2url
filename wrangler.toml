@@ -1,0 +1,21 @@
+name = "photo2url"
+compatibility_date = "2025-07-21"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+# ==================== D1 Database ====================
+[[d1_databases]]
+binding = "DB"
+database_name = "photo2url-db"
+database_id = "30523a72-061d-4974-8249-d39ed3305278"
+
+# ==================== R2 Bucket ====================
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "photo2url-bucket"
+
+# ==================== Environment Variables ====================
+[vars]
+R2_BUCKET_NAME = "photo2url-bucket"
+CDN_DOMAIN = "cdn.photo2url.com"
+APP_URL = "https://photo2url.com"
