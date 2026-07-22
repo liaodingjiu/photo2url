@@ -52,10 +52,7 @@ export default async function RootLayout({
   }
 
   return (
-    <ClerkProvider
-      afterSignInUrl="/dashboard"
-      afterSignUpUrl="/dashboard"
-    >
+    <ClerkProvider>
       <html
         lang={lang}
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
