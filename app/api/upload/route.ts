@@ -115,8 +115,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // IP hard limit (safety net)
-    if (ipCount >= IP_DAILY_HARD_LIMIT) {
+    // IP hard limit (safety net for free/guest only)
+    if (planType === "free" && ipCount >= IP_DAILY_HARD_LIMIT) {
       return NextResponse.json(
         {
           success: false,
