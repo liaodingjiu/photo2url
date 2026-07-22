@@ -23,9 +23,11 @@ import type { Dictionary } from "@/lib/i18n";
 export default function UploadZone({
   dict,
   onUploadSuccess,
+  demoView,
 }: {
   dict: Dictionary;
   onUploadSuccess?: () => void;
+  demoView?: React.ReactNode;
 }) {
   const u = dict.upload;
   const [dragActive, setDragActive] = useState(false);
@@ -286,8 +288,12 @@ export default function UploadZone({
           )}
         </div>
 
-        {/* Result Card (appears after successful upload) */}
-        {result && <ResultCard result={result} />}
+        {/* Demo video placeholder (before upload) or Result Card (after upload) */}
+        {result ? (
+          <ResultCard result={result} />
+        ) : (
+          demoView
+        )}
       </div>
     </div>
   );

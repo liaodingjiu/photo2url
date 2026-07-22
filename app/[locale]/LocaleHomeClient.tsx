@@ -10,6 +10,7 @@ import PartnerBanner from "@/components/PartnerBanner";
 import Footer from "@/components/Footer";
 import LanguageSelector from "@/components/LanguageSelector";
 import PostUploadSignup from "@/components/PostUploadSignup";
+import DemoVideo from "@/components/DemoVideo";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@clerk/nextjs";
 import type { Dictionary, Locale } from "@/lib/i18n";
@@ -44,6 +45,7 @@ export default function LocaleHomeClient({
           >
             <UploadZone
               dict={dict}
+              demoView={<DemoVideo />}
               onUploadSuccess={() => {
                 if (!isSignedIn) setShowSignupPrompt(true);
               }}
