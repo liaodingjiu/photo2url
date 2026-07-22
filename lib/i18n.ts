@@ -127,6 +127,15 @@ export interface Dictionary {
       };
     };
   };
+  whyChoose: {
+    title: string;
+    subtitle: string;
+    items: { title: string; desc: string }[];
+  };
+  teamsSaving: {
+    title: string;
+    stats: { value: string; label: string }[];
+  };
   partners: {
     title: string;
   };

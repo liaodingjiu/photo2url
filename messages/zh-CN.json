@@ -62,6 +62,23 @@
       }
     }
   },
+  "whyChoose": {
+    "title": "为什么选择 Photo To URL",
+    "subtitle": "免费、快速、无需注册——上传即分享。",
+    "items": [
+      { "title": "无需注册", "desc": "几秒钟开始使用，无需邮箱、无需密码。" },
+      { "title": "即时分享", "desc": "上传后立即获取链接，复制粘贴即可。" },
+      { "title": "全平台兼容", "desc": "一个链接适用于 Notion、GitHub、Reddit、Jira 等任何平台。" }
+    ]
+  },
+  "teamsSaving": {
+    "title": "团队使用 Photo To URL 节省时间",
+    "stats": [
+      { "value": "90%", "label": "图片分享速度提升" },
+      { "value": "<10 秒", "label": "上传到获取链接" },
+      { "value": "5,000+", "label": "团队已在使用" }
+    ]
+  },
   "partners": { "title": "全球团队的信赖" },
   "footer": {
     "brand": { "description": "上传图片并获取即时分享链接。无需注册。完美适用于 Notion、Reddit、GitHub 等平台。" },

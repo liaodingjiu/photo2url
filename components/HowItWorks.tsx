@@ -10,10 +10,10 @@ export default function HowItWorks({ dict }: { dict: Dictionary }) {
   ];
 
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-10 bg-muted/30">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-center text-3xl font-bold mb-12">{t.title}</h2>
-        <div className="grid gap-8 md:grid-cols-3">
+        <h2 className="text-center text-3xl font-bold mb-8">{t.title}</h2>
+        <div className="grid gap-6 md:grid-cols-3">
           {steps.map((step, index) => (
             <div key={step.title} className="text-center">
               <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">

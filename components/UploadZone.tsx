@@ -3,9 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Upload, ClipboardPaste } from "lucide-react";
 import { toast } from "sonner";
-import ResultCard from "./ResultCard";
-
-interface UploadResult {
+export interface UploadResult {
   url: string;
   preview: string;
   markdown: string;
@@ -23,16 +21,15 @@ import type { Dictionary } from "@/lib/i18n";
 export default function UploadZone({
   dict,
   onUploadSuccess,
-  demoView,
+  onUploadResult,
 }: {
   dict: Dictionary;
   onUploadSuccess?: () => void;
-  demoView?: React.ReactNode;
+  onUploadResult?: (result: UploadResult) => void;
 }) {
   const u = dict.upload;
   const [dragActive, setDragActive] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [result, setResult] = useState<UploadResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [uploadCount, setUploadCount] = useState(0);
   const [showTurnstile, setShowTurnstile] = useState(false);
@@ -72,9 +69,9 @@ export default function UploadZone({
           return;
         }
 
-        setResult(data);
         setUploadCount((c) => c + 1);
         onUploadSuccess?.();
+        onUploadResult?.(data);
         toast.success("Upload successful!");
       } catch {
         setError("Network error. Please try again.");
@@ -226,75 +223,59 @@ export default function UploadZone({
   }, []); // Only attach once — use ref to always get latest handleFile
 
   return (
-    <div className="w-full max-w-5xl mx-auto">
-      <div className="flex flex-col lg:flex-row gap-6 items-start">
-        {/* Upload Area */}
-        <div className="flex-1 w-full">
-          <div
-            className={`relative rounded-xl border-2 border-dashed p-8 text-center transition-all duration-200 cursor-pointer
-              ${dragActive ? "border-primary bg-primary/5 scale-[1.02]" : "border-muted-foreground/25 hover:border-muted-foreground/50"}
-              ${uploading ? "opacity-50 pointer-events-none" : ""}`}
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
-            onDragOver={handleDrag}
-            onDrop={handleDrop}
-            onClick={handleClick}
-          >
-            {uploading ? (
-              <div className="flex flex-col items-center gap-3">
-                <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-                <p className="text-muted-foreground">{u.uploading}</p>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center gap-3">
-                <div className="rounded-full bg-muted p-4">
-                  <Upload className="h-8 w-8 text-muted-foreground" />
-                </div>
-                <div>
-                  <p className="font-medium">
-                    {u.dragDrop}
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">
-                      Ctrl+V
-                    </kbd>{" "}
-                    /{" "}
-                    <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">
-                      Cmd+V
-                    </kbd>{" "}
-                    {u.pasteHint} · {u.maxSize}
-                  </p>
-                </div>
-                <ClipboardPaste className="h-5 w-5 text-muted-foreground/50 mt-1" />
-              </div>
-            )}
+    <div className="w-full">
+      <div
+        className={`relative rounded-xl border-2 border-dashed p-5 text-center transition-all duration-200 cursor-pointer
+          ${dragActive ? "border-primary bg-primary/5 scale-[1.02]" : "border-muted-foreground/25 hover:border-muted-foreground/50"}
+          ${uploading ? "opacity-50 pointer-events-none" : ""}`}
+        onDragEnter={handleDrag}
+        onDragLeave={handleDrag}
+        onDragOver={handleDrag}
+        onDrop={handleDrop}
+        onClick={handleClick}
+      >
+        {uploading ? (
+          <div className="flex flex-col items-center gap-2">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+            <p className="text-muted-foreground text-sm">{u.uploading}</p>
           </div>
-
-          {/* Error Message */}
-          {error && !uploading && (
-            <div className="mt-3 rounded-lg border border-destructive/50 bg-destructive/5 p-3 text-sm text-destructive">
-              {error}
-            </div>
-          )}
-
-          {/* Turnstile Widget */}
-          {showTurnstile && (
-            <div className="mt-4 flex flex-col items-center gap-2">
-              <p className="text-sm text-muted-foreground">
-                Please verify you&apos;re human to continue uploading
-              </p>
-              <div id="turnstile-container" />
-            </div>
-          )}
-        </div>
-
-        {/* Demo video placeholder (before upload) or Result Card (after upload) */}
-        {result ? (
-          <ResultCard result={result} />
         ) : (
-          demoView
+          <div className="flex flex-col items-center gap-2">
+            <div className="rounded-full bg-muted p-3">
+              <Upload className="h-6 w-6 text-muted-foreground" />
+            </div>
+            <p className="font-medium text-sm">{u.dragDrop}</p>
+            <p className="text-xs text-muted-foreground">
+              <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">
+                Ctrl+V
+              </kbd>{" "}
+              /{" "}
+              <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">
+                Cmd+V
+              </kbd>{" "}
+              {u.pasteHint} · {u.maxSize}
+            </p>
+            <ClipboardPaste className="h-4 w-4 text-muted-foreground/50 mt-1" />
+          </div>
         )}
       </div>
+
+      {/* Error Message */}
+      {error && !uploading && (
+        <div className="mt-3 rounded-lg border border-destructive/50 bg-destructive/5 p-3 text-sm text-destructive">
+          {error}
+        </div>
+      )}
+
+      {/* Turnstile Widget */}
+      {showTurnstile && (
+        <div className="mt-4 flex flex-col items-center gap-2">
+          <p className="text-sm text-muted-foreground">
+            Please verify you&apos;re human to continue uploading
+          </p>
+          <div id="turnstile-container" />
+        </div>
+      )}
     </div>
   );
 }

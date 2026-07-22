@@ -85,6 +85,23 @@
       }
     }
   },
+  "whyChoose": {
+    "title": "Why people choose Photo To URL",
+    "subtitle": "Free, fast, no account needed — just upload and share.",
+    "items": [
+      { "title": "No sign-up", "desc": "Start uploading in seconds. No email, no password, no hassle." },
+      { "title": "Instant share", "desc": "Upload and get a link immediately. Copy, paste, done." },
+      { "title": "Works everywhere", "desc": "One link works on Notion, GitHub, Reddit, Jira — any platform." }
+    ]
+  },
+  "teamsSaving": {
+    "title": "Teams saving time with Photo To URL",
+    "stats": [
+      { "value": "90%", "label": "Faster image sharing" },
+      { "value": "< 10s", "label": "From upload to link" },
+      { "value": "5,000+", "label": "Teams already using" }
+    ]
+  },
   "partners": {
     "title": "Trusted by teams worldwide"
   },
