@@ -42,25 +42,19 @@
   "pricing": {
     "title": "简单定价",
     "subtitle": "免费开始，需要更多时再升级。",
-    "cta": "立即订阅",
     "plans": {
-      "enterprise": {
-        "name": "企业版",
-        "badge": "最超值",
-        "features": ["256 MB 单文件限制", "每日无限上传", "200 GB 永久存储", "PNG、JPG、WEBP、GIF", "文件永不过期", "优先支持"],
-        "cta": "立即订阅"
-      },
-      "plus": {
-        "name": "Plus",
-        "features": ["50 MB 单文件限制", "每日 1,000 次上传", "100 GB 永久存储", "PNG、JPG、WEBP、GIF", "文件永不过期"],
-        "cta": "立即订阅"
-      },
-      "free": {
-        "name": "免费版",
-        "features": ["单文件最大 2 MB", "每日 10 次上传", "200 MB 存储空间", "PNG、JPG、WEBP、GIF", "文件保留 30 天（升级后永久保存）", "无需信用卡"],
-        "cta": "免费开始"
-      }
-    }
+      "enterprise": { "name": "企业版", "cta": "立即订阅" },
+      "plus": { "name": "Plus", "cta": "立即订阅" },
+      "free": { "name": "免费版", "cta": "免费开始" }
+    },
+    "rows": [
+      { "label": "文件大小", "enterprise": "256 MB", "plus": "50 MB", "free": "2 MB" },
+      { "label": "每日上传", "enterprise": "无限", "plus": "1,000 次", "free": "10 次" },
+      { "label": "存储空间", "enterprise": "200 GB", "plus": "100 GB", "free": "200 MB" },
+      { "label": "支持格式", "enterprise": "PNG, JPG, WEBP, GIF", "plus": "PNG, JPG, WEBP, GIF", "free": "PNG, JPG, WEBP, GIF" },
+      { "label": "文件有效期", "enterprise": "永久", "plus": "永久", "free": "30 天" },
+      { "label": "优先支持", "enterprise": true, "plus": false, "free": false }
+    ]
   },
   "whyChoose": {
     "title": "为什么选择 Photo To URL",

@@ -45,45 +45,19 @@
   "pricing": {
     "title": "Simple Pricing",
     "subtitle": "Start free. Upgrade when you need more.",
-    "cta": "Subscribe Now",
     "plans": {
-      "enterprise": {
-        "name": "Enterprise",
-        "badge": "Best Value",
-        "features": [
-          "256 MB file size limit",
-          "Unlimited daily uploads",
-          "200 GB permanent storage",
-          "PNG, JPG, WEBP, GIF",
-          "Files never expire",
-          "Priority support"
-        ],
-        "cta": "Subscribe Now"
-      },
-      "plus": {
-        "name": "Plus",
-        "features": [
-          "50 MB file size limit",
-          "1,000 uploads/day",
-          "100 GB permanent storage",
-          "PNG, JPG, WEBP, GIF",
-          "Files never expire"
-        ],
-        "cta": "Subscribe Now"
-      },
-      "free": {
-        "name": "Free",
-        "features": [
-          "2 MB per file",
-          "10 uploads daily",
-          "200 MB storage",
-          "PNG, JPG, WEBP, GIF",
-          "Files kept 30 days (upgrade for permanent)",
-          "No credit card required"
-        ],
-        "cta": "Start for Free"
-      }
-    }
+      "enterprise": { "name": "Enterprise", "cta": "Subscribe Now" },
+      "plus": { "name": "Plus", "cta": "Subscribe Now" },
+      "free": { "name": "Free", "cta": "Start for Free" }
+    },
+    "rows": [
+      { "label": "File size", "enterprise": "256 MB", "plus": "50 MB", "free": "2 MB" },
+      { "label": "Daily uploads", "enterprise": "Unlimited", "plus": "1,000", "free": "10 / day" },
+      { "label": "Storage", "enterprise": "200 GB", "plus": "100 GB", "free": "200 MB" },
+      { "label": "Formats", "enterprise": "PNG, JPG, WEBP, GIF", "plus": "PNG, JPG, WEBP, GIF", "free": "PNG, JPG, WEBP, GIF" },
+      { "label": "File expiry", "enterprise": "Never", "plus": "Never", "free": "30 days" },
+      { "label": "Priority support", "enterprise": true, "plus": false, "free": false }
+    ]
   },
   "whyChoose": {
     "title": "Why people choose Photo To URL",

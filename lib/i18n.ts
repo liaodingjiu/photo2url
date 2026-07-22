@@ -107,25 +107,17 @@ export interface Dictionary {
   pricing: {
     title: string;
     subtitle: string;
-    cta: string;
     plans: {
-      enterprise: {
-        name: string;
-        badge: string;
-        features: string[];
-        cta: string;
-      };
-      plus: {
-        name: string;
-        features: string[];
-        cta: string;
-      };
-      free: {
-        name: string;
-        features: string[];
-        cta: string;
-      };
+      enterprise: { name: string; cta: string };
+      plus: { name: string; cta: string };
+      free: { name: string; cta: string };
     };
+    rows: {
+      label: string;
+      enterprise: string | boolean;
+      plus: string | boolean;
+      free: string | boolean;
+    }[];
   };
   whyChoose: {
     title: string;
