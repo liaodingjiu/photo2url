@@ -105,7 +105,7 @@ export default function Footer({
           </div>
         </div>
 
-        <div className="mt-4 pt-4 text-center text-xs text-muted-foreground">
+        <div className="mt-4 rounded-lg bg-primary/5 px-4 py-3 text-center text-xs text-primary">
           {f.copyright.replace("{year}", String(new Date().getFullYear()))}
         </div>
       </div>
