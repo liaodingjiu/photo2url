@@ -17,7 +17,10 @@
     "uploading": "上传中...",
     "success": "上传成功！",
     "failed": "上传失败",
-    "verify": "请验证您是真人后继续上传"
+    "verify": "请验证您是真人后继续上传",
+    "signupTitle": "想管理您的文件吗？",
+    "signupDesc": "创建免费账户，随时查看、复制和删除您的上传文件。",
+    "signupCta": "创建免费账户"
   },
   "howItWorks": {
     "title": "使用步骤",
@@ -54,7 +57,7 @@
       },
       "free": {
         "name": "免费版",
-        "features": ["2 MB 单文件限制", "每日 10 次上传", "200 MB 总存储", "PNG、JPG、WEBP、GIF", "30 天自动清理", "无需注册"],
+        "features": ["单文件最大 2 MB", "每日 10 次上传", "200 MB 存储空间", "PNG、JPG、WEBP、GIF", "文件保留 30 天（升级后永久保存）", "无需信用卡"],
         "cta": "免费开始"
       }
     }
@@ -67,7 +70,7 @@
     "contact": { "title": "联系我们" },
     "copyright": "© {year} photo2url. 保留所有权利。"
   },
-  "nav": { "tools": "工具", "pricing": "定价", "login": "登录", "signup": "注册", "dashboard": "控制台" },
+  "nav": { "home": "首页", "tools": "工具", "pricing": "定价", "login": "登录", "signup": "注册", "dashboard": "控制台" },
   "language": { "selectRegion": "选择地区", "chooseLang": "选择您偏好的语言和地区" },
   "privacy": { "title": "隐私政策", "content": "我们收集最少量的数据以提供服务。上传的文件安全存储在 Cloudflare R2 上。我们不会出售或与第三方分享您的个人数据。免费用户的文件将在 30 天后自动删除。付费用户的文件将保留至取消订阅。我们使用 Cookie 进行身份验证和安全保护。使用本服务即表示您同意本隐私政策。" },
   "terms": { "title": "服务条款", "content": "使用 photo2url 即表示您同意不上传非法、有害或未经授权的版权内容。我们保留删除任何违反本条款内容的权利。本服务按「原样」提供，不附带任何保证。我们对因使用本服务而产生的任何损害不承担责任。免费用户受每日上传限制和 30 天自动清理的约束。付费计划受我们的支付服务商 Lemon Squeezy 的条款约束。" },

@@ -20,7 +20,13 @@ interface UploadResult {
 
 import type { Dictionary } from "@/lib/i18n";
 
-export default function UploadZone({ dict }: { dict: Dictionary }) {
+export default function UploadZone({
+  dict,
+  onUploadSuccess,
+}: {
+  dict: Dictionary;
+  onUploadSuccess?: () => void;
+}) {
   const u = dict.upload;
   const [dragActive, setDragActive] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -66,6 +72,7 @@ export default function UploadZone({ dict }: { dict: Dictionary }) {
 
         setResult(data);
         setUploadCount((c) => c + 1);
+        onUploadSuccess?.();
         toast.success("Upload successful!");
       } catch {
         setError("Network error. Please try again.");

@@ -27,6 +27,12 @@ export default function Navbar({ dict }: { dict?: Dictionary }) {
 
         {/* Nav Links */}
         <div className="flex items-center gap-1">
+          <Link href="/">
+            <Button variant="ghost" size="sm">
+              {n?.home ?? "Home"}
+            </Button>
+          </Link>
+
           {/* Tools Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger>

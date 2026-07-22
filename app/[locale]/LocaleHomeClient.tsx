@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import UploadZone from "@/components/UploadZone";
 import HowItWorks from "@/components/HowItWorks";
@@ -8,7 +9,9 @@ import PricingSection from "@/components/PricingSection";
 import PartnerBanner from "@/components/PartnerBanner";
 import Footer from "@/components/Footer";
 import LanguageSelector from "@/components/LanguageSelector";
+import PostUploadSignup from "@/components/PostUploadSignup";
 import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@clerk/nextjs";
 import type { Dictionary, Locale } from "@/lib/i18n";
 
 export default function LocaleHomeClient({
@@ -18,6 +21,9 @@ export default function LocaleHomeClient({
   locale: Locale;
   dict: Dictionary;
 }) {
+  const { isSignedIn } = useAuth();
+  const [showSignupPrompt, setShowSignupPrompt] = useState(false);
+
   return (
     <>
       <Navbar dict={dict} />
@@ -32,8 +38,17 @@ export default function LocaleHomeClient({
               {dict.hero.subtitle}
             </p>
           </div>
-          <div id="upload-zone" className="mt-10 px-4">
-            <UploadZone dict={dict} />
+          <div
+            id="upload-zone"
+            className="mt-10 px-4 scroll-mt-20 target:ring-2 target:ring-primary/50 target:rounded-xl transition-all duration-700"
+          >
+            <UploadZone
+              dict={dict}
+              onUploadSuccess={() => {
+                if (!isSignedIn) setShowSignupPrompt(true);
+              }}
+            />
+            {showSignupPrompt && <PostUploadSignup dict={dict} />}
           </div>
         </section>
 

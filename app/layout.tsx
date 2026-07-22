@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "photo2url — Instant Photo To URL",
+  title: "photo2url — Free Photo To URL",
   description:
     "No sign-up required. Upload → Get Link → Embed anywhere. Fast, free image hosting.",
   keywords: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     "markdown image",
   ],
   openGraph: {
-    title: "photo2url — Instant Photo To URL",
+    title: "photo2url — Free Photo To URL",
     description: "No sign-up required. Upload → Get Link → Embed anywhere.",
     url: "https://photo2url.com",
     siteName: "photo2url",

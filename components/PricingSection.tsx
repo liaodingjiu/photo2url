@@ -62,9 +62,7 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
 
   const handleSubscribe = (planKey: string) => {
     if (planKey === "Free") {
-      document
-        .getElementById("upload-zone")
-        ?.scrollIntoView({ behavior: "smooth" });
+      window.location.hash = "upload-zone";
       return;
     }
 

@@ -5,10 +5,10 @@
   },
   "site": {
     "name": "photo2url",
-    "tagline": "Instant Photo To URL"
+    "tagline": "Free Photo To URL"
   },
   "hero": {
-    "title": "Instant Photo To URL",
+    "title": "Free Photo To URL",
     "subtitle": "No sign-up required. Upload → Get Link → Embed anywhere."
   },
   "upload": {
@@ -20,7 +20,10 @@
     "uploading": "Uploading...",
     "success": "Upload successful!",
     "failed": "Upload failed",
-    "verify": "Please verify you're human to continue uploading"
+    "verify": "Please verify you're human to continue uploading",
+    "signupTitle": "Want to manage your files?",
+    "signupDesc": "Create a free account to view, copy, and delete your uploads anytime.",
+    "signupCta": "Create free account"
   },
   "howItWorks": {
     "title": "How It Works",
@@ -71,12 +74,12 @@
       "free": {
         "name": "Free",
         "features": [
-          "2 MB file size limit",
-          "10 uploads/day",
-          "200 MB total storage",
+          "2 MB per file",
+          "10 uploads daily",
+          "200 MB storage",
           "PNG, JPG, WEBP, GIF",
-          "30-day auto cleanup",
-          "No sign-up required"
+          "Files kept 30 days (upgrade for permanent)",
+          "No credit card required"
         ],
         "cta": "Start for Free"
       }
@@ -106,6 +109,7 @@
     "copyright": "© {year} photo2url. All rights reserved."
   },
   "nav": {
+    "home": "Home",
     "tools": "Tools",
     "pricing": "Pricing",
     "login": "Login",

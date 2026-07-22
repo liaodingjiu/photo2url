@@ -90,6 +90,9 @@ export interface Dictionary {
     success: string;
     failed: string;
     verify: string;
+    signupTitle: string;
+    signupDesc: string;
+    signupCta: string;
   };
   howItWorks: {
     title: string;
@@ -135,6 +138,7 @@ export interface Dictionary {
     copyright: string;
   };
   nav: {
+    home: string;
     tools: string;
     pricing: string;
     login: string;
