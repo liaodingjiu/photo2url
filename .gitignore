@@ -47,3 +47,6 @@ next-env.d.ts
 *.md
 !README.md
 !REQUIREMENTS.md
+
+# clerk configuration (can include secrets)
+/.clerk/

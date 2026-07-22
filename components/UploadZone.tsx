@@ -19,7 +19,12 @@ export interface UploadResult {
 
 import type { Dictionary } from "@/lib/i18n";
 
-const SAMPLE_URL = "/sample-photo.png";
+const SAMPLE_URLS = [
+  "/sample-photo.png",
+  "/sample-photo-2.png",
+  "/sample-photo-3.png",
+  "/sample-photo-4.png",
+];
 
 export default function UploadZone({
   dict,
@@ -151,19 +156,19 @@ export default function UploadZone({
     [doUpload]
   );
 
-  const handleSample = async () => {
+  const handleSample = async (url: string) => {
     try {
-      const res = await fetch(SAMPLE_URL);
+      const res = await fetch(url);
       const buffer = await res.arrayBuffer();
       const bytes = new Uint8Array(buffer);
-      // Detect real MIME type from magic bytes, not server Content-Type header
       let mimeType = "image/png";
       if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) mimeType = "image/jpeg";
       else if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) mimeType = "image/gif";
       else if (bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46) mimeType = "image/webp";
       const ext = mimeType.split("/")[1];
+      const name = url.split("/").pop() || `sample.${ext}`;
       const blob = new Blob([buffer], { type: mimeType });
-      const file = new File([blob], `sample-photo.${ext}`, { type: mimeType });
+      const file = new File([blob], name, { type: mimeType });
       await handleFile(file);
     } catch {
       toast.error("Failed to load sample image");
@@ -269,16 +274,21 @@ export default function UploadZone({
       {!uploading && (
         <div className="mt-4 text-center">
           <p className="text-xs text-muted-foreground mb-2">{u.trySample}</p>
-          <button
-            onClick={(e) => { e.stopPropagation(); handleSample(); }}
-            className="inline-block rounded-lg border border-muted-foreground/20 hover:border-primary cursor-pointer overflow-hidden transition-colors"
-          >
-            <img
-              src="/sample-photo.png"
-              alt="Sample photo"
-              className="w-40 h-auto object-cover"
-            />
-          </button>
+          <div className="flex justify-center gap-2 flex-wrap">
+            {SAMPLE_URLS.map((url) => (
+              <button
+                key={url}
+                onClick={(e) => { e.stopPropagation(); handleSample(url); }}
+                className="rounded-lg border border-muted-foreground/20 hover:border-primary cursor-pointer overflow-hidden transition-colors"
+              >
+                <img
+                  src={url}
+                  alt="Sample"
+                  className="w-20 h-auto object-cover"
+                />
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
