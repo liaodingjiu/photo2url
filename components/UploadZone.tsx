@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Upload, ClipboardPaste } from "lucide-react";
 import { toast } from "sonner";
+
 export interface UploadResult {
   url: string;
   preview: string;
@@ -17,6 +18,8 @@ export interface UploadResult {
 }
 
 import type { Dictionary } from "@/lib/i18n";
+
+const SAMPLE_URL = "https://cdn.photo2url.com/demo/sample-photo.png";
 
 export default function UploadZone({
   dict,
@@ -35,9 +38,7 @@ export default function UploadZone({
   const [showTurnstile, setShowTurnstile] = useState(false);
   const [, setTurnstileToken] = useState<string | null>(null);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
-  const turnstileRef = useRef<string | null>(null);
   const turnstileWidgetId = useRef<string | null>(null);
-  // Refs to keep latest values accessible in stale closures (e.g. Turnstile callback)
   const uploadCountRef = useRef(uploadCount);
   uploadCountRef.current = uploadCount;
   const pendingFileRef = useRef(pendingFile);
@@ -52,15 +53,12 @@ export default function UploadZone({
       try {
         const formData = new FormData();
         formData.append("file", file);
-        if (tToken) {
-          formData.append("cf-turnstile-response", tToken);
-        }
+        if (tToken) formData.append("cf-turnstile-response", tToken);
 
         const res = await fetch("/api/upload", {
           method: "POST",
           body: formData,
         });
-
         const data = await res.json();
 
         if (!res.ok) {
@@ -80,7 +78,6 @@ export default function UploadZone({
         setUploading(false);
         setTurnstileToken(null);
         setShowTurnstile(false);
-        // Reset Turnstile for next use
         if (turnstileWidgetId.current && window.turnstile) {
           window.turnstile.reset(turnstileWidgetId.current);
         }
@@ -89,19 +86,15 @@ export default function UploadZone({
     []
   );
 
-  // Load Turnstile script dynamically
+  // Load Turnstile script
   useEffect(() => {
     if (showTurnstile) {
       const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
       if (!siteKey) return;
-
-      // Destroy previous widget if exists
       if (turnstileWidgetId.current && window.turnstile) {
         window.turnstile.remove(turnstileWidgetId.current);
         turnstileWidgetId.current = null;
       }
-
-      // If script already loaded, just render
       if (window.turnstile) {
         turnstileWidgetId.current = window.turnstile.render(
           "#turnstile-container",
@@ -116,8 +109,6 @@ export default function UploadZone({
         );
         return;
       }
-
-      // Load script fresh
       const script = document.createElement("script");
       script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
       script.async = true;
@@ -137,11 +128,9 @@ export default function UploadZone({
         }
       };
       document.body.appendChild(script);
-      turnstileRef.current = "loaded";
     }
   }, [showTurnstile, doUpload]);
 
-  // Cleanup Turnstile widget
   useEffect(() => {
     return () => {
       if (turnstileWidgetId.current && window.turnstile) {
@@ -152,19 +141,27 @@ export default function UploadZone({
 
   const handleFile = useCallback(
     async (file: File) => {
-      // Check if Turnstile is needed (after 5 free uploads)
       if (uploadCountRef.current >= 5) {
         setShowTurnstile(true);
         setPendingFile(file);
-        return; // Wait for Turnstile callback
+        return;
       }
-
       await doUpload(file);
     },
     [doUpload]
   );
 
-  // Drag handlers
+  const handleSample = async () => {
+    try {
+      const res = await fetch(SAMPLE_URL);
+      const blob = await res.blob();
+      const file = new File([blob], "sample-photo.png", { type: "image/png" });
+      await handleFile(file);
+    } catch {
+      toast.error("Failed to load sample image");
+    }
+  };
+
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -180,14 +177,12 @@ export default function UploadZone({
       e.preventDefault();
       e.stopPropagation();
       setDragActive(false);
-
       const file = e.dataTransfer.files?.[0];
       if (file) handleFile(file);
     },
     [handleFile]
   );
 
-  // Click upload
   const handleClick = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -199,7 +194,6 @@ export default function UploadZone({
     input.click();
   };
 
-  // Paste handler — use ref for handleFile to avoid re-registering listener
   const handleFileRef = useRef(handleFile);
   handleFileRef.current = handleFile;
 
@@ -207,7 +201,6 @@ export default function UploadZone({
     const onPaste = (e: ClipboardEvent) => {
       const items = e.clipboardData?.items;
       if (!items) return;
-
       for (const item of Array.from(items)) {
         if (item.type.startsWith("image/")) {
           e.preventDefault();
@@ -217,16 +210,18 @@ export default function UploadZone({
         }
       }
     };
-
     document.addEventListener("paste", onPaste);
     return () => document.removeEventListener("paste", onPaste);
-  }, []); // Only attach once — use ref to always get latest handleFile
+  }, []);
 
   return (
     <div className="w-full">
       <div
-        className={`relative rounded-xl border-2 border-dashed p-5 text-center transition-all duration-200 cursor-pointer
-          ${dragActive ? "border-primary bg-primary/5 scale-[1.02]" : "border-muted-foreground/25 hover:border-muted-foreground/50"}
+        className={`relative rounded-2xl border-2 border-dashed p-5 text-center transition-all duration-200 cursor-pointer
+          shadow-2xl bg-gradient-to-br from-white to-muted/30
+          ${dragActive
+            ? "border-primary bg-primary/10 scale-[1.02] shadow-xl"
+            : "border-muted-foreground/25 hover:border-muted-foreground/50"}
           ${uploading ? "opacity-50 pointer-events-none" : ""}`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -244,35 +239,47 @@ export default function UploadZone({
             <div className="rounded-full bg-muted p-3">
               <Upload className="h-6 w-6 text-muted-foreground" />
             </div>
-            <p className="font-medium text-sm">{u.dragDrop}</p>
-            <p className="text-xs text-muted-foreground">
-              <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">
-                Ctrl+V
-              </kbd>{" "}
-              /{" "}
-              <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">
-                Cmd+V
-              </kbd>{" "}
-              {u.pasteHint} · {u.maxSize}
-            </p>
-            <ClipboardPaste className="h-4 w-4 text-muted-foreground/50 mt-1" />
+            {dragActive ? (
+              <p className="font-medium text-sm text-primary">{u.dropHere}</p>
+            ) : (
+              <>
+                <p className="font-medium text-sm">{u.dragDrop}</p>
+                <p className="text-xs text-muted-foreground">
+                  <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">Ctrl+V</kbd>
+                  {" / "}
+                  <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">Cmd+V</kbd>
+                  {" "}{u.pasteHint} · {u.maxSize}
+                </p>
+                <ClipboardPaste className="h-4 w-4 text-muted-foreground/50 mt-1" />
+              </>
+            )}
           </div>
         )}
       </div>
 
-      {/* Error Message */}
+      {/* Try with sample */}
+      {!uploading && (
+        <p className="text-center mt-2">
+          <button
+            onClick={(e) => { e.stopPropagation(); handleSample(); }}
+            className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors"
+          >
+            📸 {u.trySample}
+          </button>
+        </p>
+      )}
+
+      {/* Error */}
       {error && !uploading && (
         <div className="mt-3 rounded-lg border border-destructive/50 bg-destructive/5 p-3 text-sm text-destructive">
           {error}
         </div>
       )}
 
-      {/* Turnstile Widget */}
+      {/* Turnstile */}
       {showTurnstile && (
         <div className="mt-4 flex flex-col items-center gap-2">
-          <p className="text-sm text-muted-foreground">
-            Please verify you&apos;re human to continue uploading
-          </p>
+          <p className="text-sm text-muted-foreground">{u.verify}</p>
           <div id="turnstile-container" />
         </div>
       )}
@@ -280,14 +287,10 @@ export default function UploadZone({
   );
 }
 
-// Type declarations for Turnstile
 declare global {
   interface Window {
     turnstile: {
-      render: (
-        container: string,
-        options: { sitekey: string; callback: (token: string) => void }
-      ) => string;
+      render: (container: string, options: { sitekey: string; callback: (token: string) => void }) => string;
       reset: (widgetId: string) => void;
       remove: (widgetId: string) => void;
     };

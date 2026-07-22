@@ -9,7 +9,8 @@
   },
   "hero": {
     "title": "Free Photo To URL",
-    "subtitle": "No sign-up required. Upload → Get Link → Embed anywhere."
+    "subtitle": "No sign-up required. Upload → Get Link → Embed anywhere.",
+    "trustTags": "Free forever · No sign-up · Instant links"
   },
   "upload": {
     "title": "Free Image to URL Converter",
@@ -21,6 +22,9 @@
     "success": "Upload successful!",
     "failed": "Upload failed",
     "verify": "Please verify you're human to continue uploading",
+    "trySample": "Try with sample",
+    "tryAnother": "Try another sample",
+    "dropHere": "Drop to upload",
     "signupTitle": "Want to manage your files?",
     "signupDesc": "Create a free account to view, copy, and delete your uploads anytime.",
     "signupCta": "Create free account"

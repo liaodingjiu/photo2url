@@ -9,12 +9,10 @@ import WhyChoose from "@/components/WhyChoose";
 import UseCases from "@/components/UseCases";
 import TeamsSaving from "@/components/TeamsSaving";
 import PricingSection from "@/components/PricingSection";
-import PartnerBanner from "@/components/PartnerBanner";
 import Footer from "@/components/Footer";
 import LanguageSelector from "@/components/LanguageSelector";
 import PostUploadSignup from "@/components/PostUploadSignup";
 import DemoImage from "@/components/DemoImage";
-import DemoResultCard from "@/components/DemoResultCard";
 import ResultCard from "@/components/ResultCard";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@clerk/nextjs";
@@ -28,7 +26,7 @@ export default function LocaleHomeClient({
   dict: Dictionary;
 }) {
   const { isSignedIn } = useAuth();
-  const [showSignupPrompt, setShowSignupPrompt] = useState(false);
+  const [hasUploaded, setHasUploaded] = useState(false);
   const [uploadResult, setUploadResult] = useState<UploadResult | null>(null);
 
   return (
@@ -41,8 +39,11 @@ export default function LocaleHomeClient({
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
               {dict.hero.title}
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
               {dict.hero.subtitle}
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground/60">
+              {dict.hero.trustTags}
             </p>
           </div>
           <div
@@ -50,26 +51,20 @@ export default function LocaleHomeClient({
             className="mt-8 px-4 scroll-mt-20 target:ring-2 target:ring-primary/50 target:rounded-xl transition-all duration-700"
           >
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 max-w-5xl mx-auto">
-              {/* Left column: upload + result */}
+              {/* Left column */}
               <div>
                 <UploadZone
                   dict={dict}
                   onUploadSuccess={() => {
-                    if (!isSignedIn) setShowSignupPrompt(true);
+                    if (!isSignedIn) setHasUploaded(true);
                   }}
                   onUploadResult={setUploadResult}
                 />
-                {uploadResult ? (
-                  <ResultCard result={uploadResult} />
-                ) : (
-                  <DemoResultCard />
-                )}
-                {showSignupPrompt && <PostUploadSignup dict={dict} />}
+                {uploadResult && <ResultCard result={uploadResult} />}
+                {hasUploaded && !isSignedIn && <PostUploadSignup dict={dict} />}
               </div>
-              {/* Right column: demo GIF */}
-              <div className="hidden lg:block">
-                <DemoImage />
-              </div>
+              {/* Right column */}
+              <DemoImage variant={uploadResult ? "hidden" : "demo"} />
             </div>
           </div>
         </section>
@@ -81,7 +76,6 @@ export default function LocaleHomeClient({
         <UseCases dict={dict} />
         <TeamsSaving dict={dict} />
         <PricingSection dict={dict} />
-        <PartnerBanner dict={dict} />
       </main>
 
       <LanguageSelector currentLocale={locale} />

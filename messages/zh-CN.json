@@ -6,7 +6,8 @@
   "site": { "name": "photo2url", "tagline": "图片秒转链接" },
   "hero": {
     "title": "图片秒转链接",
-    "subtitle": "无需注册。上传 → 获取链接 → 嵌入任意位置。"
+    "subtitle": "无需注册。上传 → 获取链接 → 嵌入任意位置。",
+    "trustTags": "永久免费 · 无需注册 · 即时链接"
   },
   "upload": {
     "title": "免费图片转链接工具",
@@ -18,6 +19,9 @@
     "success": "上传成功！",
     "failed": "上传失败",
     "verify": "请验证您是真人后继续上传",
+    "trySample": "试用示例图片",
+    "tryAnother": "试用另一张示例",
+    "dropHere": "松开以上传",
     "signupTitle": "想管理您的文件吗？",
     "signupDesc": "创建免费账户，随时查看、复制和删除您的上传文件。",
     "signupCta": "创建免费账户"

@@ -95,7 +95,17 @@ export default function Footer({
           </div>
         </div>
 
-        <div className="mt-8 border-t pt-6 text-center text-xs text-muted-foreground">
+        {/* Partner scroll */}
+        <div className="mt-8 border-t pt-6">
+          <div className="flex gap-6 overflow-x-auto snap-x scrollbar-hide justify-center text-xs text-muted-foreground">
+            <span className="snap-start shrink-0">🚀 No sign-up required</span>
+            <span className="snap-start shrink-0">⚡ Instant upload & share</span>
+            <span className="snap-start shrink-0">🌐 Global CDN delivery</span>
+            <span className="snap-start shrink-0">🔒 Payments by Lemon Squeezy</span>
+          </div>
+        </div>
+
+        <div className="mt-4 pt-4 text-center text-xs text-muted-foreground">
           {f.copyright.replace("{year}", String(new Date().getFullYear()))}
         </div>
       </div>
