@@ -77,8 +77,8 @@ export async function POST(request: NextRequest) {
     const cookieCount = existingCount?.cookie_count || 0;
     const ipCount = existingCount?.ip_count || 0;
 
-    // Turnstile check: required after threshold
-    if (cookieCount >= TURNSTILE_THRESHOLD) {
+    // Turnstile check: required after threshold (free/guest only)
+    if (planType === "free" && cookieCount >= TURNSTILE_THRESHOLD) {
       if (!turnstileToken) {
         return NextResponse.json(
           {
