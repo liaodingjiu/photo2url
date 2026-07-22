@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Image, ChevronDown, Wrench } from "lucide-react";
+import { ChevronDown, Wrench } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 
 export default function Navbar({ dict }: { dict?: Dictionary }) {
@@ -21,7 +21,12 @@ export default function Navbar({ dict }: { dict?: Dictionary }) {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-          <Image className="h-6 w-6" />
+          <img
+            src="/logo.png"
+            srcSet="/logo@2x.png 2x"
+            alt="photo2url"
+            className="h-6 w-6 rounded"
+          />
           <span>photo2url</span>
         </Link>
 
