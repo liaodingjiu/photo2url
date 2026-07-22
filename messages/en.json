@@ -95,8 +95,8 @@
     }
   },
   "pricing": {
-    "title": "Simple Pricing",
-    "subtitle": "Pay for what you need. Nothing you don't.",
+    "title": "Choose the plan that works best for you",
+    "subtitle": "Choose the plan that works best for you",
     "enterpriseHint": "For teams that need their own image CDN and unlimited everything.",
     "plans": {
       "enterprise": { "name": "Enterprise", "cta": "Subscribe Now" },

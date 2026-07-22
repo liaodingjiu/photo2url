@@ -92,8 +92,8 @@
     }
   },
   "pricing": {
-    "title": "简单定价",
-    "subtitle": "只为需要的付费。其余不用。",
+    "title": "选择最适合你的方案",
+    "subtitle": "选择最适合你的方案",
     "enterpriseHint": "为需要独立图片 CDN 和无限制使用的团队打造。",
     "plans": {
       "enterprise": { "name": "企业版", "cta": "立即订阅" },
