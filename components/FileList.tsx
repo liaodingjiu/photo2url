@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Trash2, Copy, ExternalLink } from "lucide-react";
+import { Trash2, Copy, ExternalLink, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,6 +11,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 
 interface FileRecord {
@@ -27,6 +33,37 @@ function formatSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function getFileUrl(file: FileRecord): string {
+  const cdnDomain = "cdn.photo2url.com";
+  return `https://${cdnDomain}/${file.r2_key}`;
+}
+
+function CopyRow({ label, text }: { label: string; text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast.success(`${label} copied!`);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="flex items-center gap-2 w-full px-3 py-1.5 text-xs text-left hover:bg-muted rounded transition-colors"
+    >
+      {copied ? (
+        <Check className="h-3 w-3 text-green-500 shrink-0" />
+      ) : (
+        <Copy className="h-3 w-3 shrink-0 text-muted-foreground" />
+      )}
+      <span className="font-medium w-16 shrink-0 text-muted-foreground">{label}</span>
+      <span className="truncate font-mono">{text}</span>
+    </button>
+  );
 }
 
 export default function FileList() {
@@ -71,13 +108,6 @@ export default function FileList() {
     }
   };
 
-  const copyToClipboard = async (file: FileRecord) => {
-    const cdnDomain = "cdn.photo2url.com";
-    const url = `https://${cdnDomain}/${file.r2_key}`;
-    await navigator.clipboard.writeText(url);
-    toast.success("URL copied!");
-  };
-
   const openPreview = (file: FileRecord) => {
     const appUrl = window.location.origin;
     window.open(`${appUrl}/i/${file.id}`, "_blank");
@@ -92,13 +122,13 @@ export default function FileList() {
   if (files.length === 0) {
     return (
       <div className="rounded-lg border border-dashed p-12 text-center">
-        <p className="text-muted-foreground mb-2">No files uploaded yet</p>
+        <p className="text-muted-foreground mb-2">No photos uploaded yet</p>
         <p className="text-sm text-muted-foreground">
           Go to the{" "}
           <a href="/" className="text-primary hover:underline">
             homepage
           </a>{" "}
-          to upload your first image.
+          to upload your first photo.
         </p>
       </div>
     );
@@ -123,55 +153,69 @@ export default function FileList() {
               </tr>
             </thead>
             <tbody>
-              {files.map((file) => (
-                <tr key={file.id} className="border-b last:border-0 hover:bg-muted/30">
-                  <td className="px-4 py-3">
-                    <span className="font-mono text-xs truncate max-w-[200px] block">
-                      {file.original_name}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-muted-foreground">
-                    {formatSize(file.file_size)}
-                  </td>
-                  <td className="px-4 py-3 text-muted-foreground hidden sm:table-cell">
-                    {file.created_at}
-                  </td>
-                  <td className="px-4 py-3 text-muted-foreground hidden md:table-cell">
-                    {file.expires_at ? file.expires_at : "Never"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8"
-                        onClick={() => copyToClipboard(file)}
-                        title="Copy URL"
-                      >
-                        <Copy className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8"
-                        onClick={() => openPreview(file)}
-                        title="Open Preview"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-destructive hover:text-destructive"
-                        onClick={() => setDeleteTarget(file)}
-                        title="Delete"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {files.map((file) => {
+                const url = getFileUrl(file);
+                const markdown = `![${file.original_name}](${url})`;
+                const html = `<img src="${url}" alt="${file.original_name}">`;
+                return (
+                  <tr key={file.id} className="border-b last:border-0 hover:bg-muted/30">
+                    <td className="px-4 py-3">
+                      <span className="font-mono text-xs truncate max-w-[200px] block">
+                        {file.original_name}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-muted-foreground">
+                      {formatSize(file.file_size)}
+                    </td>
+                    <td className="px-4 py-3 text-muted-foreground hidden sm:table-cell">
+                      {file.created_at}
+                    </td>
+                    <td className="px-4 py-3 text-muted-foreground hidden md:table-cell">
+                      {file.expires_at ? file.expires_at : "Never"}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center justify-end gap-1">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                              title="Copy link"
+                              type="button"
+                            >
+                              <Copy className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-80">
+                            <CopyRow label="Direct" text={url} />
+                            <CopyRow label="Markdown" text={markdown} />
+                            <CopyRow label="HTML" text={html} />
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={() => openPreview(file)}
+                          title="Open Preview"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-destructive hover:text-destructive"
+                          onClick={() => setDeleteTarget(file)}
+                          title="Delete"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

@@ -1,5 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { getDictionary } from "@/lib/i18n";
+import { headers } from "next/headers";
 import DashboardClient from "./DashboardClient";
 
 export const runtime = "edge";
@@ -9,13 +11,11 @@ async function getDashboardData(userId: string) {
     const db = (process.env as any).DB;
     if (!db) return null;
 
-    // User plan + storage
     const user = await db
       .prepare("SELECT plan_type, storage_used FROM users WHERE id = ?")
       .bind(userId)
       .first();
 
-    // Today's upload count (count files created today by this user)
     const today = new Date().toISOString().split("T")[0];
     const uploadCount = await db
       .prepare(
@@ -26,7 +26,6 @@ async function getDashboardData(userId: string) {
       .bind(userId, today)
       .first();
 
-    // File count
     const fileCount = await db
       .prepare(
         "SELECT COUNT(*) as count, COALESCE(SUM(file_size), 0) as total_size FROM files WHERE user_id = ?"
@@ -57,7 +56,17 @@ export default async function DashboardPage() {
 
   if (!userId) redirect("/sign-in");
 
+  // Detect locale from middleware header
+  let locale = "en";
+  try {
+    const headersList = await headers();
+    locale = headersList.get("x-locale") || "en";
+  } catch {
+    /* fallback to en */
+  }
+
+  const dict = await getDictionary(locale);
   const data = await getDashboardData(userId);
 
-  return <DashboardClient userId={userId} data={data} />;
+  return <DashboardClient userId={userId} data={data} dict={dict} />;
 }

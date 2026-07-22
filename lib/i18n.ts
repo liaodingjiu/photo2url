@@ -131,6 +131,37 @@ export interface Dictionary {
     solutionBody: string;
     techBody: string;
   };
+  dashboard: {
+    title: string;
+    tabs: { overview: string; profile: string; billing: string };
+    overview: {
+      heading: string;
+      storage: string;
+      resources: string;
+      resourcesDesc: string;
+      dailyUploads: string;
+      dailyReset: string;
+      plan: string;
+      planActive: string;
+      storageUsage: string;
+      myPhotos: string;
+      noFiles: string;
+      noFilesHint: string;
+      uploadCta: string;
+      loading: string;
+    };
+    billing: {
+      heading: string;
+      description: string;
+      currentPlan: string;
+      upgradeDesc: string;
+      active: string;
+      features: string[];
+      storageUsage: string;
+      upgradeTitle: string;
+      upgradeCta: string;
+    };
+  };
   pricing: {
     title: string;
     subtitle: string;

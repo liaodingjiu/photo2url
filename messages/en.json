@@ -58,6 +58,42 @@
     "solutionBody": "Drag and drop, paste from clipboard, or click to browse. As soon as you upload a photo, the link generator returns three formats side by side: a direct image URL, a Markdown snippet, and an HTML embed. Copy the one you need — links work on Facebook, Twitter, Reddit, Discord, GitHub, and anywhere that accepts image URLs.",
     "techBody": "Behind the scenes, every image is stored on Cloudflare R2 and served through a global CDN over HTTPS. The free photo to url plan includes 10 uploads per day at 2 MB per file, stored for 30 days. Paid plans lift all limits and add permanent storage. The interface supports eight languages. Whether you need a PNG to URL converter for a README, a JPG to URL for a blog post, or a quick way to turn a screenshot into a shareable link, Photo2URL is built for that single task."
   },
+  "dashboard": {
+    "title": "Dashboard",
+    "tabs": { "overview": "Overview", "profile": "Profile", "billing": "Billing" },
+    "overview": {
+      "heading": "Welcome back — Here's your workspace overview.",
+      "storage": "Storage",
+      "resources": "My Photos",
+      "resourcesDesc": "Total uploaded photos",
+      "dailyUploads": "Daily Uploads",
+      "dailyReset": "Resets every 24h",
+      "plan": "Plan",
+      "planActive": "Active",
+      "storageUsage": "Storage Usage",
+      "myPhotos": "My Photos",
+      "noFiles": "No photos uploaded yet",
+      "noFilesHint": "Go to the homepage to upload your first photo.",
+      "uploadCta": "Upload",
+      "loading": "Loading..."
+    },
+    "billing": {
+      "heading": "Billing",
+      "description": "Manage your subscription and billing",
+      "currentPlan": "Current plan",
+      "upgradeDesc": "Upgrade for higher limits on file size, daily uploads, storage, and expiry.",
+      "active": "Active",
+      "features": [
+        "10 uploads per day",
+        "2 MB per file",
+        "200 MB storage",
+        "Files kept for 30 days"
+      ],
+      "storageUsage": "Storage usage",
+      "upgradeTitle": "Upgrade your plan",
+      "upgradeCta": "Upgrade to"
+    }
+  },
   "pricing": {
     "title": "Simple Pricing",
     "subtitle": "Pay for what you need. Nothing you don't.",
