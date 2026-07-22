@@ -9,7 +9,8 @@ export default function TeamsSaving({ dict }: { dict: Dictionary }) {
   return (
     <section className="py-14">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-center text-3xl font-bold mb-10">{t.title}</h2>
+        <h2 className="text-center text-3xl font-bold mb-2">{t.title}</h2>
+        <p className="text-center text-muted-foreground mb-10">{t.subtitle}</p>
         <div className="grid gap-6 md:grid-cols-3">
           {t.stats.map((stat, i) => {
             const Icon = ICONS[i] || TrendingUp;

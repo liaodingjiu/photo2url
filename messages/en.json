@@ -10,20 +10,21 @@
   "hero": {
     "title": "Free Photo To URL",
     "titleHighlight": "Photo To URL",
-    "subtitle": "No sign-up required. Upload → Get Link → Embed anywhere."
+    "subtitle": "Ctrl+V to paste. Get a link instantly. No sign-up, no ads.",
+    "trustLine": "Your photos hosted on Cloudflare. No ads."
   },
   "upload": {
     "title": "Free Image to URL Converter",
-    "dragDrop": "Drag & drop, click, or paste screenshot",
-    "pasteHint": "to paste · PNG, JPG, WEBP, GIF",
+    "dragDrop": "Ctrl+V to paste your photo",
+    "pasteHint": "Or drag & drop, or click to browse",
     "formats": "PNG, JPG, WEBP, GIF",
     "maxSize": "Max 2 MB (Free)",
     "uploading": "Uploading...",
     "success": "Upload successful!",
     "failed": "Upload failed",
     "verify": "Please verify you're human to continue uploading",
-    "trySample": "No image? Try one of these.",
-    "tryAnother": "No image? Try one of these.",
+    "trySample": "No photo handy? Try one of these.",
+    "tryAnother": "No photo handy? Try one of these.",
     "dropHere": "Drop to upload",
     "signupTitle": "Want to manage your files?",
     "signupDesc": "Create a free account to view, copy, and delete your uploads anytime.",
@@ -31,24 +32,27 @@
   },
   "howItWorks": {
     "title": "How It Works",
-    "step1": { "title": "1. Upload", "desc": "Drag & drop, click, or paste any image. No sign-up required." },
-    "step2": { "title": "2. Get Link", "desc": "Instantly receive a shareable URL for your image." },
+    "subtitle": "Two steps. No filler.",
+    "step1": { "title": "1. Paste", "desc": "Ctrl+V your photo. No file picker, no sign-up. Done." },
+    "step2": { "title": "2. Copy", "desc": "Direct URL + Markdown + HTML, ready to paste anywhere. No gallery, no ads." },
     "step3": { "title": "3. Embed", "desc": "Paste the link anywhere — Notion, Reddit, GitHub, Jira, and more." }
   },
   "useCases": {
     "title": "Use Cases",
+    "subtitle": "Every platform. One link.",
     "items": [
-      { "title": "Notion", "desc": "Embed images directly in your Notion pages without clunky uploads." },
-      { "title": "GitHub", "desc": "Host README screenshots and issue attachments instantly." },
-      { "title": "Reddit", "desc": "Share images in comments and posts with a direct link." },
-      { "title": "Jira / Linear", "desc": "Attach screenshots to tickets without bloating your project storage." },
-      { "title": "Blogs & Docs", "desc": "Embed images in Markdown files, documentation, and blog posts." },
-      { "title": "Email & Chat", "desc": "Share images in Slack, Discord, email without attachment limits." }
+      { "title": "GitHub", "desc": "Bug reports need screenshots. Paste the markdown here." },
+      { "title": "Notion", "desc": "Notion's image upload is clunky. Ctrl+V here instead." },
+      { "title": "Reddit", "desc": "Reddit comments can't attach images. A direct URL can." },
+      { "title": "Jira / Linear", "desc": "Screenshots on tickets, no storage bloat for the project." },
+      { "title": "Slack / Discord", "desc": "Free Discord caps at 8 MB. Your link doesn't." },
+      { "title": "Blogs & Docs", "desc": "Markdown image syntax needs a real URL. That's all we give you." }
     ]
   },
   "pricing": {
     "title": "Simple Pricing",
-    "subtitle": "Start free. Upgrade when you need more.",
+    "subtitle": "Pay for what you need. Nothing you don't.",
+    "enterpriseHint": "For teams that need their own image CDN and unlimited everything.",
     "plans": {
       "enterprise": { "name": "Enterprise", "cta": "Subscribe Now" },
       "plus": { "name": "Plus", "cta": "Subscribe Now" },
@@ -64,19 +68,25 @@
     ]
   },
   "whyChoose": {
-    "title": "Why people choose Photo To URL",
-    "subtitle": "Free, fast, no account needed — just upload and share.",
+    "title": "Why Choose",
+    "subtitle": "Not just another image host.",
     "items": [
-      { "title": "No sign-up", "desc": "Start uploading in seconds. No email, no password, no hassle." },
-      { "title": "Instant share", "desc": "Upload and get a link immediately. Copy, paste, done." },
-      { "title": "Works everywhere", "desc": "One link works on Notion, GitHub, Reddit, Jira — any platform." }
+      { "title": "Ctrl+V, not a file picker", "desc": "Your photo is already on your clipboard. Paste it. That's it." },
+      { "title": "A link, not a page", "desc": "A raw image URL opens everywhere. No gallery, no comments, no junk." }
     ]
+  },
+  "forEveryPhoto": {
+    "title": "For every photo that matters",
+    "family": { "title": "Family", "desc": "No app to install. One link, everyone sees it." },
+    "team": { "title": "Team", "desc": "Screenshots in tickets. Mockups in chat. Docs everyone can open." },
+    "creator": { "title": "Creator", "desc": "Full-size, no compression. Share your work, not a tiny thumbnail." }
   },
   "teamsSaving": {
     "title": "Teams saving time with Photo To URL",
+    "subtitle": "The numbers speak for themselves.",
     "stats": [
       { "value": "90%", "label": "Faster image sharing" },
-      { "value": "< 10s", "label": "From upload to link" },
+      { "value": "< 10s", "label": "From paste to link" },
       { "value": "5,000+", "label": "Teams already using" }
     ]
   },

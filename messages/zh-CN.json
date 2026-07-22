@@ -6,20 +6,22 @@
   "site": { "name": "photo2url", "tagline": "图片秒转链接" },
   "hero": {
     "title": "图片秒转链接",
-    "subtitle": "无需注册。上传 → 获取链接 → 嵌入任意位置。"
+    "titleHighlight": "秒转链接",
+    "subtitle": "Ctrl+V 粘贴，即刻获取链接。无需注册，没有广告。",
+    "trustLine": "你的照片托管在 Cloudflare 全球网络。无广告。"
   },
   "upload": {
     "title": "免费图片转链接工具",
-    "dragDrop": "拖拽、点击或粘贴截图",
-    "pasteHint": "即可粘贴",
+    "dragDrop": "Ctrl+V 粘贴你的照片",
+    "pasteHint": "或者拖拽、点击上传",
     "formats": "PNG、JPG、WEBP、GIF",
     "maxSize": "最大 2 MB（免费版）",
     "uploading": "上传中...",
     "success": "上传成功！",
     "failed": "上传失败",
     "verify": "请验证您是真人后继续上传",
-    "trySample": "没有图片？试试这张。",
-    "tryAnother": "没有图片？试试这张。",
+    "trySample": "手边没有照片？试试这些示例。",
+    "tryAnother": "手边没有照片？试试这些示例。",
     "dropHere": "松开以上传",
     "signupTitle": "想管理您的文件吗？",
     "signupDesc": "创建免费账户，随时查看、复制和删除您的上传文件。",
@@ -27,24 +29,27 @@
   },
   "howItWorks": {
     "title": "使用步骤",
-    "step1": { "title": "1. 上传", "desc": "拖拽、点击或粘贴任意图片，无需注册。" },
-    "step2": { "title": "2. 获取链接", "desc": "即刻获得图片的可分享链接。" },
+    "subtitle": "两步到位。没有废话。",
+    "step1": { "title": "1. 粘贴", "desc": "Ctrl+V 粘贴你的照片。无需文件选择器，无需注册。完成。" },
+    "step2": { "title": "2. 复制", "desc": "直链 + Markdown + HTML，复制即用。没有图库页面，没有广告。" },
     "step3": { "title": "3. 嵌入", "desc": "将链接粘贴到 Notion、Reddit、GitHub、Jira 等任意平台。" }
   },
   "useCases": {
     "title": "应用场景",
+    "subtitle": "全平台适用。一个链接足够。",
     "items": [
-      { "title": "Notion", "desc": "直接将图片嵌入 Notion 页面，告别繁琐上传。" },
-      { "title": "GitHub", "desc": "即时托管 README 截图和 Issue 附件。" },
-      { "title": "Reddit", "desc": "在评论和帖子中直接分享图片链接。" },
-      { "title": "Jira / Linear", "desc": "在工单中附加截图，不占用项目存储空间。" },
-      { "title": "博客与文档", "desc": "在 Markdown 文件、文档和博文中嵌入图片。" },
-      { "title": "邮件与聊天", "desc": "在 Slack、Discord、邮件中分享图片，不受附件大小限制。" }
+      { "title": "GitHub", "desc": "Bug 报告需要截图。把 Markdown 贴过来。" },
+      { "title": "Notion", "desc": "Notion 的图片上传太慢了。试试 Ctrl+V。" },
+      { "title": "Reddit", "desc": "Reddit 评论不能贴图。一个直链就可以。" },
+      { "title": "Jira / Linear", "desc": "工单贴截图，不占项目存储。" },
+      { "title": "Slack / Discord", "desc": "免费 Discord 限 8 MB。你的链接没有限制。" },
+      { "title": "博客与文档", "desc": "Markdown 图片语法只需要一个真实 URL。我们给你。" }
     ]
   },
   "pricing": {
     "title": "简单定价",
-    "subtitle": "免费开始，需要更多时再升级。",
+    "subtitle": "只为需要的付费。其余不用。",
+    "enterpriseHint": "为需要独立图片 CDN 和无限制使用的团队打造。",
     "plans": {
       "enterprise": { "name": "企业版", "cta": "立即订阅" },
       "plus": { "name": "Plus", "cta": "立即订阅" },
@@ -60,19 +65,25 @@
     ]
   },
   "whyChoose": {
-    "title": "为什么选择 Photo To URL",
-    "subtitle": "免费、快速、无需注册——上传即分享。",
+    "title": "为什么选择我们",
+    "subtitle": "不止是另一个图床。",
     "items": [
-      { "title": "无需注册", "desc": "几秒钟开始使用，无需邮箱、无需密码。" },
-      { "title": "即时分享", "desc": "上传后立即获取链接，复制粘贴即可。" },
-      { "title": "全平台兼容", "desc": "一个链接适用于 Notion、GitHub、Reddit、Jira 等任何平台。" }
+      { "title": "Ctrl+V，而不是文件选择器", "desc": "你的照片已经在剪贴板里了。粘贴就行。" },
+      { "title": "一个链接，而不是一个页面", "desc": "原始图片 URL，哪里都能打开。没有图库，没有评论区，没有垃圾。" }
     ]
+  },
+  "forEveryPhoto": {
+    "title": "为每一张重要的照片",
+    "family": { "title": "家庭", "desc": "无需安装 App。一个链接，全家都能看。" },
+    "team": { "title": "团队", "desc": "工单贴截图。聊天发设计稿。文档所有人都能打开。" },
+    "creator": { "title": "创作者", "desc": "全尺寸原图，无压缩。分享你的作品，不是一张小缩略图。" }
   },
   "teamsSaving": {
     "title": "团队使用 Photo To URL 节省时间",
+    "subtitle": "数字自己会说话。",
     "stats": [
       { "value": "90%", "label": "图片分享速度提升" },
-      { "value": "<10 秒", "label": "上传到获取链接" },
+      { "value": "< 10 秒", "label": "从粘贴到链接" },
       { "value": "5,000+", "label": "团队已在使用" }
     ]
   },

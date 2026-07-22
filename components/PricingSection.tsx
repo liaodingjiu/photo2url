@@ -115,7 +115,7 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
                     })}
                   </ul>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="flex-col gap-2">
                   <Button
                     className="w-full"
                     variant={plan.key === "Enterprise" ? "default" : "outline"}
@@ -124,6 +124,11 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
                   >
                     {meta.cta}
                   </Button>
+                  {plan.key === "Enterprise" && (
+                    <p className="text-xs text-muted-foreground text-center">
+                      {t.enterpriseHint}
+                    </p>
+                  )}
                 </CardFooter>
               </Card>
             );

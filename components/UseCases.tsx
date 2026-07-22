@@ -18,7 +18,7 @@ export default function UseCases({ dict }: { dict: Dictionary }) {
       <div className="mx-auto max-w-6xl px-4">
         <h2 className="text-center text-3xl font-bold mb-4">{t.title}</h2>
         <p className="text-center text-muted-foreground mb-12">
-          One link works on every platform. No formatting issues.
+          {t.subtitle}
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {t.items.map((item, i) => {

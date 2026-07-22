@@ -79,7 +79,7 @@ export function detectLocale(acceptLanguage: string | null): Locale {
 export interface Dictionary {
   meta: { title: string; description: string };
   site: { name: string; tagline: string };
-  hero: { title: string; subtitle: string; titleHighlight?: string };
+  hero: { title: string; subtitle: string; titleHighlight?: string; trustLine: string };
   upload: {
     title: string;
     dragDrop: string;
@@ -99,17 +99,26 @@ export interface Dictionary {
   };
   howItWorks: {
     title: string;
+    subtitle: string;
     step1: { title: string; desc: string };
     step2: { title: string; desc: string };
     step3: { title: string; desc: string };
   };
   useCases: {
     title: string;
+    subtitle: string;
     items: { title: string; desc: string }[];
+  };
+  forEveryPhoto: {
+    title: string;
+    family: { title: string; desc: string };
+    team: { title: string; desc: string };
+    creator: { title: string; desc: string };
   };
   pricing: {
     title: string;
     subtitle: string;
+    enterpriseHint: string;
     plans: {
       enterprise: { name: string; cta: string };
       plus: { name: string; cta: string };
@@ -129,6 +138,7 @@ export interface Dictionary {
   };
   teamsSaving: {
     title: string;
+    subtitle: string;
     stats: { value: string; label: string }[];
   };
   partners: {

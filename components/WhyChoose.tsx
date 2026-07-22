@@ -1,7 +1,7 @@
-import { UserCheck, Zap, Globe } from "lucide-react";
+import { ClipboardPaste, Image } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 
-const ICONS = [UserCheck, Zap, Globe];
+const ICONS = [ClipboardPaste, Image];
 
 export default function WhyChoose({ dict }: { dict: Dictionary }) {
   const t = dict.whyChoose;
@@ -9,11 +9,11 @@ export default function WhyChoose({ dict }: { dict: Dictionary }) {
   return (
     <section className="py-14 bg-muted/20">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-center text-3xl font-bold mb-4">{t.title}</h2>
+        <h2 className="text-center text-3xl font-bold mb-2">{t.title}</h2>
         <p className="text-center text-muted-foreground mb-10">{t.subtitle}</p>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 max-w-2xl mx-auto">
           {t.items.map((item, i) => {
-            const Icon = ICONS[i] || Zap;
+            const Icon = ICONS[i] || ClipboardPaste;
             return (
               <div key={item.title} className="text-center">
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">

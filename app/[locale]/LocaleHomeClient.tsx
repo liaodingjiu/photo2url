@@ -8,6 +8,7 @@ import HowItWorks from "@/components/HowItWorks";
 import WhyChoose from "@/components/WhyChoose";
 import UseCases from "@/components/UseCases";
 import TeamsSaving from "@/components/TeamsSaving";
+import ForEveryPhoto from "@/components/ForEveryPhoto";
 import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
 import LanguageSelector from "@/components/LanguageSelector";
@@ -62,11 +63,16 @@ export default function LocaleHomeClient({
               )}
             </div>
           </div>
+
+          <p className="mt-4 text-center text-xs text-muted-foreground">
+            {dict.hero.trustLine}
+          </p>
         </section>
 
         <Separator />
 
         <HowItWorks dict={dict} />
+        <ForEveryPhoto dict={dict} />
         <WhyChoose dict={dict} />
         <UseCases dict={dict} />
         <TeamsSaving dict={dict} />
