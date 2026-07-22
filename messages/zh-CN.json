@@ -168,6 +168,18 @@
     "team": { "title": "团队", "desc": "工单贴截图。聊天发设计稿。文档所有人都能打开。" },
     "creator": { "title": "创作者", "desc": "全尺寸原图，无压缩。分享你的作品，不是一张小缩略图。" }
   },
+  "featureHighlights": {
+    "title": "功能亮点",
+    "subtitle": "清晰至上：更少摩擦，更多分享。",
+    "items": [
+      { "title": "剪贴板友好", "desc": "从剪贴板直接粘贴截图。无需文件选择器，不用翻找文件。" },
+      { "title": "CDN 高速链接", "desc": "通过全球 CDN 提供链接。图片在任何地方都能快速加载。" },
+      { "title": "一键复制", "desc": "直链、Markdown、HTML — 一键复制任意格式。" },
+      { "title": "安全托管", "desc": "文件存储在 Cloudflare R2 上，传输中和静态时均加密。" },
+      { "title": "无需注册", "desc": "免费试用：每天 10 次上传，单文件 2 MB。无需注册。" },
+      { "title": "干净的直链", "desc": "可预测的 URL，以 .jpg、.png、.webp 结尾 — 没有包装页。" }
+    ]
+  },
   "teamsSaving": {
     "title": "团队使用 Photo To URL 节省时间",
     "subtitle": "数字自己会说话。",

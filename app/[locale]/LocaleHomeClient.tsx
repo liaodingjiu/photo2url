@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import UploadZone from "@/components/UploadZone";
 import type { UploadResult } from "@/components/UploadZone";
 import HowItWorks from "@/components/HowItWorks";
+import FeatureHighlights from "@/components/FeatureHighlights";
 import WhyChoose from "@/components/WhyChoose";
 import UseCases from "@/components/UseCases";
 import TeamsSaving from "@/components/TeamsSaving";
@@ -73,6 +74,7 @@ export default function LocaleHomeClient({
 
         <Separator />
 
+        <FeatureHighlights dict={dict} />
         <HowItWorks dict={dict} />
         <ForEveryPhoto dict={dict} />
         <WhyChoose dict={dict} />

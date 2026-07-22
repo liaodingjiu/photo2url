@@ -171,6 +171,18 @@
     "team": { "title": "Team", "desc": "Screenshots in tickets. Mockups in chat. Docs everyone can open." },
     "creator": { "title": "Creator", "desc": "Full-size, no compression. Share your work, not a tiny thumbnail." }
   },
+  "featureHighlights": {
+    "title": "Feature Highlights",
+    "subtitle": "Clarity first: less friction, more sharing.",
+    "items": [
+      { "title": "Clipboard-ready", "desc": "Paste screenshots from clipboard instantly. No file picker, no hunting for files." },
+      { "title": "Fast CDN links", "desc": "Links served through global CDN. Images load fast everywhere." },
+      { "title": "One-click copy", "desc": "Direct URL, Markdown, HTML — copy any format in one click." },
+      { "title": "Secure hosting", "desc": "Files on Cloudflare R2 with encryption at rest and in transit." },
+      { "title": "No sign-up needed", "desc": "Try free: 10 uploads/day, 2 MB per file. No registration." },
+      { "title": "Clean direct URLs", "desc": "Predictable URLs ending in .jpg, .png, .webp — no wrapper pages." }
+    ]
+  },
   "teamsSaving": {
     "title": "Teams saving time with Photo To URL",
     "subtitle": "The numbers speak for themselves.",
