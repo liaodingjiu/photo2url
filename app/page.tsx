@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { auth } from "@clerk/nextjs/server";
-import { getDictionary, getAlternateLinks, locales } from "@/lib/i18n";
+import { getDictionary, getAlternateLinks } from "@/lib/i18n";
 import LocaleHomeClient from "./[locale]/LocaleHomeClient";
 
 export const runtime = "edge";
