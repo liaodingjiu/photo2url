@@ -48,12 +48,13 @@ export default clerkMiddleware(async (auth, req) => {
     await auth.protect();
   }
 
-  // Skip API, static, sign-in/up routes
+  // Skip API, static, sign-in/up, dashboard routes (no locale)
   if (
     pathname.startsWith("/api/") ||
     pathname.startsWith("/_next/") ||
     pathname.startsWith("/sign-in") ||
     pathname.startsWith("/sign-up") ||
+    pathname.startsWith("/dashboard") ||
     pathname.startsWith("/i/") ||
     pathname.includes(".")
   ) {
