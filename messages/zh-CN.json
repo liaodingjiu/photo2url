@@ -6,8 +6,7 @@
   "site": { "name": "photo2url", "tagline": "图片秒转链接" },
   "hero": {
     "title": "图片秒转链接",
-    "subtitle": "无需注册。上传 → 获取链接 → 嵌入任意位置。",
-    "trustTags": "永久免费 · 无需注册 · 即时链接"
+    "subtitle": "无需注册。上传 → 获取链接 → 嵌入任意位置。"
   },
   "upload": {
     "title": "免费图片转链接工具",

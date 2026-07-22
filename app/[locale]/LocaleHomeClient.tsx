@@ -44,9 +44,6 @@ export default function LocaleHomeClient({
             <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
               {dict.hero.subtitle}
             </p>
-            <p className="mt-2 text-sm text-muted-foreground/60">
-              {dict.hero.trustTags}
-            </p>
           </div>
           <div
             id="upload-zone"

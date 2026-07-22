@@ -79,7 +79,7 @@ export function detectLocale(acceptLanguage: string | null): Locale {
 export interface Dictionary {
   meta: { title: string; description: string };
   site: { name: string; tagline: string };
-  hero: { title: string; subtitle: string; trustTags: string };
+  hero: { title: string; subtitle: string };
   upload: {
     title: string;
     dragDrop: string;
