@@ -19,7 +19,7 @@ export interface UploadResult {
 
 import type { Dictionary } from "@/lib/i18n";
 
-const SAMPLE_URL = "https://cdn.photo2url.com/demo/sample-photo.png";
+const SAMPLE_URL = "/sample-photo.png";
 
 export default function UploadZone({
   dict,
