@@ -155,7 +155,8 @@ export default function UploadZone({
     try {
       const res = await fetch(SAMPLE_URL);
       const blob = await res.blob();
-      const file = new File([blob], "sample-photo.png", { type: "image/png" });
+      const ext = blob.type.split("/")[1] || "png";
+      const file = new File([blob], `sample-photo.${ext}`, { type: blob.type });
       await handleFile(file);
     } catch {
       toast.error("Failed to load sample image");

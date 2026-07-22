@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)file:///Users/judy/Downloads/gemini-code-1784706574143.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  
+  body {
+    background: #1e1e24;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  /* GIF Canvas Frame (640x800) */
+  .canvas {
+    width: 640px;
+    height: 800px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+
+  /* Shared Scene Layer */
+  .scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: loopTimeline 7s infinite ease-in-out;
+  }
+
+  /* Color Palette */
+  :root {
+    --accent: #0070f3;
+    --text-dark: #111827;
+    --text-muted: #6b7280;
+    --bg-light: #f9fafb;
+  }
+
+  /* --- MOCK PHOTO UI --- */
+  .photo-card {
+    width: 320px;
+    height: 380px;
+    background: #f3f4f6;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    position: relative;
+    border: 1px solid #e5e7eb;
+  }
+
+  /* CSS Mock Photography (Asian Woman with DSLR) */
+  .photo-content {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #fef3c7 0%, #fff 100%);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .avatar-head {
+    width: 110px;
+    height: 130px;
+    background: #f87171;
+    border-radius: 50% 50% 45% 45%;
+    position: absolute;
+    top: 70px;
+  }
+  
+  .avatar-face {
+    width: 80px;
+    height: 90px;
+    background: #fde047;
+    border-radius: 40px;
+    position: absolute;
+    top: 90px;
+  }
+
+  .camera-body {
+    width: 100px;
+    height: 65px;
+    background: #1f2937;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 110px;
+    z-index: 5;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+
+  .camera-lens {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #374151;
+    border: 4px solid #6b7280;
+    margin: 10px auto;
+  }
+
+  /* --- TEXT OVERLAYS --- */
+  .caption {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-top: 32px;
+    letter-spacing: -0.5px;
+  }
+
+  /* --- SCENE SPECIFICS --- */
+
+  /* Scene 1: Upload */
+  .s1 { animation-name: scene1; }
+
+  /* Scene 2: Uploading Progress */
+  .s2 { animation-name: scene2; }
+  .progress-bar-bg {
+    width: 260px;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 100px;
+    margin-top: 24px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    animation: fillProgress 1s linear infinite;
+  }
+
+  /* Scene 3: Link Ready */
+  .s3 { animation-name: scene3; }
+  .url-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-light);
+    border: 1.5px solid #d1d5db;
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin-top: 24px;
+    font-size: 16px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .checkmark {
+    width: 22px;
+    height: 22px;
+    background: #10b981;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  /* Scene 4: Embed Everywhere */
+  .s4 { animation-name: scene4; }
+  .platform-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .platform-card {
+    width: 220px;
+    height: 180px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .platform-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+  .platform-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background: #e5e7eb;
+  }
+  .mini-embed {
+    width: 100%;
+    flex: 1;
+    background: #3b82f615;
+    border: 1px dashed var(--accent);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  /* Scene 5: End Card Logo */
+  .s5 { animation-name: scene5; }
+  .logo {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--text-dark);
+    letter-spacing: -1px;
+  }
+  .logo span { color: var(--accent); }
+  .tagline {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    text-align: center;
+  }
+  .final-url {
+    margin-top: 24px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    background: #eff6ff;
+    padding: 10px 24px;
+    border-radius: 100px;
+  }
+
+  /* --- TIMELINE ANIMATIONS (Total 7s Loop) --- */
+  /* S1: 0s - 1.5s (21%) */
+  /* S2: 1.5s - 2.5s (35%) */
+  /* S3: 2.5s - 4.5s (64%) */
+  /* S4: 4.5s - 6.0s (85%) */
+  /* S5: 6.0s - 7.0s (100%) */
+
+  @keyframes scene1 {
+    0%, 20% { opacity: 1; transform: scale(1); }
+    23%, 100% { opacity: 0; transform: scale(0.95); }
+  }
+
+  @keyframes scene2 {
+    0%, 21% { opacity: 0; transform: translateY(10px); }
+    24%, 34% { opacity: 1; transform: translateY(0); }
+    37%, 100% { opacity: 0; transform: translateY(-10px); }
+  }
+
+  @keyframes fillProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+
+  @keyframes scene3 {
+    0%, 35% { opacity: 0; transform: scale(0.95); }
+    38%, 62% { opacity: 1; transform: scale(1); }
+    65%, 100% { opacity: 0; transform: scale(1.05); }
+  }
+
+  @keyframes scene4 {
+    0%, 63% { opacity: 0; transform: translateY(10px); }
+    66%, 83% { opacity: 1; transform: translateY(0); }
+    86%, 100% { opacity: 0; transform: translateY(-10px); }
+  }
+
+  @keyframes scene5 {
+    0%, 84% { opacity: 0; transform: scale(0.95); }
+    87%, 97% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="canvas">
+
+  <div class="scene s1">
+    <div class="photo-card">
+      <div class="photo-content">
+        <div class="avatar-head"></div>
+        <div class="avatar-face"></div>
+        <div class="camera-body"><div class="camera-lens"></div></div>
+      </div>
+    </div>
+    <div class="caption">Upload your photo</div>
+  </div>
+
+  <div class="scene s2">
+    <div class="photo-card" style="transform: scale(0.85);">
+      <div class="photo-content">
+        <div class="avatar-head"></div>
+        <div class="avatar-face"></div>
+        <div class="camera-body"><div class="camera-lens"></div></div>
+      </div>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
+    <div class="caption" style="font-size: 22px;">Getting your link...</div>
+  </div>
+
+  <div class="scene s3">
+    <div class="photo-card" style="height: 280px; width: 280px;">
+      <div class="photo-content">
+        <div class="avatar-head"></div>
+        <div class="avatar-face"></div>
+        <div class="camera-body"><div class="camera-lens"></div></div>
+      </div>
+    </div>
+    <div class="url-box">
+      <span class="checkmark">✓</span>
+      https://photo2url.com/your-photo
+    </div>
+    <div class="caption">Link ready!</div>
+  </div>
+
+  <div class="scene s4">
+    <div class="caption" style="margin-top: 0; margin-bottom: 12px;">Embed Anywhere</div>
+    <div class="platform-grid">
+      <div class="platform-card">
+        <div class="platform-header"><div class="platform-icon" style="background:#000;"></div> Notion</div>
+        <div class="mini-embed">🖼️ Photo Embedded</div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-header"><div class="platform-icon" style="background:#ff4500;"></div> Reddit</div>
+        <div class="mini-embed">🖼️ Photo Embedded</div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-header"><div class="platform-icon" style="background:#24292e;"></div> GitHub</div>
+        <div class="mini-embed">🖼️ Photo Embedded</div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-header"><div class="platform-icon" style="background:#0052cc;"></div> Jira</div>
+        <div class="mini-embed">🖼️ Photo Embedded</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scene s5">
+    <div class="logo">photo<span>2url</span></div>
+    <div class="tagline">Free Photo To URL<br>Upload → Get Link → Embed anywhere</div>
+    <div class="final-url">photo2url.com</div>
+  </div>
+
+</div>
+
+
+</body></html>
