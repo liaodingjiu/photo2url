@@ -1,4 +1,4 @@
-import { ClipboardPaste, Copy } from "lucide-react";
+import { ClipboardPaste, Copy, Link } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 
 export default function HowItWorks({ dict }: { dict: Dictionary }) {
@@ -6,6 +6,7 @@ export default function HowItWorks({ dict }: { dict: Dictionary }) {
   const steps = [
     { icon: ClipboardPaste, title: t.step1.title, description: t.step1.desc },
     { icon: Copy, title: t.step2.title, description: t.step2.desc },
+    { icon: Link, title: t.step3.title, description: t.step3.desc },
   ];
 
   return (
@@ -13,7 +14,7 @@ export default function HowItWorks({ dict }: { dict: Dictionary }) {
       <div className="mx-auto max-w-6xl px-4">
         <h2 className="text-center text-3xl font-bold mb-2">{t.title}</h2>
         <p className="text-center text-muted-foreground mb-8">{t.subtitle}</p>
-        <div className="grid gap-6 md:grid-cols-2 max-w-2xl mx-auto">
+        <div className="grid gap-6 md:grid-cols-3 max-w-3xl mx-auto">
           {steps.map((step, index) => (
             <div key={step.title} className="text-center">
               <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">

@@ -285,6 +285,9 @@ export default function UploadZone({
               <div className="rounded-full bg-primary/10 p-4">
                 <Upload className="h-10 w-10 text-primary" />
               </div>
+              <span className="inline-block rounded-full bg-primary px-5 py-1.5 text-sm font-semibold text-primary-foreground">
+                Upload
+              </span>
               {dragActive ? (
                 <p className="font-semibold text-base text-primary">{u.dropHere}</p>
               ) : (

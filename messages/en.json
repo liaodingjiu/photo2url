@@ -15,10 +15,10 @@
   },
   "upload": {
     "title": "Free Image to URL Converter",
-    "dragDrop": "Ctrl+V to paste your photo",
+    "dragDrop": "or Ctrl+V to paste your photo",
     "pasteHint": "Or drag & drop, or click to browse",
     "formats": "PNG, JPG, WEBP, GIF",
-    "maxSize": "Max 2 MB (Free)",
+    "maxSize": "Max 2 MB · 10/day (Free)",
     "uploading": "Uploading...",
     "success": "Upload successful!",
     "failed": "Upload failed",
@@ -31,11 +31,11 @@
     "signupCta": "Create free account"
   },
   "howItWorks": {
-    "title": "How It Works",
-    "subtitle": "Two steps. No filler.",
-    "step1": { "title": "1. Paste", "desc": "Ctrl+V your photo. No file picker, no sign-up. Done." },
-    "step2": { "title": "2. Copy", "desc": "Direct URL + Markdown + HTML, ready to paste anywhere. No gallery, no ads." },
-    "step3": { "title": "3. Embed", "desc": "Paste the link anywhere — Notion, Reddit, GitHub, Jira, and more." }
+    "title": "How to Convert Photo to URL",
+    "subtitle": "Three steps — done in seconds.",
+    "step1": { "title": "1. Upload", "desc": "Upload or Ctrl+V your photo — a shareable photo URL link is generated instantly." },
+    "step2": { "title": "2. Copy", "desc": "Copy the direct image URL, Markdown, or HTML — three formats, one click." },
+    "step3": { "title": "3. Embed", "desc": "Paste your photo link anywhere — GitHub, Notion, Reddit, Jira, and more." }
   },
   "useCases": {
     "title": "Use Cases",
@@ -158,11 +158,12 @@
     ]
   },
   "whyChoose": {
-    "title": "Why Choose",
-    "subtitle": "Not just another image host.",
+    "title": "A Photo to URL Converter, Not a Social Platform",
+    "subtitle": "Your image link should just work. Here's how we're different.",
     "items": [
-      { "title": "Ctrl+V, not a file picker", "desc": "Your photo is already on your clipboard. Paste it. That's it." },
-      { "title": "A link, not a page", "desc": "A raw image URL opens everywhere. No gallery, no comments, no junk." }
+      { "title": "Direct Link, Not a Gallery Page", "desc": "Most image hosts wrap your upload in a gallery page with ads and comments. We don't — your photo URL ends in .jpg, not a /gallery slug. Paste it anywhere, the image renders directly." },
+      { "title": "No Account, No Ads", "desc": "Most free image hosts show ads to your viewers. We don't — get a clean direct image URL without sign-up, without redirects, without 'view on our site' pages." },
+      { "title": "Three Formats, One Copy", "desc": "Markdown for GitHub, HTML for blogs, direct URL for everything else. One upload generates all three — copy the format your platform actually expects." }
     ]
   },
   "forEveryPhoto": {
@@ -173,14 +174,14 @@
   },
   "featureHighlights": {
     "title": "Feature Highlights",
-    "subtitle": "Clarity first: less friction, more sharing.",
+    "subtitle": "Everything you need in a photo to url converter — no compromises.",
     "items": [
-      { "title": "Clipboard-ready", "desc": "Paste screenshots from clipboard instantly. No file picker, no hunting for files." },
-      { "title": "Fast CDN links", "desc": "Links served through global CDN. Images load fast everywhere." },
-      { "title": "One-click copy", "desc": "Direct URL, Markdown, HTML — copy any format in one click." },
-      { "title": "Secure hosting", "desc": "Files on Cloudflare R2 with encryption at rest and in transit." },
-      { "title": "No sign-up needed", "desc": "Try free: 10 uploads/day, 2 MB per file. No registration." },
-      { "title": "Clean direct URLs", "desc": "Predictable URLs ending in .jpg, .png, .webp — no wrapper pages." }
+      { "title": "Paste → Link", "desc": "Paste a screenshot from clipboard and get a photo URL link instantly — no file picker, no drag-and-drop. The fastest way to convert photo to url." },
+      { "title": "Global CDN", "desc": "Every photo link is served through Cloudflare's worldwide CDN. Image URLs load in under 200ms anywhere, on any device." },
+      { "title": "All 3 Formats", "desc": "One upload, three outputs: direct image URL, Markdown snippet, HTML embed. Copy your photo link in the format you actually need." },
+      { "title": "Encrypted at Rest", "desc": "Photo URLs hosted on Cloudflare R2 with TLS in transit and server-side encryption at rest. Your image links stay private." },
+      { "title": "Free · No Sign-Up", "desc": "Convert photo to link without an account — 10 free image to URL conversions per day, 2 MB per file, 30-day storage. No credit card." },
+      { "title": "Raw .jpg URLs", "desc": "No wrapper pages, no ads, no galleries. Every direct photo link ends in the original extension — .jpg, .png, .webp, .gif. Clean image URLs that work everywhere." }
     ]
   },
   "teamsSaving": {

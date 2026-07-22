@@ -12,10 +12,10 @@
   },
   "upload": {
     "title": "免费图片转链接工具",
-    "dragDrop": "Ctrl+V 粘贴你的照片",
+    "dragDrop": "或 Ctrl+V 粘贴你的照片",
     "pasteHint": "或者拖拽、点击上传",
     "formats": "PNG、JPG、WEBP、GIF",
-    "maxSize": "最大 2 MB（免费版）",
+    "maxSize": "最大 2 MB · 每天 10 次（免费版）",
     "uploading": "上传中...",
     "success": "上传成功！",
     "failed": "上传失败",
@@ -28,11 +28,11 @@
     "signupCta": "创建免费账户"
   },
   "howItWorks": {
-    "title": "使用步骤",
-    "subtitle": "两步到位。没有废话。",
-    "step1": { "title": "1. 粘贴", "desc": "Ctrl+V 粘贴你的照片。无需文件选择器，无需注册。完成。" },
-    "step2": { "title": "2. 复制", "desc": "直链 + Markdown + HTML，复制即用。没有图库页面，没有广告。" },
-    "step3": { "title": "3. 嵌入", "desc": "将链接粘贴到 Notion、Reddit、GitHub、Jira 等任意平台。" }
+    "title": "如何将照片转为链接",
+    "subtitle": "三步搞定，几秒钟的事。",
+    "step1": { "title": "1. 上传", "desc": "上传或 Ctrl+V 粘贴照片，即刻生成可分享的照片链接。" },
+    "step2": { "title": "2. 复制", "desc": "一键复制图片直链、Markdown 或 HTML，三种格式任选。" },
+    "step3": { "title": "3. 嵌入", "desc": "将照片链接粘贴到任何地方——GitHub、Notion、Reddit、Jira 等。" }
   },
   "useCases": {
     "title": "应用场景",
@@ -155,11 +155,12 @@
     ]
   },
   "whyChoose": {
-    "title": "为什么选择我们",
-    "subtitle": "不止是另一个图床。",
+    "title": "图片转链接工具，不是社交平台",
+    "subtitle": "你的图片链接应该简单好用。以下是我们的不同之处。",
     "items": [
-      { "title": "Ctrl+V，而不是文件选择器", "desc": "你的照片已经在剪贴板里了。粘贴就行。" },
-      { "title": "一个链接，而不是一个页面", "desc": "原始图片 URL，哪里都能打开。没有图库，没有评论区，没有垃圾。" }
+      { "title": "直链，而不是相册页", "desc": "大多数图床把你的上传包装成带广告和评论的相册页。我们不会——你的图片链接以 .jpg 结尾，不是 /gallery/xxx。粘贴到任何地方，图片直接显示。" },
+      { "title": "无需账号，没有广告", "desc": "大多数免费图床给观看者展示广告。我们不会——获得干净的图片直链，无需注册，无跳转，无'到我们网站查看'页面。" },
+      { "title": "一次上传，三种格式", "desc": "Markdown 给 GitHub、HTML 给博客、直链给其他所有场景。一次上传生成三种格式——按你的平台需求复制即可。" }
     ]
   },
   "forEveryPhoto": {
@@ -170,14 +171,14 @@
   },
   "featureHighlights": {
     "title": "功能亮点",
-    "subtitle": "清晰至上：更少摩擦，更多分享。",
+    "subtitle": "一个专业的图片转链接工具，该有的都有。",
     "items": [
-      { "title": "剪贴板友好", "desc": "从剪贴板直接粘贴截图。无需文件选择器，不用翻找文件。" },
-      { "title": "CDN 高速链接", "desc": "通过全球 CDN 提供链接。图片在任何地方都能快速加载。" },
-      { "title": "一键复制", "desc": "直链、Markdown、HTML — 一键复制任意格式。" },
-      { "title": "安全托管", "desc": "文件存储在 Cloudflare R2 上，传输中和静态时均加密。" },
-      { "title": "无需注册", "desc": "免费试用：每天 10 次上传，单文件 2 MB。无需注册。" },
-      { "title": "干净的直链", "desc": "可预测的 URL，以 .jpg、.png、.webp 结尾 — 没有包装页。" }
+      { "title": "粘贴即得链接", "desc": "从剪贴板粘贴截图，立刻获得照片链接——无需文件选择器，无需拖拽。最快的图片转 URL 方式。" },
+      { "title": "全球 CDN 加速", "desc": "每张图片链接都通过 Cloudflare 全球 CDN 分发。图片 URL 在任何地区、任何设备上都能在 200 毫秒内加载。" },
+      { "title": "三种格式一键复制", "desc": "一次上传，三种输出：图片直链、Markdown 代码、HTML 标签。按需复制你的图片链接格式。" },
+      { "title": "端到端加密存储", "desc": "照片链接托管在 Cloudflare R2，传输层 TLS 加密 + 服务端静态加密。你的图片链接保持私密。" },
+      { "title": "免费 · 无需注册", "desc": "无需账号即可将图片转为链接——每天 10 次免费图片转 URL，单文件 2 MB，保存 30 天。无需信用卡。" },
+      { "title": ".jpg 原生直链", "desc": "无包装页、无广告、无相册。每条图片直链保留原始扩展名——.jpg、.png、.webp、.gif。干净的图片 URL，随处可用。" }
     ]
   },
   "teamsSaving": {

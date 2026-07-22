@@ -40,7 +40,7 @@ export default function LocaleHomeClient({
       <Navbar dict={dict} />
       <main className="flex-1">
         {/* Hero + Upload */}
-        <section className="py-8 lg:py-12">
+        <section className="flex flex-col justify-center min-h-[calc(100vh-64px)] py-8 lg:py-12">
           <div
             id="upload-zone"
             className="px-4 scroll-mt-20 target:ring-2 target:ring-primary/50 target:rounded-xl transition-all duration-700"
@@ -66,18 +66,14 @@ export default function LocaleHomeClient({
               )}
             </div>
           </div>
-
-          <p className="mt-4 text-center text-xs text-muted-foreground">
-            {dict.hero.trustLine}
-          </p>
         </section>
 
         <Separator />
 
-        <FeatureHighlights dict={dict} />
         <HowItWorks dict={dict} />
         <ForEveryPhoto dict={dict} />
         <WhyChoose dict={dict} />
+        <FeatureHighlights dict={dict} />
         <UseCases dict={dict} />
         <TeamsSaving dict={dict} />
         <PricingSection dict={dict} />
