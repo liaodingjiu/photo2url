@@ -1,7 +1,7 @@
 export default function DemoImage({ variant = "demo" }: { variant?: "demo" | "hidden" }) {
   return (
     <div
-      className={`w-full lg:w-80 shrink-0 transition-all duration-500 ${
+      className={`w-full max-w-xs mx-auto lg:w-80 lg:max-w-none shrink-0 transition-all duration-500 ${
         variant === "hidden" ? "opacity-0 !w-0 overflow-hidden" : ""
       }`}
     >

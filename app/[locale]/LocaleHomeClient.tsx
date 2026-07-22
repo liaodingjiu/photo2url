@@ -10,6 +10,8 @@ import UseCases from "@/components/UseCases";
 import TeamsSaving from "@/components/TeamsSaving";
 import ForEveryPhoto from "@/components/ForEveryPhoto";
 import PricingSection from "@/components/PricingSection";
+import HomeFaq from "@/components/HomeFaq";
+import AboutPhoto2Url from "@/components/AboutPhoto2Url";
 import Footer from "@/components/Footer";
 import LanguageSelector from "@/components/LanguageSelector";
 import PostUploadSignup from "@/components/PostUploadSignup";
@@ -77,6 +79,8 @@ export default function LocaleHomeClient({
         <UseCases dict={dict} />
         <TeamsSaving dict={dict} />
         <PricingSection dict={dict} />
+        <HomeFaq dict={dict} />
+        <AboutPhoto2Url dict={dict} />
       </main>
 
       <LanguageSelector currentLocale={locale} />

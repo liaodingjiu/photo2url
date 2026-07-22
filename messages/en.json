@@ -49,6 +49,15 @@
       { "title": "Blogs & Docs", "desc": "Markdown image syntax needs a real URL. That's all we give you." }
     ]
   },
+  "about": {
+    "title": "About Photo2URL",
+    "lead": "Photo2URL is a free online photo to url converter — upload a PNG, JPG, WEBP, or GIF and get a photo to url link in one step. No sign-up, no ads, no file picker.",
+    "problemHeading": "Why most image links come with friction",
+    "problemBody": "Other services were built for page views, not link generation. They ask for an account before you upload. They wrap your image in a gallery page with ads and comments, hiding the direct URL behind menus. Unlike Imgur — which turns a simple upload into a full-page experience — Photo2URL is designed to convert photos to URLs, nothing more.",
+    "solutionHeading": "How Photo2URL turns a photo into a link",
+    "solutionBody": "Drag and drop, paste from clipboard, or click to browse. As soon as you upload a photo, the link generator returns three formats side by side: a direct image URL, a Markdown snippet, and an HTML embed. Copy the one you need — links work on Facebook, Twitter, Reddit, Discord, GitHub, and anywhere that accepts image URLs.",
+    "techBody": "Behind the scenes, every image is stored on Cloudflare R2 and served through a global CDN over HTTPS. The free photo to url plan includes 10 uploads per day at 2 MB per file, stored for 30 days. Paid plans lift all limits and add permanent storage. The interface supports eight languages. Whether you need a PNG to URL converter for a README, a JPG to URL for a blog post, or a quick way to turn a screenshot into a shareable link, Photo2URL is built for that single task."
+  },
   "pricing": {
     "title": "Simple Pricing",
     "subtitle": "Pay for what you need. Nothing you don't.",
@@ -65,6 +74,51 @@
       { "label": "Formats", "enterprise": "PNG, JPG, WEBP, GIF", "plus": "PNG, JPG, WEBP, GIF", "free": "PNG, JPG, WEBP, GIF" },
       { "label": "File expiry", "enterprise": "Never", "plus": "Never", "free": "30 days" },
       { "label": "Priority support", "enterprise": true, "plus": false, "free": false }
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "What is Photo To URL?",
+        "answer": "Photo To URL is a free online tool that turns your photos into direct image links. You upload a JPG, PNG, WEBP, or GIF — we give you back a URL. No sign-up. No ads. The link works in documents, chat, forums, and anywhere you can paste text."
+      },
+      {
+        "question": "How do I convert a photo to a URL link?",
+        "answer": "Drag and drop your photo, paste from clipboard, or click to browse. Photo To URL converts it instantly and returns a direct HTTPS link. The file keeps its original format — a .jpg stays a .jpg. No image processing, no format changes. The URL is ready to copy the moment the upload finishes."
+      },
+      {
+        "question": "Is the photo to URL converter free?",
+        "answer": "Yes — and we mean it. The free tier includes 10 uploads per day, 2 MB per file, hosted for 30 days. No trial period. No credit card. Paid plans lift the limits and add permanent Cloudflare R2 storage, but the core converter stays free."
+      },
+      {
+        "question": "What kind of link do I get?",
+        "answer": "You get a direct image URL — the link ends in .jpg, .png, .webp, or .gif. It's not a page with ads or embeds. You also get a Markdown snippet and an HTML img tag in the same result card. One upload, three formats. Copy the one you need."
+      },
+      {
+        "question": "Do the links work everywhere?",
+        "answer": "Every link we generate is HTTPS and served from Cloudflare's global CDN. Paste it into a GitHub README, a Notion page, a Reddit comment, a Jira ticket, a Slack message — it renders the image directly. No embed code. No iframe. Just the image."
+      },
+      {
+        "question": "Can I use this for Facebook or social media?",
+        "answer": "Yes. Upload your photo here, copy the direct URL, and paste it into a Facebook post, comment, or message. The link works the same way on Twitter, LinkedIn, Discord, and any other platform that supports image URLs. It's one link across every app."
+      },
+      {
+        "question": "What's the difference between Photo To URL and Imgur?",
+        "answer": "Imgur wraps your image in a gallery page with ads and comments. Photo To URL gives you a raw image URL — no page, no ads, no clutter. Paste the link anywhere and the image shows up directly. For Markdown users, we also give you a ready-to-use snippet."
+      },
+      {
+        "question": "How do I cancel my subscription?",
+        "answer": "Cancel recurring billing through your card issuer — mobile banking app, online banking, or customer service."
+      },
+      {
+        "question": "Can I get a refund?",
+        "answer": "If the service was unavailable due to an issue on our side, contact support and we'll review your case. We aim to reply within 1–2 business days."
+      },
+      {
+        "question": "What happens after I cancel?",
+        "answer": "You keep access for the period you already paid for. No further charges after that period ends."
+      }
     ]
   },
   "whyChoose": {
@@ -95,7 +149,7 @@
   },
   "footer": {
     "brand": {
-      "description": "Upload images and get instant shareable links. No sign-up required. Perfect for embedding in Notion, Reddit, GitHub, and everywhere else."
+      "description": "PhotoToURL is a free image to URL converter. Upload JPG, PNG, WEBP to get direct image URLs for sharing in docs, chat, tickets, and forums. Free tier: 10 uploads/day, 2 MB per file. Paid plans with CDN links on Cloudflare R2."
     },
     "product": {
       "title": "Product",

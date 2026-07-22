@@ -78,7 +78,7 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
             return (
               <Card
                 key={plan.key}
-                className="relative shadow-2xl scale-[1.04] rounded-xl
+                className="relative shadow-2xl lg:scale-[1.04] rounded-xl
                            bg-gradient-to-b from-primary/5 to-transparent
                            hover:scale-[1.06] transition-all duration-300"
               >

@@ -46,6 +46,15 @@
       { "title": "博客与文档", "desc": "Markdown 图片语法只需要一个真实 URL。我们给你。" }
     ]
   },
+  "about": {
+    "title": "关于 Photo2URL",
+    "lead": "Photo2URL 是一个免费的在线照片转链接工具 —— 上传 PNG、JPG、WEBP 或 GIF，一步获得图片链接。无需注册，没有广告，不用文件选择器。",
+    "problemHeading": "为什么大多数图片链接充满阻力",
+    "problemBody": "其他服务为页面浏览量而建，不是为生成链接而建。它们要求你先注册再上传。把你的图片包装成带广告和评论的图库页面，把直链藏在层层菜单后面。和 Imgur 不同 —— 后者把一个简单的上传变成全页面体验 —— Photo2URL 只做一件事：把照片转成链接。",
+    "solutionHeading": "Photo2URL 如何把照片变成链接",
+    "solutionBody": "拖拽、剪贴板粘贴或点击上传。照片上传后，链接生成器立即返回三种格式：直链、Markdown 代码段和 HTML 嵌入代码。选你需要的复制 —— 链接可用于 Facebook、Twitter、Reddit、Discord、GitHub 等任何支持图片 URL 的平台。",
+    "techBody": "每一张图片都存储在 Cloudflare R2 上，通过全球 CDN 以 HTTPS 提供服务。免费版每天 10 次上传，单文件 2 MB，托管 30 天。付费版解除所有限制并增加永久存储。界面支持 8 种语言。无论你是需要 PNG 转链接贴到 README，还是 JPG 转链接写博客，或是把截图快速变成可分享的链接，Photo2URL 就为这一件事而建。"
+  },
   "pricing": {
     "title": "简单定价",
     "subtitle": "只为需要的付费。其余不用。",
@@ -62,6 +71,51 @@
       { "label": "支持格式", "enterprise": "PNG, JPG, WEBP, GIF", "plus": "PNG, JPG, WEBP, GIF", "free": "PNG, JPG, WEBP, GIF" },
       { "label": "文件有效期", "enterprise": "永久", "plus": "永久", "free": "30 天" },
       { "label": "优先支持", "enterprise": true, "plus": false, "free": false }
+    ]
+  },
+  "faq": {
+    "title": "常见问题",
+    "items": [
+      {
+        "question": "Photo To URL 是什么？",
+        "answer": "Photo To URL 是一个免费的在线工具，将你的照片转换成直链。上传 JPG、PNG、WEBP 或 GIF，我们返回一个 URL。无需注册，没有广告。链接可用于文档、聊天、论坛等任何能粘贴文字的地方。"
+      },
+      {
+        "question": "如何将照片转换成 URL 链接？",
+        "answer": "拖拽照片、从剪贴板粘贴，或点击浏览选择文件。Photo To URL 会立即转换并返回一个 HTTPS 直链。文件保持原始格式 —— .jpg 就是 .jpg。不做图片处理，不改格式。上传完成即可复制链接。"
+      },
+      {
+        "question": "照片转 URL 工具免费吗？",
+        "answer": "是的，真正的免费。免费版每天 10 次上传，单文件 2 MB，托管 30 天。没有试用期，不需要绑卡。付费版提升限额并增加 Cloudflare R2 永久存储，但核心转换功能始终免费。"
+      },
+      {
+        "question": "我会得到什么样的链接？",
+        "answer": "你会得到一个直链 —— 链接以 .jpg、.png、.webp 或 .gif 结尾，不是带广告或嵌入代码的页面。同一张结果卡片上还提供 Markdown 代码段和 HTML img 标签。一次上传，三种格式，各取所需。"
+      },
+      {
+        "question": "链接能到处用吗？",
+        "answer": "我们生成的每个链接都是 HTTPS，通过 Cloudflare 全球 CDN 提供服务。粘贴到 GitHub README、Notion 页面、Reddit 评论、Jira 工单、Slack 消息中 —— 图片直接显示。没有嵌入代码，没有 iframe，只有图片本身。"
+      },
+      {
+        "question": "能用在 Facebook 或其他社交平台吗？",
+        "answer": "可以。在这里上传照片，复制直链，粘贴到 Facebook 帖子、评论或私信中即可。同样的链接也适用于 Twitter、LinkedIn、Discord 等任何支持图片 URL 的平台。一个链接，全平台通用。"
+      },
+      {
+        "question": "Photo To URL 和 Imgur 有什么区别？",
+        "answer": "Imgur 把你的图片包装成一个带广告和评论的图库页面。Photo To URL 给你原始图片 URL —— 没有页面，没有广告，没有杂物。粘贴链接到任何地方，图片直接显示。Markdown 用户还能拿到即用的代码段。"
+      },
+      {
+        "question": "如何取消订阅？",
+        "answer": "通过你的发卡机构取消自动扣款 —— 手机银行 App、网上银行或客服均可操作。"
+      },
+      {
+        "question": "可以退款吗？",
+        "answer": "如果是由于我们方面的原因导致服务不可用，请联系客服，我们会逐案审核。通常 1-2 个工作日内回复。"
+      },
+      {
+        "question": "取消后会怎样？",
+        "answer": "你可以在已付费的周期内继续使用服务。该周期结束后不再扣费，权益也随之终止。"
+      }
     ]
   },
   "whyChoose": {
@@ -89,7 +143,7 @@
   },
   "partners": { "title": "全球团队的信赖" },
   "footer": {
-    "brand": { "description": "上传图片并获取即时分享链接。无需注册。完美适用于 Notion、Reddit、GitHub 等平台。" },
+    "brand": { "description": "PhotoToURL 是一款免费的图片转链接工具。上传 JPG、PNG、WEBP，获取直链，适用于文档、聊天、工单和论坛。免费版：每天 10 次上传，单文件 2 MB。付费版享 Cloudflare R2 CDN 链接。" },
     "product": { "title": "产品", "pricing": "定价", "upload": "上传" },
     "legal": { "title": "法律", "privacy": "隐私政策", "terms": "服务条款", "refund": "退款政策" },
     "contact": { "title": "联系我们" },

@@ -115,6 +115,19 @@ export interface Dictionary {
     team: { title: string; desc: string };
     creator: { title: string; desc: string };
   };
+  faq: {
+    title: string;
+    items: { question: string; answer: string }[];
+  };
+  about: {
+    title: string;
+    lead: string;
+    problemHeading: string;
+    problemBody: string;
+    solutionHeading: string;
+    solutionBody: string;
+    techBody: string;
+  };
   pricing: {
     title: string;
     subtitle: string;
