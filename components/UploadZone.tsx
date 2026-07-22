@@ -265,16 +265,21 @@ export default function UploadZone({
         )}
       </div>
 
-      {/* Try with sample */}
+      {/* No image? Try one of these. */}
       {!uploading && (
-        <p className="text-center mt-2">
+        <div className="mt-4 text-center">
+          <p className="text-xs text-muted-foreground mb-2">{u.trySample}</p>
           <button
             onClick={(e) => { e.stopPropagation(); handleSample(); }}
-            className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors"
+            className="inline-block rounded-lg border border-muted-foreground/20 hover:border-primary cursor-pointer overflow-hidden transition-colors"
           >
-            📸 {u.trySample}
+            <img
+              src="/sample-photo.png"
+              alt="Sample photo"
+              className="w-40 h-auto object-cover"
+            />
           </button>
-        </p>
+        </div>
       )}
 
       {/* Error */}
