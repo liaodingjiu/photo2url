@@ -235,11 +235,11 @@ export default function UploadZone({
   return (
     <div className="w-full">
       <div
-        className={`relative rounded-2xl border-2 border-dashed p-5 text-center transition-all duration-200 cursor-pointer
-          shadow-2xl bg-gradient-to-br from-white to-muted/30
+        className={`relative rounded-2xl border-2 border-dashed p-5 sm:p-8 text-center transition-all duration-200 cursor-pointer
+          shadow-2xl bg-gradient-to-br from-white to-primary/5
           ${dragActive
             ? "border-primary bg-primary/10 scale-[1.02] shadow-xl"
-            : "border-muted-foreground/25 hover:border-muted-foreground/50"}
+            : "border-muted-foreground/40 hover:border-muted-foreground/60"}
           ${uploading ? "opacity-50 pointer-events-none" : ""}`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -253,49 +253,79 @@ export default function UploadZone({
             <p className="text-muted-foreground text-sm">{u.uploading}</p>
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-2">
-            <div className="rounded-full bg-muted p-3">
-              <Upload className="h-6 w-6 text-muted-foreground" />
+          <>
+            {/* Hero title inside card */}
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              {dict.hero.titleHighlight
+                ? (() => {
+                    const idx = dict.hero.title.indexOf(dict.hero.titleHighlight);
+                    if (idx === -1) return dict.hero.title;
+                    const before = dict.hero.title.slice(0, idx);
+                    const after = dict.hero.title.slice(idx + dict.hero.titleHighlight.length);
+                    return (
+                      <>
+                        {before}
+                        <span className="text-primary">{dict.hero.titleHighlight}</span>
+                        {after}
+                      </>
+                    );
+                  })()
+                : dict.hero.title
+              }
+            </h2>
+            <p className="mt-2 text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
+              {dict.hero.subtitle}
+            </p>
+
+            {/* Divider */}
+            <div className="my-5 border-t border-muted-foreground/15" />
+
+            {/* Upload action */}
+            <div className="flex flex-col items-center gap-2">
+              <div className="rounded-full bg-primary/10 p-4">
+                <Upload className="h-10 w-10 text-primary" />
+              </div>
+              {dragActive ? (
+                <p className="font-semibold text-base text-primary">{u.dropHere}</p>
+              ) : (
+                <>
+                  <p className="font-semibold text-base">{u.dragDrop}</p>
+                  <p className="text-sm text-muted-foreground">
+                    <kbd className="rounded border bg-muted px-1.5 py-0.5 text-sm font-mono">Ctrl+V</kbd>
+                    {" / "}
+                    <kbd className="rounded border bg-muted px-1.5 py-0.5 text-sm font-mono">Cmd+V</kbd>
+                    {" "}{u.pasteHint} · {u.maxSize}
+                  </p>
+                  <ClipboardPaste className="h-4 w-4 text-muted-foreground/50 mt-1" />
+                </>
+              )}
             </div>
-            {dragActive ? (
-              <p className="font-medium text-sm text-primary">{u.dropHere}</p>
-            ) : (
-              <>
-                <p className="font-medium text-sm">{u.dragDrop}</p>
-                <p className="text-xs text-muted-foreground">
-                  <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">Ctrl+V</kbd>
-                  {" / "}
-                  <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">Cmd+V</kbd>
-                  {" "}{u.pasteHint} · {u.maxSize}
-                </p>
-                <ClipboardPaste className="h-4 w-4 text-muted-foreground/50 mt-1" />
-              </>
-            )}
-          </div>
+
+            {/* Sample picker — inside the drop zone */}
+            <div
+              className="mt-5 pt-5 border-t border-muted-foreground/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <p className="text-xs text-muted-foreground mb-3">{u.trySample}</p>
+              <div className="flex justify-center gap-2 flex-wrap">
+                {SAMPLE_URLS.map((url) => (
+                  <button
+                    key={url}
+                    onClick={(e) => { e.stopPropagation(); handleSample(url); }}
+                    className="rounded-md border border-muted-foreground/20 hover:border-primary hover:shadow-sm cursor-pointer overflow-hidden transition-all"
+                  >
+                    <img
+                      src={url}
+                      alt="Sample"
+                      className="w-16 h-auto object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
         )}
       </div>
-
-      {/* No image? Try one of these. */}
-      {!uploading && (
-        <div className="mt-4 text-center">
-          <p className="text-xs text-muted-foreground mb-2">{u.trySample}</p>
-          <div className="flex justify-center gap-2 flex-wrap">
-            {SAMPLE_URLS.map((url) => (
-              <button
-                key={url}
-                onClick={(e) => { e.stopPropagation(); handleSample(url); }}
-                className="rounded-lg border border-muted-foreground/20 hover:border-primary cursor-pointer overflow-hidden transition-colors"
-              >
-                <img
-                  src={url}
-                  alt="Sample"
-                  className="w-20 h-auto object-cover"
-                />
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Error */}
       {error && !uploading && (

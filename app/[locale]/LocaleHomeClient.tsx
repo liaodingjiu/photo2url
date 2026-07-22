@@ -37,19 +37,11 @@ export default function LocaleHomeClient({
       <main className="flex-1">
         {/* Hero + Upload */}
         <section className="py-8 lg:py-12">
-          <div className="mx-auto max-w-6xl px-4 text-center">
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-              {dict.hero.title}
-            </h1>
-            <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
-              {dict.hero.subtitle}
-            </p>
-          </div>
           <div
             id="upload-zone"
-            className="mt-8 px-4 scroll-mt-20 target:ring-2 target:ring-primary/50 target:rounded-xl transition-all duration-700"
+            className="px-4 scroll-mt-20 target:ring-2 target:ring-primary/50 target:rounded-xl transition-all duration-700"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 max-w-5xl mx-auto items-start">
               {/* Left column */}
               <div>
                 <UploadZone
