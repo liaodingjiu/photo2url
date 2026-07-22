@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
@@ -44,9 +45,11 @@ export default function LanguageSelector({
             align="center"
             className="max-h-80 overflow-y-auto w-52"
           >
-            <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
-              Select Region
-            </DropdownMenuLabel>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>
+                Select Region
+              </DropdownMenuLabel>
+            </DropdownMenuGroup>
             {locales.map((locale) => {
               const { native, flag } = getLocaleLabel(locale);
               return (
