@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Zap, Crown } from "lucide-react";
+import { Check, Zap, Crown, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useAuth, useUser } from "@clerk/nextjs";
@@ -30,8 +30,6 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
       price: "$94.90",
       period: "/year",
       icon: Crown,
-      highlight: true,
-      badge: t.plans.enterprise.badge,
       features: t.plans.enterprise.features,
       cta: t.plans.enterprise.cta,
       name: t.plans.enterprise.name,
@@ -41,8 +39,6 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
       price: "$9.90",
       period: "/month",
       icon: Zap,
-      highlight: false,
-      badge: null,
       features: t.plans.plus.features,
       cta: t.plans.plus.cta,
       name: t.plans.plus.name,
@@ -51,9 +47,7 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
       key: "Free",
       price: "$0",
       period: "",
-      icon: null,
-      highlight: false,
-      badge: null,
+      icon: Sparkles,
       features: t.plans.free.features,
       cta: t.plans.free.cta,
       name: t.plans.free.name,
@@ -108,17 +102,10 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
           {plans.map((plan) => (
             <Card
               key={plan.key}
-              className={`relative ${
-                plan.highlight
-                  ? "border-primary shadow-lg ring-1 ring-primary scale-[1.02]"
-                  : ""
-              }`}
+              className="relative shadow-2xl scale-[1.04] rounded-xl
+                         bg-gradient-to-b from-primary/5 to-transparent
+                         hover:scale-[1.06] transition-all duration-300"
             >
-              {plan.badge && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold text-primary-foreground">
-                  {plan.badge}
-                </div>
-              )}
               <CardHeader className="text-center pb-2">
                 {plan.icon && <plan.icon className="mx-auto h-8 w-8 text-primary mb-2" />}
                 <h3 className="text-xl font-bold">{plan.name}</h3>
@@ -135,7 +122,7 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
                 <ul className="space-y-2.5">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2 text-sm">
-                      <Check className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
+                      <Check className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -144,7 +131,7 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
               <CardFooter>
                 <Button
                   className="w-full"
-                  variant={plan.highlight ? "default" : "outline"}
+                  variant={plan.key === "Enterprise" ? "default" : "outline"}
                   size="lg"
                   onClick={() => handleSubscribe(plan.key)}
                 >
