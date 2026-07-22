@@ -28,10 +28,12 @@ const SAMPLE_URLS = [
 
 export default function UploadZone({
   dict,
+  planType = "free",
   onUploadSuccess,
   onUploadResult,
 }: {
   dict: Dictionary;
+  planType?: string;
   onUploadSuccess?: () => void;
   onUploadResult?: (result: UploadResult) => void;
 }) {
@@ -144,16 +146,19 @@ export default function UploadZone({
     };
   }, []);
 
+  const isDev = typeof window !== "undefined" && window.location.hostname === "localhost";
+  const skipTurnstile = isDev || planType !== "free";
+
   const handleFile = useCallback(
     async (file: File) => {
-      if (uploadCountRef.current >= 5) {
+      if (!skipTurnstile && uploadCountRef.current >= 5) {
         setShowTurnstile(true);
         setPendingFile(file);
         return;
       }
       await doUpload(file);
     },
-    [doUpload]
+    [doUpload, skipTurnstile]
   );
 
   const handleSample = async (url: string) => {

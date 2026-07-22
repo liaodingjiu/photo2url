@@ -21,9 +21,11 @@ import type { Dictionary, Locale } from "@/lib/i18n";
 export default function LocaleHomeClient({
   locale,
   dict,
+  planType = "free",
 }: {
   locale: Locale;
   dict: Dictionary;
+  planType?: string;
 }) {
   const { isSignedIn } = useAuth();
   const [hasUploaded, setHasUploaded] = useState(false);
@@ -55,6 +57,7 @@ export default function LocaleHomeClient({
               <div>
                 <UploadZone
                   dict={dict}
+                  planType={planType}
                   onUploadSuccess={() => {
                     if (!isSignedIn) setHasUploaded(true);
                   }}
