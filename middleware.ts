@@ -31,9 +31,13 @@ function detectLocale(request: NextRequest): string {
 export default clerkMiddleware(async (auth, req) => {
   const { pathname } = req.nextUrl;
 
-  // --- Locale handling ---
+  // /en or /en/* → 301 to root (English lives at /)
+  if (pathname === "/en" || pathname.startsWith("/en/")) {
+    const newPath = pathname === "/en" ? "/" : pathname.slice(3);
+    return NextResponse.redirect(new URL(newPath, req.url), 301);
+  }
 
-  // Already in a locale route → pass through, set header for layout
+  // Already in a non-English locale route → pass through
   const currentLocale = LOCALES.find(
     (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`)
   );
@@ -43,12 +47,12 @@ export default clerkMiddleware(async (auth, req) => {
     return res;
   }
 
-  // Dashboard stays under /dashboard (no locale prefix), protect with auth
+  // Dashboard stays under /dashboard, protect with auth
   if (isProtectedRoute(req)) {
     await auth.protect();
   }
 
-  // Skip API, static, sign-in/up, dashboard routes (no locale)
+  // Skip API, static, sign-in/up, dashboard, image routes (no locale)
   if (
     pathname.startsWith("/api/") ||
     pathname.startsWith("/_next/") ||
@@ -61,9 +65,16 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.next();
   }
 
-  // Root or other path → redirect to detected locale
+  // Root → English (pass through, no redirect)
+  if (pathname === "/") {
+    const res = NextResponse.next();
+    res.headers.set("x-locale", "en");
+    return res;
+  }
+
+  // Other path → redirect to detected locale
   const locale = detectLocale(req);
-  const newPath = pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
+  const newPath = `/${locale}${pathname}`;
   return NextResponse.redirect(new URL(newPath, req.url));
 });
 

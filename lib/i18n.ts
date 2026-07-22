@@ -41,7 +41,10 @@ export function getAlternateLinks(pathname: string): AlternateLink[] {
 
   return locales.map((locale) => ({
     hreflang: locale,
-    href: `https://photo2url.com/${locale}${normalized}`,
+    href:
+      locale === "en"
+        ? `https://photo2url.com${normalized}`
+        : `https://photo2url.com/${locale}${normalized}`,
   }));
 }
 

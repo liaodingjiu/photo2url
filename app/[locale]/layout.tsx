@@ -10,14 +10,21 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const dict = await getDictionary(locale);
+  const normalizedPath = locale === "en" ? "" : `/${locale}`;
 
   return {
     title: dict.meta.title,
     description: dict.meta.description,
     alternates: {
-      canonical: `https://photo2url.com/${locale}`,
+      canonical: `https://photo2url.com${normalizedPath}`,
       languages: Object.fromEntries(
-        locales.map((l) => [l, `https://photo2url.com/${l}`])
+        locales.map((l) => {
+          const href =
+            l === "en"
+              ? "https://photo2url.com"
+              : `https://photo2url.com/${l}`;
+          return [l, href];
+        })
       ),
     },
     other: {
@@ -31,7 +38,7 @@ export async function generateMetadata({
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
-      url: `https://photo2url.com/${locale}`,
+      url: `https://photo2url.com${normalizedPath}`,
       siteName: "photo2url",
       type: "website",
     },
