@@ -154,9 +154,16 @@ export default function UploadZone({
   const handleSample = async () => {
     try {
       const res = await fetch(SAMPLE_URL);
-      const blob = await res.blob();
-      const ext = blob.type.split("/")[1] || "png";
-      const file = new File([blob], `sample-photo.${ext}`, { type: blob.type });
+      const buffer = await res.arrayBuffer();
+      const bytes = new Uint8Array(buffer);
+      // Detect real MIME type from magic bytes, not server Content-Type header
+      let mimeType = "image/png";
+      if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) mimeType = "image/jpeg";
+      else if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) mimeType = "image/gif";
+      else if (bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46) mimeType = "image/webp";
+      const ext = mimeType.split("/")[1];
+      const blob = new Blob([buffer], { type: mimeType });
+      const file = new File([blob], `sample-photo.${ext}`, { type: mimeType });
       await handleFile(file);
     } catch {
       toast.error("Failed to load sample image");
