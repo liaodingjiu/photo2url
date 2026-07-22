@@ -20,7 +20,6 @@ export default function SignUpPage() {
             },
           }}
           signInUrl="/sign-in"
-          fallbackRedirectUrl="/dashboard"
         />
         <p className="mt-6 text-center text-xs text-muted-foreground">
           Already have an account?{" "}
