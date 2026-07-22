@@ -10,6 +10,7 @@
     "pages:build": "npx @cloudflare/next-on-pages",
     "pages:preview": "npx wrangler pages dev .vercel/output/static",
     "pages:deploy": "npx wrangler pages deploy .vercel/output/static",
+    "postinstall": "patch-package",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
