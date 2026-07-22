@@ -60,11 +60,14 @@ export default function LocaleHomeClient({
                   }}
                   onUploadResult={setUploadResult}
                 />
-                {uploadResult && <ResultCard result={uploadResult} />}
                 {hasUploaded && !isSignedIn && <PostUploadSignup dict={dict} />}
               </div>
-              {/* Right column */}
-              <DemoImage variant={uploadResult ? "hidden" : "demo"} />
+              {/* Right column: demo → result */}
+              {uploadResult ? (
+                <ResultCard result={uploadResult} />
+              ) : (
+                <DemoImage variant="demo" />
+              )}
             </div>
           </div>
         </section>
