@@ -2,7 +2,7 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const LOCALES = ["en", "zh-CN", "zh-TW", "ja", "ko", "es", "de", "fr"];
+const LOCALES = ["en", "zh-CN"];
 
 const BYPASS_AUTH = process.env.DEV_BYPASS_AUTH === "true";
 

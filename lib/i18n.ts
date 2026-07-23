@@ -3,19 +3,13 @@
  * Subdirectory routing: /en/, /zh-CN/, etc. Root / → 301 to /en/.
  */
 
-export const locales = ["en", "zh-CN", "zh-TW", "ja", "ko", "es", "de", "fr"] as const;
+export const locales = ["en", "zh-CN"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en";
 
-const localeLabels: Record<Locale, { native: string; flag: string }> = {
-  en: { native: "English", flag: "🇬🇧" },
-  "zh-CN": { native: "简体中文", flag: "🇨🇳" },
-  "zh-TW": { native: "繁體中文", flag: "🇹🇼" },
-  ja: { native: "日本語", flag: "🇯🇵" },
-  ko: { native: "한국어", flag: "🇰🇷" },
-  es: { native: "Español", flag: "🇪🇸" },
-  de: { native: "Deutsch", flag: "🇩🇪" },
-  fr: { native: "Français", flag: "🇫🇷" },
+const localeLabels: Record<Locale, { native: string }> = {
+  en: { native: "English" },
+  "zh-CN": { native: "简体中文" },
 };
 
 export function getLocaleLabel(locale: Locale) {
@@ -36,7 +30,7 @@ export async function getDictionary(locale: string): Promise<Dictionary> {
 /** Generate hreflang alternate links for all locales. */
 export function getAlternateLinks(pathname: string): AlternateLink[] {
   // Strip locale prefix to get the page path
-  const pagePath = pathname.replace(/^\/(en|zh-CN|zh-TW|ja|ko|es|de|fr)(\/|$)/, "/$2");
+  const pagePath = pathname.replace(/^\/(en|zh-CN)(\/|$)/, "/$2");
   const normalized = pagePath === "/" ? "" : pagePath;
 
   return locales.map((locale) => ({
