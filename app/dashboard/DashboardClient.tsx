@@ -156,13 +156,11 @@ export default function DashboardClient({
   data,
   files,
   dict,
-  debug,
 }: {
   userId: string;
   data: DashboardData | null;
   files?: FileRecord[];
   dict: Dictionary;
-  debug?: { planType?: string; userId?: string; error?: string };
 }) {
   // useUser may not be available when Clerk is bypassed in local dev
   let user: { firstName?: string | null; username?: string | null;
@@ -282,13 +280,6 @@ export default function DashboardClient({
 
       {/* Content */}
       <main className="flex-1 p-6 pb-24 md:pb-6 overflow-auto">
-        {/* DEBUG: plan_type diagnosis */}
-        {debug && (
-          <div className="p-3 mb-6 rounded-lg border border-amber-200 bg-amber-50 dark:bg-amber-950/20 text-xs font-mono">
-            DEBUG: {JSON.stringify(debug)}
-          </div>
-        )}
-
         {/* P1 #27: Data loading error banner */}
         {!data && (
           <div className="flex items-center gap-3 p-4 mb-6 rounded-lg border border-destructive/30 bg-destructive/5 text-sm">

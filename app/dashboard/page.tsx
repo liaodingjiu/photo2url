@@ -18,8 +18,6 @@ async function getDashboardData(userId: string) {
       .bind(userId)
       .first();
 
-    console.log("[dashboard] userId:", userId, "user row:", JSON.stringify(user));
-
     const today = new Date().toISOString().split("T")[0];
     const uploadCount = await db
       .prepare(
@@ -95,8 +93,5 @@ export default async function DashboardPage() {
   const dict = await getDictionary(locale);
   const data = await getDashboardData(userId);
 
-  // DEBUG: Include raw DB result to diagnose plan_type mismatch
-  const debug = data ? { planType: data.planType, userId } : { error: "data is null", userId };
-
-  return <DashboardClient userId={userId} data={data} dict={dict} debug={debug} />;
+  return <DashboardClient userId={userId} data={data} dict={dict} />;
 }
