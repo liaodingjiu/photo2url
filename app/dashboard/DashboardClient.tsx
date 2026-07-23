@@ -165,7 +165,7 @@ export default function DashboardClient({
   // useUser may not be available when Clerk is bypassed in local dev
   let user: { firstName?: string | null; username?: string | null;
               primaryEmailAddress?: { emailAddress: string } | null;
-              fullName?: string | null } | null = null;
+              fullName?: string | null } | null | undefined = null;
   try { const u = useUser(); user = u.user; } catch { /* Clerk not available */ }
 
   const searchParams = useSearchParams();
@@ -497,7 +497,7 @@ function BillingTab({
   dict: Dictionary;
 }) {
   let user: { primaryEmailAddress?: { emailAddress: string } | null;
-              fullName?: string | null } | null = null;
+              fullName?: string | null } | null | undefined = null;
   try { const u = useUser(); user = u.user; } catch { /* Clerk not available */ }
   const d = dict.dashboard.billing;
 
