@@ -330,7 +330,7 @@ function OverviewTab({
   plan: { storage: number; daily: number; label: string };
   storagePct: number;
   dict: Dictionary;
-  user?: { firstName?: string | null; username?: string | null };
+  user?: { firstName?: string | null; username?: string | null } | null;
   files?: FileRecord[];
 }) {
   const d = dict.dashboard.overview;
