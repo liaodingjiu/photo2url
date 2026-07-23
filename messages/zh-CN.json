@@ -101,12 +101,12 @@
       "free": { "name": "免费版", "cta": "免费开始" }
     },
     "rows": [
-      { "label": "文件大小", "enterprise": "256 MB", "plus": "50 MB", "free": "2 MB" },
-      { "label": "每日上传", "enterprise": "无限", "plus": "1,000 次", "free": "10 次" },
+      { "label": "文件大小", "enterprise": "256 MB", "plus": "50 MB", "free": "3 MB" },
+      { "label": "每日上传", "enterprise": "无限", "plus": "1,000 次", "free": "15 次" },
       { "label": "存储空间", "enterprise": "200 GB", "plus": "100 GB", "free": "200 MB" },
       { "label": "支持格式", "enterprise": "PNG, JPG, WEBP, GIF", "plus": "PNG, JPG, WEBP, GIF", "free": "PNG, JPG, WEBP, GIF" },
-      { "label": "文件有效期", "enterprise": "永久", "plus": "永久", "free": "30 天" },
-      { "label": "优先支持", "enterprise": true, "plus": false, "free": false }
+      { "label": "文件有效期", "enterprise": "永久", "plus": "永久", "free": "180 天" },
+      { "label": "邮件支持", "enterprise": "优先", "plus": "标准", "free": "标准" }
     ]
   },
   "faq": {
@@ -142,15 +142,15 @@
       },
       {
         "question": "如何取消订阅？",
-        "answer": "通过你的发卡机构取消自动扣款 —— 手机银行 App、网上银行或客服均可操作。"
+        "answer": "发送邮件至 support@photo2url.com，我们会在 1-2 个工作日内为你取消订阅，无需任何理由。"
       },
       {
         "question": "可以退款吗？",
-        "answer": "如果是由于我们方面的原因导致服务不可用，请联系客服，我们会逐案审核。通常 1-2 个工作日内回复。"
+        "answer": "可以 —— 如果不满意，购买后 7 天内可申请全额退款。发送邮件至 support@photo2url.com 并附上订单详情即可。"
       },
       {
         "question": "取消后会怎样？",
-        "answer": "你可以在已付费的周期内继续使用服务。该周期结束后不再扣费，权益也随之终止。"
+        "answer": "你可以在当前计费周期内继续使用全部功能。周期结束后，账户自动降级为免费套餐，已有文件不会丢失。"
       }
     ]
   },

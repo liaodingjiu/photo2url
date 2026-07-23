@@ -528,6 +528,17 @@ function BillingTab({
               {plan.label}
             </span>
             <span className="text-xs text-muted-foreground">{d.active}</span>
+            {/* Paid users: self-service subscription management via Lemon Squeezy */}
+            {plan.label !== "Free" && (
+              <a
+                href="https://photo2url.lemonsqueezy.com/billing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-auto text-xs text-primary hover:underline shrink-0"
+              >
+                Manage Subscription ↗
+              </a>
+            )}
           </div>
 
           {/* Feature list — dynamic per plan, synced with utils/upload-limit.ts */}

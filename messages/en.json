@@ -105,11 +105,11 @@
     },
     "rows": [
       { "label": "File size", "enterprise": "256 MB", "plus": "50 MB", "free": "3 MB" },
-      { "label": "Daily uploads", "enterprise": "Unlimited", "plus": "1,000", "free": "10 / day" },
+      { "label": "Daily uploads", "enterprise": "Unlimited", "plus": "1,000", "free": "15 / day" },
       { "label": "Storage", "enterprise": "200 GB", "plus": "100 GB", "free": "200 MB" },
       { "label": "Formats", "enterprise": "PNG, JPG, WEBP, GIF", "plus": "PNG, JPG, WEBP, GIF", "free": "PNG, JPG, WEBP, GIF" },
       { "label": "File expiry", "enterprise": "Never", "plus": "Never", "free": "180 days" },
-      { "label": "Priority support", "enterprise": true, "plus": false, "free": false }
+      { "label": "Email support", "enterprise": "Priority", "plus": "Standard", "free": "Standard" }
     ]
   },
   "faq": {
@@ -145,15 +145,15 @@
       },
       {
         "question": "How do I cancel my subscription?",
-        "answer": "Cancel recurring billing through your card issuer — mobile banking app, online banking, or customer service."
+        "answer": "Contact support at support@photo2url.com and we'll cancel your subscription within 1–2 business days. No questions asked."
       },
       {
         "question": "Can I get a refund?",
-        "answer": "If the service was unavailable due to an issue on our side, contact support and we'll review your case. We aim to reply within 1–2 business days."
+        "answer": "Yes — if you're not satisfied, you can request a full refund within 7 days of purchase. Just email support@photo2url.com with your order details."
       },
       {
         "question": "What happens after I cancel?",
-        "answer": "You keep access for the period you already paid for. No further charges after that period ends."
+        "answer": "You keep full access for the remainder of your billing period. After that, your account is downgraded to the Free plan and your existing files remain accessible. No data is lost."
       }
     ]
   },
