@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 
 export const runtime = "edge";
 
@@ -13,8 +14,16 @@ export async function DELETE(
   try {
     const { id: fileId } = await params;
 
-    // Get user identity (Clerk via middleware, or guest via cookie)
-    const clerkUserId = (request as any).auth?.userId;
+    // Get user identity via auth() — more reliable than request.auth?.userId
+    // under @cloudflare/next-on-pages.
+    let clerkUserId: string | null = null;
+    try {
+      const { userId } = await auth();
+      clerkUserId = userId ?? null;
+    } catch {
+      // Clerk not configured — fall through to guest mode
+    }
+
     const cookieId = request.cookies.get("p2u_guest_id")?.value;
 
     if (!clerkUserId && !cookieId) {

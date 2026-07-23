@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 
 export const runtime = "edge";
 
@@ -8,7 +9,16 @@ export const runtime = "edge";
  */
 export async function GET(request: NextRequest) {
   try {
-    const clerkUserId = (request as any).auth?.userId;
+    // Use auth() directly instead of request.auth?.userId — the latter is
+    // middleware-injected and unreliable under @cloudflare/next-on-pages.
+    let clerkUserId: string | null = null;
+    try {
+      const { userId } = await auth();
+      clerkUserId = userId ?? null;
+    } catch {
+      // Clerk not configured — fall through to guest mode
+    }
+
     const cookieId = request.cookies.get("p2u_guest_id")?.value;
 
     if (!clerkUserId && !cookieId) {
