@@ -101,11 +101,10 @@
       "free": { "name": "免费版", "cta": "免费开始" }
     },
     "rows": [
-      { "label": "文件大小", "enterprise": "256 MB", "plus": "50 MB", "free": "3 MB" },
+      { "label": "单文件上限", "enterprise": "256 MB", "plus": "50 MB", "free": "3 MB" },
       { "label": "每日上传", "enterprise": "无限", "plus": "1,000 次", "free": "15 次" },
-      { "label": "存储空间", "enterprise": "200 GB", "plus": "100 GB", "free": "200 MB" },
-      { "label": "支持格式", "enterprise": "PNG, JPG, WEBP, GIF", "plus": "PNG, JPG, WEBP, GIF", "free": "PNG, JPG, WEBP, GIF" },
-      { "label": "文件有效期", "enterprise": "永久", "plus": "永久", "free": "180 天" },
+      { "label": "总存储空间", "enterprise": "200 GB", "plus": "100 GB", "free": "200 MB" },
+      { "label": "保存期限", "enterprise": "永久", "plus": "永久", "free": "180 天" },
       { "label": "邮件支持", "enterprise": "优先", "plus": "标准", "free": "标准" }
     ]
   },

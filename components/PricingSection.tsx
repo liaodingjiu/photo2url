@@ -1,20 +1,15 @@
 "use client";
 
-import { Check, X, Zap, Crown, Sparkles } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { useAuth, useUser } from "@clerk/nextjs";
 import type { Dictionary } from "@/lib/i18n";
 
 const CHECKOUT_URLS: Record<string, string> = {
   Plus: "https://photo2url.lemonsqueezy.com/checkout/buy/a29b1d30-70b5-4a72-a467-99f2cc42cbdb",
   Enterprise: "https://photo2url.lemonsqueezy.com/checkout/buy/adfbbc5a-e7ff-4f48-a9c3-718e0ebbc7bb",
-};
-
-const PLAN_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
-  Enterprise: Crown,
-  Plus: Zap,
-  Free: Sparkles,
 };
 
 function detectCountry(): string | null {
@@ -30,9 +25,9 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
   const t = dict.pricing;
 
   const plans = [
-    { key: "Enterprise", price: "$94.90", period: "/year" },
-    { key: "Plus", price: "$9.90", period: "/month" },
     { key: "Free", price: "$0", period: "" },
+    { key: "Plus", price: "$9.90", period: "/month", highlight: true },
+    { key: "Enterprise", price: "$94.90", period: "/year", monthly: "~$7.91 /mo" },
   ] as const;
 
   const handleSubscribe = (planKey: string) => {
@@ -73,68 +68,83 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
         <div className="grid gap-6 lg:grid-cols-3 items-start">
           {plans.map((plan) => {
             const meta = t.plans[plan.key.toLowerCase() as "enterprise" | "plus" | "free"];
-            const Icon = PLAN_ICONS[plan.key];
 
             return (
-              <div key={plan.key}>
-                <Card
-                  className="relative shadow-2xl lg:scale-[1.04] rounded-xl
-                             bg-gradient-to-b from-primary/5 to-transparent
-                             hover:scale-[1.06] transition-all duration-300"
-                >
-                  <CardHeader className="text-center pb-2">
-                    {Icon && <Icon className="mx-auto h-8 w-8 text-primary mb-2" />}
-                    <h3 className="text-xl font-bold">{meta.name}</h3>
+              <Card
+                key={plan.key}
+                className={`flex flex-col ${plan.highlight ? "ring-2 ring-primary lg:-mt-2" : ""}`}
+              >
+                <CardContent className="flex flex-col p-0">
+                  {/* Header */}
+                  <div className="px-5 pt-6 pb-4 text-center">
+                    {plan.highlight && (
+                      <span className="inline-block rounded-full bg-primary px-3 py-0.5 text-xs font-medium text-primary-foreground mb-2">
+                        Most Popular
+                      </span>
+                    )}
+                    <h3 className="text-lg font-bold">{meta.name}</h3>
                     <div className="mt-2">
-                      <span className="text-4xl font-extrabold">{plan.price}</span>
+                      <span className="text-3xl font-extrabold">{plan.price}</span>
                       {plan.period && (
-                        <span className="text-muted-foreground ml-1">{plan.period}</span>
+                        <span className="text-sm font-normal text-muted-foreground ml-1">
+                          {plan.period}
+                        </span>
                       )}
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2.5">
-                      {t.rows.map((row) => {
-                        const value = row[plan.key.toLowerCase() as "enterprise" | "plus" | "free"];
-                        return (
-                          <li key={row.label} className="flex items-start gap-2 text-sm">
-                            {typeof value === "boolean" ? (
-                              value ? (
-                                <Check className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
-                              ) : (
-                                <X className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
-                              )
-                            ) : (
-                              <Check className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
-                            )}
-                            <span>
-                              {typeof value === "string" ? value : row.label}
-                            </span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </CardContent>
-                  <CardFooter>
+                    {plan.monthly && (
+                      <p className="text-xs text-muted-foreground mt-1">{plan.monthly}</p>
+                    )}
+                  </div>
+
+                  <Separator />
+
+                  {/* Features */}
+                  <div className="px-5 py-3 flex-1">
+                    {t.rows.map((row) => {
+                      const value = row[plan.key.toLowerCase() as "enterprise" | "plus" | "free"];
+                      return (
+                        <div
+                          key={row.label}
+                          className="flex items-center gap-2 py-2.5"
+                        >
+                          <span className="text-xs text-muted-foreground truncate min-w-0 flex-1">
+                            {row.label}
+                          </span>
+                          <span className="text-sm font-medium shrink-0 text-right">
+                            {typeof value === "string" ? value : row.label}
+                          </span>
+                          {typeof value === "boolean" && !value ? (
+                            <span className="h-4 w-4 shrink-0" />
+                          ) : (
+                            <Check className="h-4 w-4 text-emerald-500 shrink-0" />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <Separator />
+
+                  {/* CTA */}
+                  <div className="px-5 py-4">
                     <Button
                       className="w-full"
-                      variant={plan.key === "Enterprise" ? "default" : "outline"}
+                      variant={plan.highlight ? "default" : "outline"}
                       size="lg"
                       onClick={() => handleSubscribe(plan.key)}
                     >
                       {meta.cta}
                     </Button>
-                  </CardFooter>
-                </Card>
-                {plan.key === "Enterprise" && (
-                  <p className="mt-3 text-xs text-muted-foreground text-center">
-                    {t.enterpriseHint}
-                  </p>
-                )}
-              </div>
+                  </div>
+                </CardContent>
+              </Card>
             );
           })}
         </div>
+
+        <p className="mt-4 text-xs text-muted-foreground text-center">
+          {t.enterpriseHint}
+        </p>
       </div>
     </section>
   );
