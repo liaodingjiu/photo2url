@@ -18,7 +18,7 @@
     "dragDrop": "or Ctrl+V to paste your photo",
     "pasteHint": "Or drag & drop, or click to browse",
     "formats": "PNG, JPG, WEBP, GIF",
-    "maxSize": "Max 2 MB · 10/day (Free)",
+    "maxSize": "Max 3 MB · 15/day (Free)",
     "uploading": "Uploading...",
     "success": "Upload successful!",
     "failed": "Upload failed",
@@ -56,7 +56,7 @@
     "problemBody": "Other services were built for page views, not link generation. They ask for an account before you upload. They wrap your image in a gallery page with ads and comments, hiding the direct URL behind menus. Unlike Imgur — which turns a simple upload into a full-page experience — Photo2URL is designed to convert photos to URLs, nothing more.",
     "solutionHeading": "How Photo2URL turns a photo into a link",
     "solutionBody": "Drag and drop, paste from clipboard, or click to browse. As soon as you upload a photo, the link generator returns three formats side by side: a direct image URL, a Markdown snippet, and an HTML embed. Copy the one you need — links work on Facebook, Twitter, Reddit, Discord, GitHub, and anywhere that accepts image URLs.",
-    "techBody": "Behind the scenes, every image is stored on Cloudflare R2 and served through a global CDN over HTTPS. The free photo to url plan includes 10 uploads per day at 2 MB per file, stored for 30 days. Paid plans lift all limits and add permanent storage. The interface supports eight languages. Whether you need a PNG to URL converter for a README, a JPG to URL for a blog post, or a quick way to turn a screenshot into a shareable link, Photo2URL is built for that single task."
+    "techBody": "Behind the scenes, every image is stored on Cloudflare R2 and served through a global CDN over HTTPS. The free photo to url plan includes 15 uploads per day at 3 MB per file, stored for 180 days. Paid plans lift all limits and add permanent storage. The interface supports eight languages. Whether you need a PNG to URL converter for a README, a JPG to URL for a blog post, or a quick way to turn a screenshot into a shareable link, Photo2URL is built for that single task."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -84,10 +84,10 @@
       "upgradeDesc": "Upgrade for higher limits on file size, daily uploads, storage, and expiry.",
       "active": "Active",
       "features": [
-        "10 uploads per day",
-        "2 MB per file",
+        "15 uploads per day",
+        "3 MB per file",
         "200 MB storage",
-        "Files kept for 30 days"
+        "Files kept for 180 days"
       ],
       "storageUsage": "Storage usage",
       "upgradeTitle": "Upgrade your plan",
@@ -104,11 +104,11 @@
       "free": { "name": "Free", "cta": "Start for Free" }
     },
     "rows": [
-      { "label": "File size", "enterprise": "256 MB", "plus": "50 MB", "free": "2 MB" },
+      { "label": "File size", "enterprise": "256 MB", "plus": "50 MB", "free": "3 MB" },
       { "label": "Daily uploads", "enterprise": "Unlimited", "plus": "1,000", "free": "10 / day" },
       { "label": "Storage", "enterprise": "200 GB", "plus": "100 GB", "free": "200 MB" },
       { "label": "Formats", "enterprise": "PNG, JPG, WEBP, GIF", "plus": "PNG, JPG, WEBP, GIF", "free": "PNG, JPG, WEBP, GIF" },
-      { "label": "File expiry", "enterprise": "Never", "plus": "Never", "free": "30 days" },
+      { "label": "File expiry", "enterprise": "Never", "plus": "Never", "free": "180 days" },
       { "label": "Priority support", "enterprise": true, "plus": false, "free": false }
     ]
   },
@@ -125,7 +125,7 @@
       },
       {
         "question": "Is the photo to URL converter free?",
-        "answer": "Yes — and we mean it. The free tier includes 10 uploads per day, 2 MB per file, hosted for 30 days. No trial period. No credit card. Paid plans lift the limits and add permanent Cloudflare R2 storage, but the core converter stays free."
+        "answer": "Yes — and we mean it. The free tier includes 15 uploads per day, 3 MB per file, hosted for 180 days. No trial period. No credit card. Paid plans lift the limits and add permanent Cloudflare R2 storage, but the core converter stays free."
       },
       {
         "question": "What kind of link do I get?",
@@ -180,7 +180,7 @@
       { "title": "Global CDN", "desc": "Every photo link is served through Cloudflare's worldwide CDN. Image URLs load in under 200ms anywhere, on any device." },
       { "title": "All 3 Formats", "desc": "One upload, three outputs: direct image URL, Markdown snippet, HTML embed. Copy your photo link in the format you actually need." },
       { "title": "Encrypted at Rest", "desc": "Photo URLs hosted on Cloudflare R2 with TLS in transit and server-side encryption at rest. Your image links stay private." },
-      { "title": "Free · No Sign-Up", "desc": "Convert photo to link without an account — 10 free image to URL conversions per day, 2 MB per file, 30-day storage. No credit card." },
+      { "title": "Free · No Sign-Up", "desc": "Convert photo to link without an account — 15 free image to URL conversions per day, 3 MB per file, 180-day storage. No credit card." },
       { "title": "Raw .jpg URLs", "desc": "No wrapper pages, no ads, no galleries. Every direct photo link ends in the original extension — .jpg, .png, .webp, .gif. Clean image URLs that work everywhere." }
     ]
   },
@@ -198,7 +198,7 @@
   },
   "footer": {
     "brand": {
-      "description": "PhotoToURL is a free image to URL converter. Upload JPG, PNG, WEBP to get direct image URLs for sharing in docs, chat, tickets, and forums. Free tier: 10 uploads/day, 2 MB per file. Paid plans with CDN links on Cloudflare R2."
+      "description": "PhotoToURL is a free image to URL converter. Upload JPG, PNG, WEBP to get direct image URLs for sharing in docs, chat, tickets, and forums. Free tier: 15 uploads/day, 3 MB per file. Paid plans with CDN links on Cloudflare R2."
     },
     "product": {
       "title": "Product",

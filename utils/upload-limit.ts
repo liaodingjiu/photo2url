@@ -5,10 +5,10 @@
 
 export const UPLOAD_LIMITS = {
   free: {
-    fileSizeLimit: 2 * 1024 * 1024,       // 2 MB
-    dailyUploadLimit: 10,
+    fileSizeLimit: 3 * 1024 * 1024,       // 3 MB
+    dailyUploadLimit: 15,
     storageLimit: 200 * 1024 * 1024,       // 200 MB
-    expiresDays: 30,
+    expiresDays: 180,
   },
   plus: {
     fileSizeLimit: 50 * 1024 * 1024,       // 50 MB

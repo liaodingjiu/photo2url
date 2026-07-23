@@ -39,7 +39,7 @@ interface DashboardData {
 type Tab = "overview" | "profile" | "billing";
 
 const PLAN_LIMITS: Record<string, { storage: number; daily: number; label: string }> = {
-  free: { storage: 200 * 1024 * 1024, daily: 10, label: "Free" },
+  free: { storage: 200 * 1024 * 1024, daily: 15, label: "Free" },
   plus: { storage: 100 * 1024 * 1024 * 1024, daily: 1000, label: "Plus" },
   enterprise: { storage: 200 * 1024 * 1024 * 1024, daily: Infinity, label: "Enterprise" },
 };
@@ -47,10 +47,10 @@ const PLAN_LIMITS: Record<string, { storage: number; daily: number; label: strin
 // Synced with utils/upload-limit.ts — the single source of truth
 const PLAN_FEATURES: Record<string, string[]> = {
   free: [
-    "10 uploads per day",
-    "2 MB per file",
+    "15 uploads per day",
+    "3 MB per file",
     "200 MB storage",
-    "Files kept for 30 days",
+    "Files kept for 180 days",
   ],
   plus: [
     "1,000 uploads per day",
