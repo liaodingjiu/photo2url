@@ -95,7 +95,21 @@ export async function POST(request: NextRequest) {
         `[clerk-webhook] user.created: ${email} → claimed plan=${planType} sub=${lemonSubId}`
       );
     } else {
-      console.log(`[clerk-webhook] user.created: ${email} → free`);
+      // Check for email mismatch: a pending subscription exists but under a
+      // different email than the one used to sign up. Log so we can manually
+      // associate it later.
+      const pendingCount = (
+        await db
+          .prepare("SELECT COUNT(*) as count FROM pending_subscriptions WHERE status = 'pending'")
+          .first()
+      ) as any;
+      if (pendingCount?.count > 0) {
+        console.warn(
+          `[clerk-webhook] user.created: ${email} → free, but ${pendingCount.count} pending subscription(s) exist — email mismatch?`
+        );
+      } else {
+        console.log(`[clerk-webhook] user.created: ${email} → free`);
+      }
     }
 
     return NextResponse.json({ received: true });

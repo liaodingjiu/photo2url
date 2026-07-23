@@ -67,6 +67,11 @@ export async function POST(request: NextRequest) {
     const planType = clerkUserId ? await getUserPlanType(clerkUserId) : "free";
     const quota = getUploadQuota(planType);
 
+    // Migrate guest data to user account on first auth'd upload after sign-up
+    if (clerkUserId && cookieId) {
+      await migrateGuestData(clerkUserId, cookieId);
+    }
+
     // ================================================================
     // 4. Rate limit check (cookie + IP)
     // ================================================================
@@ -115,13 +120,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // IP hard limit (safety net for free/guest only)
-    if (planType === "free" && ipCount >= IP_DAILY_HARD_LIMIT) {
+    // IP hard limit (safety net for guests only — logged-in users have per-plan quotas)
+    if (!clerkUserId && ipCount >= IP_DAILY_HARD_LIMIT) {
       return NextResponse.json(
         {
           success: false,
           error: "ip_limit",
-          message: "Upload limit exceeded for this network",
+          message: "Network limit (50 uploads/day) reached. Sign up for higher limits.",
         },
         { status: 429 }
       );
@@ -288,6 +293,55 @@ export async function POST(request: NextRequest) {
 // ================================================================
 // Helper functions — interact with D1
 // ================================================================
+
+/**
+ * Migrate guest-uploaded files and upload counts to a user account.
+ * Called once on the first authenticated upload after sign-up.
+ * Idempotent: UPDATE WHERE user_id IS NULL won't re-match after migration.
+ */
+async function migrateGuestData(userId: string, cookieId: string) {
+  try {
+    const db = (process.env as any).DB;
+    if (!db) return;
+
+    // Calculate total size of migrated files for storage accounting
+    const sizeResult = await db
+      .prepare(
+        "SELECT COALESCE(SUM(file_size), 0) as total FROM files WHERE cookie_id = ? AND user_id IS NULL"
+      )
+      .bind(cookieId)
+      .first();
+    const totalSize = (sizeResult as any)?.total || 0;
+
+    // Migrate file ownership
+    await db
+      .prepare("UPDATE files SET user_id = ? WHERE cookie_id = ? AND user_id IS NULL")
+      .bind(userId, cookieId)
+      .run();
+
+    // Migrate upload counts
+    await db
+      .prepare(
+        "UPDATE upload_counts SET user_id = ? WHERE cookie_id = ? AND user_id IS NULL"
+      )
+      .bind(userId, cookieId)
+      .run();
+
+    // Update user storage
+    if (totalSize > 0) {
+      await db
+        .prepare("UPDATE users SET storage_used = storage_used + ? WHERE id = ?")
+        .bind(totalSize, userId)
+        .run();
+    }
+
+    console.log(
+      `[migrate] cookie=${cookieId.slice(0,8)}... → user=${userId.slice(0,12)}... (${totalSize} bytes)`
+    );
+  } catch (error) {
+    console.error("[migrate] Guest data migration failed:", error);
+  }
+}
 
 async function getUserPlanType(userId: string): Promise<string> {
   try {
