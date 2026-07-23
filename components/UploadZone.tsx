@@ -65,6 +65,7 @@ export default function UploadZone({
         const res = await fetch("/api/upload", {
           method: "POST",
           body: formData,
+          credentials: "include",
         });
         const data = await res.json();
 
