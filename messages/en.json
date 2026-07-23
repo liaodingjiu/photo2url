@@ -125,7 +125,7 @@
       },
       {
         "question": "Is the photo to URL converter free?",
-        "answer": "Yes — and we mean it. The free tier includes 15 uploads per day, 3 MB per file, hosted for 180 days. No trial period. No credit card. Paid plans lift the limits and add permanent Cloudflare R2 storage, but the core converter stays free."
+        "answer": "Yes — and we mean it. The free tier includes 15 uploads per day, 3 MB per file, hosted for 180 days — more than enough for docs, forums, and chat threads. Need permanent storage? Paid plans keep your files forever. No trial period. No credit card. Paid plans lift the limits and add permanent Cloudflare R2 storage, but the core converter stays free."
       },
       {
         "question": "What kind of link do I get?",
