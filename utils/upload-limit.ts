@@ -27,7 +27,7 @@ export const UPLOAD_LIMITS = {
 export type PlanType = keyof typeof UPLOAD_LIMITS;
 
 /** Guest/Free tier: Turnstile kicks in after this many uploads */
-export const TURNSTILE_THRESHOLD = 5;
+export const TURNSTILE_THRESHOLD = 30;
 
 /** IP-level hard cap (per day) — safety net beyond cookie tracking */
 export const IP_DAILY_HARD_LIMIT = 50;
