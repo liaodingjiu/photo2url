@@ -64,9 +64,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Determine plan type and quota
+    const dbAvailable = !!(process.env as any).DB;
     const planType = clerkUserId ? await getUserPlanType(clerkUserId) : "free";
     const quota = getUploadQuota(planType);
-    console.log("[upload] userId:", clerkUserId, "planType:", planType, "quota.fileSizeLimit:", quota.fileSizeLimit);
+    console.log("[upload] userId:", clerkUserId, "dbAvailable:", dbAvailable, "planType:", planType);
 
     // Migrate guest data to user account on first auth'd upload after sign-up
     if (clerkUserId && cookieId) {
@@ -168,7 +169,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: "file_too_large",
-          message: `File exceeds maximum size of ${maxMB} MB (plan: ${planType})`,
+          message: `File exceeds maximum size of ${maxMB} MB (plan: ${planType}, userId: ${clerkUserId?.slice(-8) || "none"}, db: ${dbAvailable})`,
         },
         { status: 400 }
       );
