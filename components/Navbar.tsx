@@ -13,7 +13,8 @@ import { ChevronDown, Wrench } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 
 export default function Navbar({ dict }: { dict?: Dictionary }) {
-  const { isSignedIn } = useAuth();
+  let isSignedIn = false;
+  try { const auth = useAuth(); isSignedIn = auth.isSignedIn ?? false; } catch { /* Clerk not available */ }
   const n = dict?.nav;
 
   return (

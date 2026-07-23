@@ -44,28 +44,6 @@ const PLAN_LIMITS: Record<string, { storage: number; daily: number; label: strin
   enterprise: { storage: 200 * 1024 * 1024 * 1024, daily: Infinity, label: "Enterprise" },
 };
 
-// Synced with utils/upload-limit.ts — the single source of truth
-const PLAN_FEATURES: Record<string, string[]> = {
-  free: [
-    "15 uploads per day",
-    "3 MB per file",
-    "200 MB storage",
-    "Files kept for 180 days",
-  ],
-  plus: [
-    "1,000 uploads per day",
-    "50 MB per file",
-    "100 GB storage",
-    "Never expires",
-  ],
-  enterprise: [
-    "Unlimited uploads",
-    "256 MB per file",
-    "200 GB storage",
-    "Never expires",
-  ],
-};
-
 const CHECKOUT_URLS: Record<string, string> = {
   Plus: "https://photo2url.lemonsqueezy.com/checkout/buy/a29b1d30-70b5-4a72-a467-99f2cc42cbdb",
   Enterprise: "https://photo2url.lemonsqueezy.com/checkout/buy/adfbbc5a-e7ff-4f48-a9c3-718e0ebbc7bb",
@@ -97,22 +75,52 @@ function buildCheckoutUrl(planName: string, userId: string, user?: { email?: str
   return `${base}?${params.toString()}`;
 }
 
-const BILLING_PLANS = [
-  {
-    name: "Enterprise",
-    price: "$94.90/yr",
-    icon: Crown,
-    highlight: true,
-    features: ["256 MB per file", "Unlimited uploads", "200 GB storage", "Never expires"],
-  },
-  {
-    name: "Plus",
-    price: "$9.90/mo",
-    icon: Zap,
-    highlight: false,
-    features: ["50 MB per file", "1,000 uploads/day", "100 GB storage", "Never expires"],
-  },
-];
+function getBillingUpgradePlans(
+  dict: Dictionary,
+  currentPlanType: string,
+): { checkoutKey: string; name: string; price: string; icon: React.ElementType; highlight: boolean; features: string[] }[] {
+  const rows = dict.pricing.rows;
+  const allPlans = [
+    {
+      key: "enterprise",
+      checkoutKey: "Enterprise" as const,
+      price: "$94.90/yr",
+      icon: Crown,
+      highlight: true,
+    },
+    {
+      key: "plus",
+      checkoutKey: "Plus" as const,
+      price: "$9.90/mo",
+      icon: Zap,
+      highlight: false,
+    },
+  ];
+
+  // Filter: Plus users only see Enterprise card
+  const filtered = currentPlanType === "plus"
+    ? allPlans.filter((p) => p.key === "enterprise")
+    : allPlans;
+
+  return filtered.map((p) => ({
+    checkoutKey: p.checkoutKey,
+    name: dict.pricing.plans[p.key as "enterprise" | "plus"]?.name || p.key,
+    price: p.price,
+    icon: p.icon,
+    highlight: p.highlight,
+    features: rows
+      .filter((row) => {
+        const value = row[p.key as "enterprise" | "plus"];
+        if (typeof value === "boolean" && !value) return false;
+        return true;
+      })
+      .map((row) => {
+        const value = row[p.key as "enterprise" | "plus"];
+        if (typeof value === "string") return `${row.label}: ${value}`;
+        return row.label; // boolean true → feature name only
+      }),
+  }));
+}
 
 // =============== Helpers ===============
 
@@ -188,7 +196,8 @@ export default function DashboardClient({
     }
   }, [searchParams]);
 
-  const plan = PLAN_LIMITS[data?.planType || "free"] || PLAN_LIMITS.free;
+  const planType = (data?.planType || "free").toLowerCase();
+  const plan = PLAN_LIMITS[planType] || PLAN_LIMITS.free;
   const storagePct = plan.storage > 0 ? ((data?.storageUsed || 0) / plan.storage) * 100 : 0;
 
   const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
@@ -304,11 +313,11 @@ export default function DashboardClient({
         {/* P3 #4: Tab content with fade-in animation */}
         <div key={tab} className="animate-in fade-in slide-in-from-right-2 duration-200">
           {tab === "overview" && (
-            <OverviewTab data={data} plan={plan} storagePct={storagePct} dict={dict} user={user} files={files} />
+            <OverviewTab data={data} plan={plan} planType={planType} storagePct={storagePct} dict={dict} user={user} files={files} />
           )}
           {tab === "profile" && <ProfileTab dict={dict} />}
           {tab === "billing" && (
-            <BillingTab data={data} plan={plan} storagePct={storagePct} userId={userId} dict={dict} />
+            <BillingTab data={data} plan={plan} planType={planType} storagePct={storagePct} userId={userId} dict={dict} />
           )}
         </div>
       </main>
@@ -321,6 +330,7 @@ export default function DashboardClient({
 function OverviewTab({
   data,
   plan,
+  planType,
   storagePct,
   dict,
   user,
@@ -328,12 +338,14 @@ function OverviewTab({
 }: {
   data: DashboardData | null;
   plan: { storage: number; daily: number; label: string };
+  planType: string;
   storagePct: number;
   dict: Dictionary;
   user?: { firstName?: string | null; username?: string | null } | null;
   files?: FileRecord[];
 }) {
   const d = dict.dashboard.overview;
+  const planDisplayName = dict.pricing.plans[planType as "enterprise" | "plus" | "free"]?.name || plan.label;
 
   // P3 #6: Threshold color for storage bar
   const barColor =
@@ -362,7 +374,7 @@ function OverviewTab({
               <p className="text-xs text-muted-foreground">{d.storage}</p>
               <p className="text-xl font-bold">{formatBytes(data?.storageUsed || 0)}</p>
               <p className="text-xs text-muted-foreground">
-                {plan.label} · {formatLimit(plan.storage)}
+                {planDisplayName} · {formatLimit(plan.storage)}
               </p>
             </div>
           </CardContent>
@@ -406,7 +418,7 @@ function OverviewTab({
             </div>
             <div>
               <p className="text-xs text-muted-foreground">{d.plan}</p>
-              <p className="text-xl font-bold">{plan.label}</p>
+              <p className="text-xl font-bold">{planDisplayName}</p>
               <p className="text-xs text-muted-foreground">{d.planActive}</p>
             </div>
           </CardContent>
@@ -486,12 +498,14 @@ function ProfileTab({ dict }: { dict: Dictionary }) {
 function BillingTab({
   data,
   plan,
+  planType,
   storagePct,
   userId,
   dict,
 }: {
   data: DashboardData | null;
   plan: { storage: number; daily: number; label: string };
+  planType: string;
   storagePct: number;
   userId: string;
   dict: Dictionary;
@@ -500,6 +514,7 @@ function BillingTab({
               fullName?: string | null } | null | undefined = null;
   try { const u = useUser(); user = u.user; } catch { /* Clerk not available */ }
   const d = dict.dashboard.billing;
+  const planDisplayName = dict.pricing.plans[planType as "enterprise" | "plus" | "free"]?.name || plan.label;
 
   // P3 #6: Threshold color
   const barColor =
@@ -513,6 +528,23 @@ function BillingTab({
     if (url) window.location.href = url;
   };
 
+  // Generate current plan features from i18n pricing rows (shared with homepage)
+  // String values → "Label: value" | Boolean true → label only | Boolean false → skip
+  const currentPlanFeatures = dict.pricing.rows
+    .filter((row) => {
+      const value = row[planType as "enterprise" | "plus" | "free"];
+      // Skip non-applicable boolean features (false)
+      if (typeof value === "boolean" && !value) return false;
+      return true;
+    })
+    .map((row) => {
+      const value = row[planType as "enterprise" | "plus" | "free"];
+      if (typeof value === "string") return `${row.label}: ${value}`;
+      return row.label; // boolean true → just show the feature name
+    });
+
+  const upgradePlans = getBillingUpgradePlans(dict, planType);
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-2">{d.heading}</h1>
@@ -525,11 +557,11 @@ function BillingTab({
           <p className="text-sm text-muted-foreground mb-4">{d.upgradeDesc}</p>
           <div className="flex items-center gap-3 mb-4">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
-              {plan.label}
+              {planDisplayName}
             </span>
             <span className="text-xs text-muted-foreground">{d.active}</span>
             {/* Paid users: self-service subscription management via Lemon Squeezy */}
-            {plan.label !== "Free" && (
+            {planType !== "free" && (
               <a
                 href="https://photo2url.lemonsqueezy.com/billing"
                 target="_blank"
@@ -541,9 +573,9 @@ function BillingTab({
             )}
           </div>
 
-          {/* Feature list — dynamic per plan, synced with utils/upload-limit.ts */}
+          {/* Feature list — generated from i18n pricing rows, shared with homepage */}
           <ul className="space-y-2 mb-4">
-            {(PLAN_FEATURES[plan.label] || PLAN_FEATURES.free).map((feat) => (
+            {currentPlanFeatures.map((feat) => (
               <li key={feat} className="flex items-center gap-2 text-sm">
                 <Check className="h-4 w-4 text-green-500 shrink-0" />
                 {feat}
@@ -586,17 +618,13 @@ function BillingTab({
       </Card>
 
       {/* P1 #28: Show upgrade cards for Free AND Plus users */}
-      {plan.label !== "Enterprise" && (
+      {planType !== "enterprise" && upgradePlans.length > 0 && (
         <div>
           <h2 className="text-lg font-semibold mb-4">
-            {plan.label === "Plus" ? "Upgrade to Enterprise" : d.upgradeTitle}
+            {planType === "plus" ? "Upgrade to Enterprise" : d.upgradeTitle}
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
-            {/* P1 #28: Plus users only see Enterprise card */}
-            {BILLING_PLANS.filter((p) => {
-              if (plan.label === "Plus") return p.name === "Enterprise";
-              return true;
-            }).map((p) => (
+            {upgradePlans.map((p) => (
               <Card key={p.name} className={p.highlight ? "border-primary ring-1 ring-primary" : ""}>
                 <CardContent className="p-5">
                   <div className="flex items-center gap-2 mb-3">
@@ -615,9 +643,9 @@ function BillingTab({
                   <Button
                     className="w-full"
                     variant={p.highlight ? "default" : "outline"}
-                    onClick={() => handleUpgrade(p.name)}
+                    onClick={() => handleUpgrade(p.checkoutKey)}
                   >
-                    {plan.label === "Plus" ? "Upgrade to " : d.upgradeCta + " "}{p.name} <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
+                    {planType === "plus" ? "Upgrade to " : d.upgradeCta + " "}{p.name} <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
                   </Button>
                 </CardContent>
               </Card>

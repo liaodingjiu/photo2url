@@ -155,7 +155,6 @@ export interface Dictionary {
       currentPlan: string;
       upgradeDesc: string;
       active: string;
-      features: string[];
       storageUsage: string;
       upgradeTitle: string;
       upgradeCta: string;

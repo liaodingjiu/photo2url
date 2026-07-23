@@ -80,12 +80,6 @@
       "currentPlan": "当前套餐",
       "upgradeDesc": "升级以获得更高的文件大小、每日上传、存储空间和有效期限制。",
       "active": "使用中",
-      "features": [
-        "每天 10 次上传",
-        "单文件最大 2 MB",
-        "200 MB 存储空间",
-        "文件保存 30 天"
-      ],
       "storageUsage": "存储用量",
       "upgradeTitle": "升级套餐",
       "upgradeCta": "升级到"
@@ -105,6 +99,8 @@
       { "label": "每日上传", "enterprise": "无限", "plus": "1,000 次", "free": "15 次" },
       { "label": "总存储空间", "enterprise": "200 GB", "plus": "100 GB", "free": "200 MB" },
       { "label": "保存期限", "enterprise": "永久", "plus": "永久", "free": "180 天" },
+      { "label": "永久存储", "enterprise": true, "plus": true, "free": false },
+      { "label": "无限制上传", "enterprise": true, "plus": false, "free": false },
       { "label": "邮件支持", "enterprise": "优先", "plus": "标准", "free": "标准" }
     ]
   },
@@ -176,7 +172,7 @@
       { "title": "全球 CDN 加速", "desc": "每张图片链接都通过 Cloudflare 全球 CDN 分发。图片 URL 在任何地区、任何设备上都能在 200 毫秒内加载。" },
       { "title": "三种格式一键复制", "desc": "一次上传，三种输出：图片直链、Markdown 代码、HTML 标签。按需复制你的图片链接格式。" },
       { "title": "端到端加密存储", "desc": "照片链接托管在 Cloudflare R2，传输层 TLS 加密 + 服务端静态加密。你的图片链接保持私密。" },
-      { "title": "免费 · 无需注册", "desc": "无需账号即可将图片转为链接——每天 10 次免费图片转 URL，单文件 2 MB，保存 30 天。无需信用卡。" },
+      { "title": "免费 · 无需注册", "desc": "无需账号即可将图片转为链接——每天 15 次免费图片转 URL，单文件 3 MB，保存 180 天。无需信用卡。" },
       { "title": ".jpg 原生直链", "desc": "无包装页、无广告、无相册。每条图片直链保留原始扩展名——.jpg、.png、.webp、.gif。干净的图片 URL，随处可用。" }
     ]
   },
@@ -191,7 +187,7 @@
   },
   "partners": { "title": "全球团队的信赖" },
   "footer": {
-    "brand": { "description": "PhotoToURL 是一款免费的图片转链接工具。上传 JPG、PNG、WEBP，获取直链，适用于文档、聊天、工单和论坛。免费版：每天 10 次上传，单文件 2 MB。付费版享 Cloudflare R2 CDN 链接。" },
+    "brand": { "description": "PhotoToURL 是一款免费的图片转链接工具。上传 JPG、PNG、WEBP，获取直链，适用于文档、聊天、工单和论坛。免费版：每天 15 次上传，单文件 3 MB。付费版享 Cloudflare R2 CDN 链接。" },
     "product": { "title": "产品", "pricing": "定价", "upload": "上传" },
     "legal": { "title": "法律", "privacy": "隐私政策", "terms": "服务条款", "refund": "退款政策",
       "reportAbuse": "Report Abuse" },
@@ -200,7 +196,7 @@
   },
   "nav": { "home": "首页", "tools": "工具", "pricing": "定价", "login": "登录", "signup": "注册", "dashboard": "控制台" },
   "language": { "selectRegion": "选择地区", "chooseLang": "选择您偏好的语言和地区" },
-  "privacy": { "title": "隐私政策", "content": "我们收集最少量的数据以提供服务。上传的文件安全存储在 Cloudflare R2 上。我们不会出售或与第三方分享您的个人数据。免费用户的文件将在 30 天后自动删除。付费用户的文件将保留至取消订阅。我们使用 Cookie 进行身份验证和安全保护。使用本服务即表示您同意本隐私政策。" },
-  "terms": { "title": "服务条款", "content": "使用 photo2url 即表示您同意不上传非法、有害或未经授权的版权内容。我们保留删除任何违反本条款内容的权利。本服务按「原样」提供，不附带任何保证。我们对因使用本服务而产生的任何损害不承担责任。免费用户受每日上传限制和 30 天自动清理的约束。付费计划受我们的支付服务商 Lemon Squeezy 的条款约束。" },
+  "privacy": { "title": "隐私政策", "content": "我们收集最少量的数据以提供服务。上传的文件安全存储在 Cloudflare R2 上。我们不会出售或与第三方分享您的个人数据。免费用户的文件将在 180 天后自动删除。付费用户的文件将保留至取消订阅。我们使用 Cookie 进行身份验证和安全保护。使用本服务即表示您同意本隐私政策。" },
+  "terms": { "title": "服务条款", "content": "使用 photo2url 即表示您同意不上传非法、有害或未经授权的版权内容。我们保留删除任何违反本条款内容的权利。本服务按「原样」提供，不附带任何保证。我们对因使用本服务而产生的任何损害不承担责任。免费用户受每日上传限制和 180 天自动清理的约束。付费计划受我们的支付服务商 Lemon Squeezy 的条款约束。" },
   "refund": { "title": "退款政策", "content": "如果您对已付费的订阅不满意，可在购买后 7 天内申请退款。退款通过我们的支付服务商 Lemon Squeezy 处理。请发送邮件至 support@photo2url.com 并附上订单详情申请退款。超过 7 天的订阅不予退款。取消订阅将停止未来的收费，但不退还当前计费周期的费用。" }
 }

@@ -83,12 +83,6 @@
       "currentPlan": "Current plan",
       "upgradeDesc": "Upgrade for higher limits on file size, daily uploads, storage, and expiry.",
       "active": "Active",
-      "features": [
-        "15 uploads per day",
-        "3 MB per file",
-        "200 MB storage",
-        "Files kept for 180 days"
-      ],
       "storageUsage": "Storage usage",
       "upgradeTitle": "Upgrade your plan",
       "upgradeCta": "Upgrade to"
@@ -108,6 +102,8 @@
       { "label": "Daily uploads", "enterprise": "Unlimited", "plus": "1,000", "free": "15 / day" },
       { "label": "Total storage", "enterprise": "200 GB", "plus": "100 GB", "free": "200 MB" },
       { "label": "Files kept for", "enterprise": "Never", "plus": "Never", "free": "180 days" },
+      { "label": "Permanent storage", "enterprise": true, "plus": true, "free": false },
+      { "label": "Unlimited uploads", "enterprise": true, "plus": false, "free": false },
       { "label": "Email support", "enterprise": "Priority", "plus": "Standard", "free": "Standard" }
     ]
   },

@@ -1,6 +1,6 @@
 "use client";
 
-import { Check } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -20,8 +20,15 @@ function detectCountry(): string | null {
 }
 
 export default function PricingSection({ dict }: { dict: Dictionary }) {
-  const { isSignedIn, userId } = useAuth();
-  const { user } = useUser();
+  let isSignedIn = false;
+  let userId: string | null = null;
+  let user: { primaryEmailAddress?: { emailAddress: string } | null; fullName?: string | null } | null | undefined = null;
+  try {
+    const auth = useAuth();
+    isSignedIn = auth.isSignedIn ?? false;
+    userId = auth.userId ?? null;
+  } catch { /* Clerk not available */ }
+  try { const u = useUser(); user = u.user; } catch { /* Clerk not available */ }
   const t = dict.pricing;
 
   const plans = [
@@ -114,7 +121,7 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
                             {typeof value === "string" ? value : row.label}
                           </span>
                           {typeof value === "boolean" && !value ? (
-                            <span className="h-4 w-4 shrink-0" />
+                            <X className="h-4 w-4 text-red-400 shrink-0" />
                           ) : (
                             <Check className="h-4 w-4 text-emerald-500 shrink-0" />
                           )}

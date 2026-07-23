@@ -31,7 +31,8 @@ export default function LocaleHomeClient({
   dict: Dictionary;
   planType?: string;
 }) {
-  const { isSignedIn } = useAuth();
+  let isSignedIn = false;
+  try { const auth = useAuth(); isSignedIn = auth.isSignedIn ?? false; } catch { /* Clerk not available */ }
   const [hasUploaded, setHasUploaded] = useState(false);
   const [uploadResult, setUploadResult] = useState<UploadResult | null>(null);
 
