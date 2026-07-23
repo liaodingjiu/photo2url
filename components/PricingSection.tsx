@@ -25,9 +25,9 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
   const t = dict.pricing;
 
   const plans = [
-    { key: "Free", price: "$0", period: "" },
-    { key: "Plus", price: "$9.90", period: "/month", highlight: true },
-    { key: "Enterprise", price: "$94.90", period: "/year", monthly: "~$7.91 /mo" },
+    { key: "Free", price: "$0", period: "" as const, highlight: false as const, monthly: "" as const },
+    { key: "Plus", price: "$9.90", period: "/month" as const, highlight: true as const, monthly: "" as const },
+    { key: "Enterprise", price: "$94.90", period: "/year" as const, highlight: false as const, monthly: "~$7.91 /mo" as const },
   ] as const;
 
   const handleSubscribe = (planKey: string) => {
@@ -91,7 +91,7 @@ export default function PricingSection({ dict }: { dict: Dictionary }) {
                         </span>
                       )}
                     </div>
-                    {plan.monthly && (
+                    {plan.monthly !== "" && (
                       <p className="text-xs text-muted-foreground mt-1">{plan.monthly}</p>
                     )}
                   </div>
