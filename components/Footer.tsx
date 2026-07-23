@@ -77,6 +77,14 @@ export default function Footer({
                   {f.legal.refund}
                 </Link>
               </li>
+              <li>
+                <a
+                  href="mailto:abuse@photo2url.com"
+                  className="hover:text-foreground transition-colors"
+                >
+                  {f.legal.reportAbuse}
+                </a>
+              </li>
             </ul>
           </div>
 

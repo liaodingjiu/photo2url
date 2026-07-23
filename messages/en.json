@@ -209,7 +209,8 @@
       "title": "Legal",
       "privacy": "Privacy Policy",
       "terms": "Terms of Service",
-      "refund": "Refund Policy"
+      "refund": "Refund Policy",
+      "reportAbuse": "Report Abuse"
     },
     "contact": {
       "title": "Contact"
@@ -230,11 +231,11 @@
   },
   "privacy": {
     "title": "Privacy Policy",
-    "content": "We collect minimal data to provide our service. Uploaded files are stored securely on Cloudflare R2. We do not sell or share your personal data with third parties. For free users, files are automatically removed after 30 days. Paid users retain their files until they cancel their subscription. We use cookies for authentication and security purposes. By using this service, you agree to this privacy policy."
+    "content": "We collect minimal data to provide our service. Uploaded files are stored on Cloudflare R2 and served via a global CDN. We do not sell or share your personal data with third parties. For free users, files are automatically removed after 180 days. Paid users retain their files until they cancel their subscription. We use cookies for authentication and security purposes. Content that violates our Terms of Service may be removed without notice. In cases involving illegal content, we may report to the relevant authorities. By using this service, you agree to this privacy policy."
   },
   "terms": {
     "title": "Terms of Service",
-    "content": "By using photo2url, you agree not to upload illegal, harmful, or copyrighted content without permission. We reserve the right to remove any content that violates these terms. The service is provided 'as is' without warranty. We are not liable for any damages resulting from the use of our service. Free tier users are subject to daily upload limits and automatic file cleanup after 30 days. Paid plans are governed by the terms of our payment provider, Lemon Squeezy."
+    "content": "By using photo2url, you agree not to upload content that: (a) depicts or promotes child sexual abuse — we will report such content to law enforcement immediately; (b) infringes copyright, trademark, or other intellectual property rights; (c) violates any applicable law in your jurisdiction or ours. We reserve the right to remove any content and suspend or terminate any account, at any time, for any reason, without prior notice. You bear sole responsibility for the content you upload. The service is provided 'as is' without warranty. We are not liable for any damages resulting from the use of our service. Free tier users are subject to daily upload limits and automatic file cleanup after 180 days. Paid plans are governed by the terms of our payment provider, Lemon Squeezy."
   },
   "refund": {
     "title": "Refund Policy",

@@ -199,7 +199,7 @@ export interface Dictionary {
   footer: {
     brand: { description: string };
     product: { title: string; pricing: string; upload: string };
-    legal: { title: string; privacy: string; terms: string; refund: string };
+    legal: { title: string; privacy: string; terms: string; refund: string; reportAbuse: string };
     contact: { title: string };
     copyright: string;
   };
