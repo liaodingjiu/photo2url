@@ -172,11 +172,13 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function mapVariantToPlan(variantId: string): string {
+function mapVariantToPlan(variantId: string | number): string {
   const plusVariant = process.env.LEMON_SQUEEZY_PLUS_VARIANT_ID;
   const enterpriseVariant = process.env.LEMON_SQUEEZY_ENTERPRISE_VARIANT_ID;
 
-  if (variantId === enterpriseVariant) return "enterprise";
-  if (variantId === plusVariant) return "plus";
+  // variant_id from webhook is number, env vars are strings — compare as strings
+  const id = String(variantId);
+  if (id === enterpriseVariant) return "enterprise";
+  if (id === plusVariant) return "plus";
   return "free";
 }
