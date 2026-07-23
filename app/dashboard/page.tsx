@@ -95,5 +95,8 @@ export default async function DashboardPage() {
   const dict = await getDictionary(locale);
   const data = await getDashboardData(userId);
 
-  return <DashboardClient userId={userId} data={data} dict={dict} />;
+  // DEBUG: Include raw DB result to diagnose plan_type mismatch
+  const debug = data ? { planType: data.planType, userId } : { error: "data is null", userId };
+
+  return <DashboardClient userId={userId} data={data} dict={dict} debug={debug} />;
 }
