@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Free Photo2URL link Converter|Convert image to URL link online free",
-    "description": "Photo2URL is a free image to URL converter and image link generator that helps you convert images to shareable URLs instantly with our free hosting service. Upload JPG, PNG, GIF files up to 3MB, get CDN-powered links hosted for 180 days."
+    "title": "Photo to URL Converter — Free Image to URL Converter Online | photo2url",
+    "description": "Convert photos to shareable URLs instantly. Paste or drag & drop JPG, PNG, WEBP or GIF images, get a direct image link, Markdown snippet, and HTML embed. No sign-up, no ads, free 15 uploads/day."
   },
   "site": {
     "name": "photo2url",
@@ -75,7 +75,9 @@
       "noFiles": "No photos uploaded yet",
       "noFilesHint": "Go to the homepage to upload your first photo.",
       "uploadCta": "Upload",
-      "loading": "Loading..."
+      "loading": "Loading...",
+      "showingFiles": "Showing {count} files",
+      "noMatch": "No files match your search"
     },
     "billing": {
       "heading": "Billing",

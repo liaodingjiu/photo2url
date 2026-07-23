@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "photo2url — 图片秒转链接",
-    "description": "无需注册。上传 → 获取链接 → 嵌入任意位置。快速、免费的图片托管服务。"
+    "title": "图片转链接 — 免费在线图片 URL 生成器 | photo2url",
+    "description": "将照片即时转换为可分享的链接。粘贴或拖拽 JPG、PNG、WEBP、GIF 图片，获取直链、Markdown 和 HTML 嵌入代码。无需注册，无广告，每天免费 15 次上传。"
   },
   "site": { "name": "photo2url", "tagline": "图片秒转链接" },
   "hero": {
@@ -72,7 +72,9 @@
       "noFiles": "还没有上传照片",
       "noFilesHint": "前往首页上传你的第一张照片。",
       "uploadCta": "上传",
-      "loading": "加载中..."
+      "loading": "加载中...",
+      "showingFiles": "共 {count} 个文件",
+      "noMatch": "没有匹配的文件"
     },
     "billing": {
       "heading": "订阅",

@@ -465,7 +465,7 @@ function OverviewTab({
             </Button>
           </a>
         </div>
-        <FileList files={files} />
+        <FileList files={files} dict={dict} />
       </div>
     </div>
   );

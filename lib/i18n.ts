@@ -148,6 +148,8 @@ export interface Dictionary {
       noFilesHint: string;
       uploadCta: string;
       loading: string;
+      showingFiles: string;
+      noMatch: string;
     };
     billing: {
       heading: string;
