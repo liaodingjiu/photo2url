@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 
 const LOCALES = ["en", "zh-CN", "zh-TW", "ja", "ko", "es", "de", "fr"];
 
-const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
+const BYPASS_AUTH = process.env.DEV_BYPASS_AUTH === "true";
 
 function detectLocale(request: NextRequest): string {
   const cookie = request.cookies.get("locale")?.value;
@@ -28,7 +28,7 @@ function detectLocale(request: NextRequest): string {
   return "en";
 }
 
-export default clerkMiddleware(async (auth, req) => {
+function handleLocaleRouting(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // /en or /en/* → 301 to root (English lives at /)
@@ -45,11 +45,6 @@ export default clerkMiddleware(async (auth, req) => {
     const res = NextResponse.next();
     res.headers.set("x-locale", currentLocale);
     return res;
-  }
-
-  // Dashboard stays under /dashboard, protect with auth
-  if (isProtectedRoute(req)) {
-    await auth.protect();
   }
 
   // Skip API, static, sign-in/up, dashboard, image routes (no locale)
@@ -76,7 +71,20 @@ export default clerkMiddleware(async (auth, req) => {
   const locale = detectLocale(req);
   const newPath = `/${locale}${pathname}`;
   return NextResponse.redirect(new URL(newPath, req.url));
-});
+}
+
+// Local dev: skip Clerk entirely, use plain middleware
+const middleware = BYPASS_AUTH
+  ? (req: NextRequest) => handleLocaleRouting(req)
+  : clerkMiddleware(async (auth, req) => {
+      const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
+      if (isProtectedRoute(req)) {
+        await auth.protect();
+      }
+      return handleLocaleRouting(req);
+    });
+
+export default middleware;
 
 export const config = {
   matcher: [

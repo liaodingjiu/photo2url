@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { UserProfile } from "@clerk/nextjs";
+import { useSearchParams } from "next/navigation";
 import {
   LayoutDashboard,
   User,
@@ -14,10 +15,15 @@ import {
   Zap,
   Crown,
   Check,
+  Sun,
+  Moon,
+  AlertCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import FileList from "@/components/FileList";
+import { Separator } from "@/components/ui/separator";
+import FileList, { type FileRecord } from "@/components/FileList";
+import { toast } from "sonner";
 import type { Dictionary } from "@/lib/i18n";
 
 // =============== Types & Constants ===============
@@ -36,6 +42,28 @@ const PLAN_LIMITS: Record<string, { storage: number; daily: number; label: strin
   free: { storage: 200 * 1024 * 1024, daily: 10, label: "Free" },
   plus: { storage: 100 * 1024 * 1024 * 1024, daily: 1000, label: "Plus" },
   enterprise: { storage: 200 * 1024 * 1024 * 1024, daily: Infinity, label: "Enterprise" },
+};
+
+// Synced with utils/upload-limit.ts — the single source of truth
+const PLAN_FEATURES: Record<string, string[]> = {
+  free: [
+    "10 uploads per day",
+    "2 MB per file",
+    "200 MB storage",
+    "Files kept for 30 days",
+  ],
+  plus: [
+    "1,000 uploads per day",
+    "50 MB per file",
+    "100 GB storage",
+    "Never expires",
+  ],
+  enterprise: [
+    "Unlimited uploads",
+    "256 MB per file",
+    "200 GB storage",
+    "Never expires",
+  ],
 };
 
 const CHECKOUT_URLS: Record<string, string> = {
@@ -91,7 +119,7 @@ const BILLING_PLANS = [
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  if (bytes < (1024 * 1024 * 1024)) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
 }
 
@@ -100,21 +128,65 @@ function formatLimit(bytes: number): string {
   return `${bytes / (1024 * 1024)} MB`;
 }
 
+function useDarkMode() {
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = stored === "dark" || (!stored && prefersDark);
+    setDark(isDark);
+    document.documentElement.classList.toggle("dark", isDark);
+  }, []);
+
+  const toggle = () => {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("theme", next ? "dark" : "light");
+  };
+
+  return { dark, toggle };
+}
+
 // =============== Main Component ===============
 
 export default function DashboardClient({
   userId,
   data,
+  files,
   dict,
 }: {
   userId: string;
   data: DashboardData | null;
+  files?: FileRecord[];
   dict: Dictionary;
 }) {
-  const { user } = useUser();
+  // useUser may not be available when Clerk is bypassed in local dev
+  let user: { firstName?: string | null; username?: string | null;
+              primaryEmailAddress?: { emailAddress: string } | null;
+              fullName?: string | null } | null = null;
+  try { const u = useUser(); user = u.user; } catch { /* Clerk not available */ }
+
+  const searchParams = useSearchParams();
   const [tab, setTab] = useState<Tab>("overview");
+  const { dark, toggle: toggleDark } = useDarkMode();
   const d = dict.dashboard;
   const dt = d.tabs;
+
+  // P0 #26: Payment success feedback
+  useEffect(() => {
+    if (searchParams.get("checkout") === "success") {
+      toast.success("Payment successful! Your plan has been upgraded.", {
+        duration: 6000,
+      });
+      setTab("billing");
+      // Clean the URL without reloading
+      const url = new URL(window.location.href);
+      url.searchParams.delete("checkout");
+      window.history.replaceState({}, "", url.toString());
+    }
+  }, [searchParams]);
 
   const plan = PLAN_LIMITS[data?.planType || "free"] || PLAN_LIMITS.free;
   const storagePct = plan.storage > 0 ? ((data?.storageUsed || 0) / plan.storage) * 100 : 0;
@@ -127,26 +199,49 @@ export default function DashboardClient({
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
-      {/* Sidebar */}
-      <aside className="w-56 border-r bg-muted/10 shrink-0 hidden md:block">
-        <nav className="p-4 space-y-1">
+      {/* Sidebar — P0 #1: fixed positioning, P2 #23: active indicator, P3 #3: visibility */}
+      <aside className="relative flex flex-col w-56 border-r bg-muted/30 shrink-0 hidden md:flex">
+        {/* Brand logo — click to return home */}
+        <a
+          href="/"
+          className="flex items-center gap-2 px-4 py-3.5 border-b text-sm font-semibold hover:bg-muted/50 transition-colors"
+        >
+          <Image className="h-5 w-5 text-primary" />
+          photo2url
+        </a>
+        <nav className="p-4 space-y-1 flex-1">
           {tabs.map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+              className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm transition-colors
                 ${tab === t.id
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "bg-primary text-primary-foreground font-semibold shadow-sm"
+                  : "font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
                 }`}
             >
               <t.icon className="h-4 w-4" />
               {t.label}
+              {/* P2 #23: Active left border bar */}
+              {tab === t.id && (
+                <span className="ml-auto w-0.5 h-4 rounded-full bg-primary-foreground/50" />
+              )}
             </button>
           ))}
+
+          {/* P2 #25: Dark mode toggle */}
+          <button
+            onClick={toggleDark}
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors mt-2"
+            aria-label="Toggle dark mode"
+          >
+            {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {dark ? "Light Mode" : "Dark Mode"}
+          </button>
         </nav>
 
-        <div className="absolute bottom-0 left-0 w-56 p-4 border-t">
+        {/* P0 #1: mt-auto pushes user info to bottom naturally */}
+        <div className="p-4 border-t">
           <p className="text-sm font-medium truncate">
             {user?.firstName || user?.username || "User"}
           </p>
@@ -156,9 +251,9 @@ export default function DashboardClient({
         </div>
       </aside>
 
-      {/* Mobile tab bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 border-t bg-background z-40">
-        <div className="flex">
+      {/* Mobile tab bar — P2 #20: middle tab as FAB upload */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 border-t bg-background z-40 safe-area-inset-bottom">
+        <div className="flex items-end">
           {tabs.map((t) => (
             <button
               key={t.id}
@@ -170,18 +265,52 @@ export default function DashboardClient({
               {t.label}
             </button>
           ))}
+          {/* P2 #20: Prominent upload FAB in center */}
+          <div className="flex-1 flex flex-col items-center -mt-3">
+            <a
+              href="/#upload"
+              className="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors active:scale-95"
+              aria-label="Upload photo"
+            >
+              <Upload className="h-5 w-5" />
+            </a>
+          </div>
         </div>
       </div>
 
       {/* Content */}
-      <main className="flex-1 p-6 pb-20 md:pb-6 overflow-auto">
-        {tab === "overview" && (
-          <OverviewTab data={data} plan={plan} storagePct={storagePct} dict={dict} />
+      <main className="flex-1 p-6 pb-24 md:pb-6 overflow-auto">
+        {/* P1 #27: Data loading error banner */}
+        {!data && (
+          <div className="flex items-center gap-3 p-4 mb-6 rounded-lg border border-destructive/30 bg-destructive/5 text-sm">
+            <AlertCircle className="h-5 w-5 text-destructive shrink-0" />
+            <div>
+              <p className="font-medium text-destructive">Failed to load dashboard data</p>
+              <p className="text-muted-foreground text-xs mt-0.5">
+                Please refresh the page or try again later.
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              className="ml-auto shrink-0"
+              onClick={() => window.location.reload()}
+            >
+              Refresh
+            </Button>
+          </div>
         )}
-        {tab === "profile" && <ProfileTab dict={dict} />}
-        {tab === "billing" && (
-          <BillingTab data={data} plan={plan} storagePct={storagePct} userId={userId} dict={dict} />
-        )}
+
+        {/* P3 #4: Tab content with fade-in animation */}
+        <div key={tab} className="animate-in fade-in slide-in-from-right-2 duration-200">
+          {tab === "overview" && (
+            <OverviewTab data={data} plan={plan} storagePct={storagePct} dict={dict} user={user} files={files} />
+          )}
+          {tab === "profile" && <ProfileTab dict={dict} />}
+          {tab === "billing" && (
+            <BillingTab data={data} plan={plan} storagePct={storagePct} userId={userId} dict={dict} />
+          )}
+        </div>
       </main>
     </div>
   );
@@ -194,17 +323,33 @@ function OverviewTab({
   plan,
   storagePct,
   dict,
+  user,
+  files,
 }: {
   data: DashboardData | null;
   plan: { storage: number; daily: number; label: string };
   storagePct: number;
   dict: Dictionary;
+  user?: { firstName?: string | null; username?: string | null };
+  files?: FileRecord[];
 }) {
   const d = dict.dashboard.overview;
 
+  // P3 #6: Threshold color for storage bar
+  const barColor =
+    storagePct > 85 ? "bg-destructive" : storagePct > 60 ? "bg-amber-500" : "bg-primary";
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">{d.heading}</h1>
+      {/* P3 #9: Personalized greeting */}
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold">
+          {user?.firstName ? `Welcome back, ${user.firstName}` : d.heading}
+        </h1>
+        {user?.firstName && (
+          <p className="text-sm text-muted-foreground mt-1">{d.heading}</p>
+        )}
+      </div>
 
       {/* Stat Cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
@@ -268,7 +413,7 @@ function OverviewTab({
         </Card>
       </div>
 
-      {/* Storage Bar */}
+      {/* Storage Bar — P3 #6: threshold colors, P3 #22: ARIA */}
       <div className="mb-8">
         <div className="flex justify-between text-sm mb-2">
           <span className="font-medium">{d.storageUsage}</span>
@@ -276,18 +421,39 @@ function OverviewTab({
             {formatBytes(data?.storageUsed || 0)} / {formatLimit(plan.storage)} · {storagePct.toFixed(1)}%
           </span>
         </div>
-        <div className="h-2.5 rounded-full bg-muted overflow-hidden">
+        <div
+          className="h-2.5 rounded-full bg-muted overflow-hidden"
+          role="progressbar"
+          aria-valuenow={Math.round(storagePct)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`Storage usage: ${storagePct.toFixed(1)}%`}
+        >
           <div
-            className="h-full rounded-full bg-primary transition-all duration-500"
+            className={`h-full rounded-full transition-all duration-500 ${barColor}`}
             style={{ width: `${Math.min(storagePct, 100)}%` }}
           />
         </div>
+        {/* P3 #6: Warning message near limit */}
+        {storagePct > 85 && (
+          <p className="text-xs text-destructive mt-2">
+            Storage almost full. Consider upgrading your plan.
+          </p>
+        )}
       </div>
 
       {/* File List */}
       <div>
-        <h2 className="text-lg font-semibold mb-4">{d.myPhotos}</h2>
-        <FileList />
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold">{d.myPhotos}</h2>
+          <a href="/#upload">
+            <Button size="sm">
+              <Upload className="h-4 w-4" />
+              Upload
+            </Button>
+          </a>
+        </div>
+        <FileList files={files} />
       </div>
     </div>
   );
@@ -330,8 +496,14 @@ function BillingTab({
   userId: string;
   dict: Dictionary;
 }) {
-  const { user } = useUser();
+  let user: { primaryEmailAddress?: { emailAddress: string } | null;
+              fullName?: string | null } | null = null;
+  try { const u = useUser(); user = u.user; } catch { /* Clerk not available */ }
   const d = dict.dashboard.billing;
+
+  // P3 #6: Threshold color
+  const barColor =
+    storagePct > 85 ? "bg-destructive" : storagePct > 60 ? "bg-amber-500" : "bg-primary";
 
   const handleUpgrade = (planName: string) => {
     const url = buildCheckoutUrl(planName, userId, {
@@ -358,9 +530,9 @@ function BillingTab({
             <span className="text-xs text-muted-foreground">{d.active}</span>
           </div>
 
-          {/* Feature list */}
+          {/* Feature list — dynamic per plan, synced with utils/upload-limit.ts */}
           <ul className="space-y-2 mb-4">
-            {d.features.map((feat) => (
+            {(PLAN_FEATURES[plan.label] || PLAN_FEATURES.free).map((feat) => (
               <li key={feat} className="flex items-center gap-2 text-sm">
                 <Check className="h-4 w-4 text-green-500 shrink-0" />
                 {feat}
@@ -368,8 +540,11 @@ function BillingTab({
             ))}
           </ul>
 
-          {/* Storage usage */}
-          <div className="mt-6 p-4 rounded-lg bg-muted/30">
+          {/* P3 #12: Separator between features and storage */}
+          <Separator className="my-5" />
+
+          {/* Storage usage — P3 #22: ARIA */}
+          <div className="p-4 rounded-lg bg-muted/30">
             <p className="text-sm font-medium mb-3">{d.storageUsage}</p>
             <div className="flex justify-between text-sm mb-2">
               <span className="text-muted-foreground">
@@ -377,22 +552,40 @@ function BillingTab({
               </span>
               <span className="text-muted-foreground">{storagePct.toFixed(1)}%</span>
             </div>
-            <div className="h-2 rounded-full bg-muted overflow-hidden">
+            <div
+              className="h-2 rounded-full bg-muted overflow-hidden"
+              role="progressbar"
+              aria-valuenow={Math.round(storagePct)}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={`Storage usage: ${storagePct.toFixed(1)}%`}
+            >
               <div
-                className="h-full rounded-full bg-primary transition-all"
+                className={`h-full rounded-full transition-all ${barColor}`}
                 style={{ width: `${Math.min(storagePct, 100)}%` }}
               />
             </div>
+            {storagePct > 85 && (
+              <p className="text-xs text-destructive mt-2">
+                Storage almost full. Consider upgrading your plan.
+              </p>
+            )}
           </div>
         </CardContent>
       </Card>
 
-      {/* Upgrade Plans — only shown for free users */}
-      {plan.label === "Free" && (
+      {/* P1 #28: Show upgrade cards for Free AND Plus users */}
+      {plan.label !== "Enterprise" && (
         <div>
-          <h2 className="text-lg font-semibold mb-4">{d.upgradeTitle}</h2>
+          <h2 className="text-lg font-semibold mb-4">
+            {plan.label === "Plus" ? "Upgrade to Enterprise" : d.upgradeTitle}
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2">
-            {BILLING_PLANS.map((p) => (
+            {/* P1 #28: Plus users only see Enterprise card */}
+            {BILLING_PLANS.filter((p) => {
+              if (plan.label === "Plus") return p.name === "Enterprise";
+              return true;
+            }).map((p) => (
               <Card key={p.name} className={p.highlight ? "border-primary ring-1 ring-primary" : ""}>
                 <CardContent className="p-5">
                   <div className="flex items-center gap-2 mb-3">
@@ -413,7 +606,7 @@ function BillingTab({
                     variant={p.highlight ? "default" : "outline"}
                     onClick={() => handleUpgrade(p.name)}
                   >
-                    {d.upgradeCta} {p.name} <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
+                    {plan.label === "Plus" ? "Upgrade to " : d.upgradeCta + " "}{p.name} <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
                   </Button>
                 </CardContent>
               </Card>

@@ -6,6 +6,8 @@ import DashboardClient from "./DashboardClient";
 
 export const runtime = "edge";
 
+const BYPASS_AUTH = process.env.DEV_BYPASS_AUTH === "true";
+
 async function getDashboardData(userId: string) {
   try {
     const db = (process.env as any).DB;
@@ -46,6 +48,29 @@ async function getDashboardData(userId: string) {
 }
 
 export default async function DashboardPage() {
+  // Dev bypass: mock user + data + file list
+  if (BYPASS_AUTH) {
+    const dict = await getDictionary("en");
+    const mockFiles = Array.from({ length: 7 }, (_, i) => ({
+      id: `mock_${i + 1}`,
+      original_name: `photo_${i + 1}.${i % 3 === 0 ? "png" : i % 3 === 1 ? "jpg" : "webp"}`,
+      file_size: [2450000, 820000, 15000000, 430000, 5600000, 1200000, 980000][i],
+      mime_type: `image/${i % 3 === 0 ? "png" : i % 3 === 1 ? "jpeg" : "webp"}`,
+      created_at: new Date(Date.now() - (i + 1) * 86400000).toISOString(),
+      expires_at: i === 0 ? new Date(Date.now() + 30 * 86400000).toISOString() : null,
+      r2_key: `mock/r2-key-${i + 1}`,
+    }));
+    const totalSize = mockFiles.reduce((sum, f) => sum + f.file_size, 0);
+    const mockData = {
+      planType: "free",
+      storageUsed: totalSize,
+      uploadsToday: 3,
+      fileCount: mockFiles.length,
+      totalSize,
+    };
+    return <DashboardClient userId="dev_user_001" data={mockData} files={mockFiles} dict={dict} />;
+  }
+
   let userId: string | null = null;
   try {
     const authResult = await auth();

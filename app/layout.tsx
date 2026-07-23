@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/sonner";
 import ClerkListener from "@/components/ClerkListener";
 import "./globals.css";
 
+const BYPASS_AUTH = process.env.DEV_BYPASS_AUTH === "true";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -51,18 +53,19 @@ export default async function RootLayout({
     // headers() may not be available in all contexts
   }
 
-  return (
-    <ClerkProvider>
-      <html
-        lang={lang}
-        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      >
-        <body className="min-h-full flex flex-col">
-          <ClerkListener />
-          {children}
-          <Toaster />
-        </body>
-      </html>
-    </ClerkProvider>
+  const body = (
+    <html
+      lang={lang}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col">
+        {!BYPASS_AUTH && <ClerkListener />}
+        {children}
+        <Toaster />
+      </body>
+    </html>
   );
+
+  if (BYPASS_AUTH) return body;
+  return <ClerkProvider>{body}</ClerkProvider>;
 }
