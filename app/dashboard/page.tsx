@@ -18,6 +18,8 @@ async function getDashboardData(userId: string) {
       .bind(userId)
       .first();
 
+    console.log("[dashboard] userId:", userId, "user row:", JSON.stringify(user));
+
     const today = new Date().toISOString().split("T")[0];
     const uploadCount = await db
       .prepare(
