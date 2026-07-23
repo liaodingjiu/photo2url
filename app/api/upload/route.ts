@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { getAuth } from "@clerk/nextjs/server";
 import { v4 as uuidv4 } from "uuid";
 import {
   ALLOWED_MIME_TYPES,
@@ -55,9 +55,11 @@ export async function POST(request: NextRequest) {
     // ================================================================
     // 3. Get user info (authenticated or guest)
     // ================================================================
+    // Use getAuth(request) instead of auth() — explicitly passes the request
+    // object which is more reliable under @cloudflare/next-on-pages.
     let clerkUserId: string | null = null;
     try {
-      const { userId } = await auth();
+      const { userId } = getAuth(request);
       clerkUserId = userId ?? null;
     } catch {
       // Clerk not configured or auth failed — continue as guest
