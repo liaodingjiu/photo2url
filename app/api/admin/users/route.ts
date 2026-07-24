@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
 
     // Get file count for each user in this page
     const userIds = (users.results as any[]).map((u) => u.id);
-    let fileCountMap: Record<string, number> = {};
+    const fileCountMap: Record<string, number> = {};
     if (userIds.length > 0) {
       const placeholders = userIds.map(() => "?").join(",");
       const fileCounts = await db

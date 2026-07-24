@@ -1,16 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import {
   Users,
   FileText,
   Shield,
   Sun,
   Moon,
-  Image,
 } from "lucide-react";
-import { toast } from "sonner";
 import type { Dictionary } from "@/lib/i18n";
 import UsersTab from "./UsersTab";
 import LogsTab from "./LogsTab";
@@ -74,15 +71,12 @@ function useDarkMode() {
 }
 
 export default function AdminClient({
-  userId,
   userName,
   dict,
 }: {
-  userId: string;
   userName: string;
   dict: Dictionary;
 }) {
-  const router = useRouter();
   const [tab, setTab] = useState<Tab>("users");
   const { dark, toggle: toggleDark } = useDarkMode();
 

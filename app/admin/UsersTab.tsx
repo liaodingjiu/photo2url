@@ -7,7 +7,7 @@ import type { Dictionary } from "@/lib/i18n";
 import type { AdminUser, AdminUserDetail } from "./AdminClient";
 import UserDetail from "./UserDetail";
 
-export default function UsersTab({ dict }: { dict: Dictionary }) {
+export default function UsersTab({ dict: _dict }: { dict: Dictionary }) {
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);

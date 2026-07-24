@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, ShieldOff, ShieldCheck, ArrowUpRight, Check } from "lucide-react";
+import { X, ShieldOff, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import type { AdminUserDetail } from "./AdminClient";
 

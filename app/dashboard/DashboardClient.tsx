@@ -204,7 +204,7 @@ export default function DashboardClient({
     refreshFiles();
   }, [refreshFiles]);
 
-  const handleUploadResult = useCallback((_result: UploadResult) => {
+  const handleUploadResult = useCallback((_r: UploadResult) => {
     refreshFiles();
   }, [refreshFiles]);
 

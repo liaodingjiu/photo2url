@@ -13,7 +13,7 @@ const ACTION_LABELS: Record<string, string> = {
   role_change: "Role Change",
 };
 
-export default function LogsTab({ dict }: { dict: Dictionary }) {
+export default function LogsTab({ dict: _dict }: { dict: Dictionary }) {
   const [logs, setLogs] = useState<AdminLog[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);

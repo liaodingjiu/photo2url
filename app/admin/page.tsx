@@ -10,7 +10,7 @@ export default async function AdminPage() {
   const dict = await getDictionary("en");
 
   if (BYPASS_AUTH) {
-    return <AdminClient userId="dev_admin" userName="Admin (Dev)" dict={dict} />;
+    return <AdminClient userName="Admin (Dev)" dict={dict} />;
   }
 
   const { userId } = await auth();
@@ -26,5 +26,5 @@ export default async function AdminPage() {
   const userName =
     user?.firstName || user?.emailAddresses?.[0]?.emailAddress || "Admin";
 
-  return <AdminClient userId={userId!} userName={userName} dict={dict} />;
+  return <AdminClient userName={userName} dict={dict} />;
 }
