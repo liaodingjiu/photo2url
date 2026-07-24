@@ -1,12 +1,15 @@
 "use client";
 
-import { locales, getLocaleLabel, type Locale } from "@/lib/i18n";
+import { locales, getLocaleLabel, type Locale, type Dictionary } from "@/lib/i18n";
 
 export default function LanguageSelector({
   currentLocale,
+  dict,
 }: {
   currentLocale: Locale;
+  dict?: Dictionary;
 }) {
+  const l = dict?.language;
   const handleSelect = (locale: Locale) => {
     if (locale === currentLocale) return;
     document.cookie = `locale=${locale};path=/;max-age=31536000`;
@@ -17,9 +20,15 @@ export default function LanguageSelector({
   };
 
   return (
-    <div className="border-t py-6 bg-muted/10">
+    <section className="border-t py-12 bg-muted/10">
       <div className="mx-auto max-w-6xl px-4 text-center">
-        <p className="text-xs text-muted-foreground mb-3">Language</p>
+        {l?.title && (
+          <h2 className="text-2xl font-bold tracking-tight">{l.title}</h2>
+        )}
+        {l?.subtitle && (
+          <p className="mt-2 text-sm text-muted-foreground">{l.subtitle}</p>
+        )}
+        <div className="mt-6" />
         <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-sm">
           {locales.map((locale) => {
             const { native } = getLocaleLabel(locale);
@@ -40,6 +49,6 @@ export default function LanguageSelector({
           })}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

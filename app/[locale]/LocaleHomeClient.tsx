@@ -82,7 +82,7 @@ export default function LocaleHomeClient({
         <AboutPhoto2Url dict={dict} />
       </main>
 
-      <LanguageSelector currentLocale={locale} />
+      <LanguageSelector currentLocale={locale} dict={dict} />
       <Footer dict={dict} locale={locale} />
     </>
   );

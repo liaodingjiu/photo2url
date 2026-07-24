@@ -226,7 +226,9 @@
   },
   "language": {
     "selectRegion": "Select Region",
-    "chooseLang": "Choose your preferred language and region"
+    "chooseLang": "Choose your preferred language and region",
+    "title": "Choose your region",
+    "subtitle": "Select your preferred language"
   },
   "privacy": {
     "title": "Privacy Policy",

@@ -209,6 +209,8 @@ export interface Dictionary {
     dashboard: string;
   };
   language: {
+    title: string;
+    subtitle: string;
     selectRegion: string;
     chooseLang: string;
   };
