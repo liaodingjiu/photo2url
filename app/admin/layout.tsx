@@ -3,11 +3,15 @@ import { redirect } from "next/navigation";
 
 export const runtime = "edge";
 
+const BYPASS_AUTH = process.env.DEV_BYPASS_AUTH === "true";
+
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  if (BYPASS_AUTH) return <>{children}</>;
+
   try {
     const { userId } = await auth();
     if (!userId) redirect("/sign-in");

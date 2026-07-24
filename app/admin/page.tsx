@@ -4,8 +4,14 @@ import AdminClient from "./AdminClient";
 
 export const runtime = "edge";
 
+const BYPASS_AUTH = process.env.DEV_BYPASS_AUTH === "true";
+
 export default async function AdminPage() {
   const dict = await getDictionary("en");
+
+  if (BYPASS_AUTH) {
+    return <AdminClient userId="dev_admin" userName="Admin (Dev)" dict={dict} />;
+  }
 
   const { userId } = await auth();
   let user = null;

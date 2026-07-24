@@ -47,13 +47,14 @@ function handleLocaleRouting(req: NextRequest) {
     return res;
   }
 
-  // Skip API, static, sign-in/up, dashboard, image routes (no locale)
+  // Skip API, static, sign-in/up, dashboard, admin, image routes (no locale)
   if (
     pathname.startsWith("/api/") ||
     pathname.startsWith("/_next/") ||
     pathname.startsWith("/sign-in") ||
     pathname.startsWith("/sign-up") ||
     pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/admin") ||
     pathname.startsWith("/i/") ||
     pathname.includes(".")
   ) {
