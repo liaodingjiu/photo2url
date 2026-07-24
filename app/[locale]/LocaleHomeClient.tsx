@@ -50,29 +50,6 @@ export default function LocaleHomeClient({
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 max-w-5xl mx-auto items-start">
               {/* Left column */}
               <div>
-                {/* Hero heading — above the upload card */}
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">
-                  {dict.hero.titleHighlight
-                    ? (() => {
-                        const idx = dict.hero.title.indexOf(dict.hero.titleHighlight);
-                        if (idx === -1) return dict.hero.title;
-                        const before = dict.hero.title.slice(0, idx);
-                        const after = dict.hero.title.slice(idx + dict.hero.titleHighlight.length);
-                        return (
-                          <>
-                            {before}
-                            <span className="text-primary">{dict.hero.titleHighlight}</span>
-                            {after}
-                          </>
-                        );
-                      })()
-                    : dict.hero.title
-                  }
-                </h1>
-                <p className="text-sm sm:text-base text-muted-foreground mb-6">
-                  {dict.hero.subtitle}
-                </p>
-
                 <UploadZone
                   dict={dict}
                   planType={planType}

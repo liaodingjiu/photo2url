@@ -255,6 +255,32 @@ export default function UploadZone({
           </div>
         ) : (
           <>
+            {/* Hero title inside card */}
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              {dict.hero.titleHighlight
+                ? (() => {
+                    const idx = dict.hero.title.indexOf(dict.hero.titleHighlight);
+                    if (idx === -1) return dict.hero.title;
+                    const before = dict.hero.title.slice(0, idx);
+                    const after = dict.hero.title.slice(idx + dict.hero.titleHighlight.length);
+                    return (
+                      <>
+                        {before}
+                        <span className="text-primary">{dict.hero.titleHighlight}</span>
+                        {after}
+                      </>
+                    );
+                  })()
+                : dict.hero.title
+              }
+            </h1>
+            <p className="mt-2 text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
+              {dict.hero.subtitle}
+            </p>
+
+            {/* Divider */}
+            <div className="my-5 border-t border-muted-foreground/15" />
+
             {/* Upload action */}
             <div className="flex flex-col items-center gap-2">
               <div className="rounded-full bg-primary/10 p-4">
