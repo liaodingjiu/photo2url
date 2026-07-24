@@ -1,16 +1,7 @@
-"use client";
-
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 
 export default function HomeFaq({ dict }: { dict: Dictionary }) {
   const t = dict.faq;
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggle = (i: number) => {
-    setOpenIndex(openIndex === i ? null : i);
-  };
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -34,26 +25,12 @@ export default function HomeFaq({ dict }: { dict: Dictionary }) {
           {t.items.map((item, i) => (
             <div
               key={i}
-              className="rounded-xl border bg-card transition-colors"
+              className="rounded-xl border bg-card px-5 py-4"
             >
-              <button
-                onClick={() => toggle(i)}
-                className="flex w-full items-center justify-between px-5 py-4 text-left"
-              >
-                <span className="text-sm font-medium pr-4">
-                  {item.question}
-                </span>
-                <ChevronDown
-                  className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 ${
-                    openIndex === i ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              {openIndex === i && (
-                <div className="px-5 pb-4 text-sm text-muted-foreground leading-relaxed">
-                  {item.answer}
-                </div>
-              )}
+              <p className="text-sm font-medium mb-2">{item.question}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {item.answer}
+              </p>
             </div>
           ))}
         </div>
