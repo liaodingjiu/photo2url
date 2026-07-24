@@ -5,6 +5,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAdmin } from "@/lib/admin-auth";
 import { checkRateLimit } from "@/lib/rate-limiter";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export const runtime = "edge";
 
@@ -78,15 +79,36 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const result = (users.results as any[]).map((u) => ({
-      id: u.id,
-      email: u.email,
-      planType: u.plan_type,
-      storageUsed: u.storage_used,
-      fileCount: fileCountMap[u.id] || 0,
-      suspendedAt: u.suspended_at || null,
-      createdAt: u.created_at,
-    }));
+    const result = await Promise.all(
+      (users.results as any[]).map(async (u) => {
+        let email = u.email;
+        // Fix placeholder emails by fetching real email from Clerk
+        if (email && email.includes("@placeholder")) {
+          try {
+            const clerk = await clerkClient();
+            const clerkUser = await clerk.users.getUser(u.id);
+            const realEmail = clerkUser.emailAddresses?.[0]?.emailAddress;
+            if (realEmail) {
+              email = realEmail;
+              // Backfill D1 record
+              await db
+                .prepare("UPDATE users SET email = ? WHERE id = ?")
+                .bind(realEmail, u.id)
+                .run();
+            }
+          } catch { /* Keep placeholder if Clerk lookup fails */ }
+        }
+        return {
+          id: u.id,
+          email,
+          planType: u.plan_type,
+          storageUsed: u.storage_used,
+          fileCount: fileCountMap[u.id] || 0,
+          suspendedAt: u.suspended_at || null,
+          createdAt: u.created_at,
+        };
+      })
+    );
 
     return NextResponse.json({
       users: result,

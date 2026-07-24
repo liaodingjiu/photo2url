@@ -4,6 +4,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAdmin } from "@/lib/admin-auth";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export const runtime = "edge";
 
@@ -51,10 +52,28 @@ export async function GET(
       .all();
 
     const u = user as any;
+    let email = u.email;
+
+    // Fix placeholder email by fetching real email from Clerk
+    if (email && email.includes("@placeholder")) {
+      try {
+        const clerk = await clerkClient();
+        const clerkUser = await clerk.users.getUser(id);
+        const realEmail = clerkUser.emailAddresses?.[0]?.emailAddress;
+        if (realEmail) {
+          email = realEmail;
+          await db
+            .prepare("UPDATE users SET email = ? WHERE id = ?")
+            .bind(realEmail, id)
+            .run();
+        }
+      } catch { /* Keep placeholder if Clerk lookup fails */ }
+    }
+
     return NextResponse.json({
       user: {
         id: u.id,
-        email: u.email,
+        email,
         planType: u.plan_type,
         storageUsed: u.storage_used,
         suspendedAt: u.suspended_at || null,
