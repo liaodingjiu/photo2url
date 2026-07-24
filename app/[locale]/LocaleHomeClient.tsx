@@ -8,6 +8,7 @@ import HowItWorks from "@/components/HowItWorks";
 import FeatureHighlights from "@/components/FeatureHighlights";
 import WhyChoose from "@/components/WhyChoose";
 import UseCases from "@/components/UseCases";
+import Scenarios from "@/components/Scenarios";
 import TeamsSaving from "@/components/TeamsSaving";
 import ForEveryPhoto from "@/components/ForEveryPhoto";
 import PricingSection from "@/components/PricingSection";
@@ -76,6 +77,7 @@ export default function LocaleHomeClient({
         <WhyChoose dict={dict} />
         <FeatureHighlights dict={dict} />
         <UseCases dict={dict} />
+        <Scenarios dict={dict} />
         <TeamsSaving dict={dict} />
         <PricingSection dict={dict} />
         <HomeFaq dict={dict} />

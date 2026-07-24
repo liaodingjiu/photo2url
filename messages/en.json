@@ -183,6 +183,42 @@
       { "title": "Raw .jpg URLs", "desc": "No wrapper pages, no ads, no galleries. Every direct photo link ends in the original extension — .jpg, .png, .webp, .gif. Clean image URLs that work everywhere." }
     ]
   },
+  "scenarios": {
+    "title": "Image to URL Converter — Built for Every Workflow",
+    "subtitle": "One link, endless use cases across your daily tools.",
+    "items": [
+      {
+        "emoji": "✍️",
+        "title": "Markdown Image to URL",
+        "desc": "Convert screenshots into image URLs for Obsidian, Notion, and any Markdown-based knowledge base. No bloated vaults, just clean links."
+      },
+      {
+        "emoji": "🎨",
+        "title": "Screenshot to URL for Teams",
+        "desc": "Paste design mockups directly into Jira, Figma, or Linear tickets. No file exports, no storage bloat — one link renders everywhere."
+      },
+      {
+        "emoji": "🛠️",
+        "title": "Photo Link for GitHub Issues",
+        "desc": "Turn error logs and bug screenshots into a photo URL. Paste into any GitHub Issue or PR comment — reproduction steps, delivered fast."
+      },
+      {
+        "emoji": "🎧",
+        "title": "Image URL for Help Docs",
+        "desc": "Step-by-step screenshots become instant image links. Embed into support tickets, FAQ pages, and onboarding manuals — lightweight and always accessible."
+      },
+      {
+        "emoji": "💼",
+        "title": "Photo to URL Without Attachments",
+        "desc": "Replace bulky email attachments with a direct image link. Clients open your demo screenshots instantly — no download, no spam filter."
+      },
+      {
+        "emoji": "💬",
+        "title": "Direct Image Link for Social",
+        "desc": "Generate a photo URL and share in Slack, Discord, X, or forums. No compression, no preview cards — just the full-size image."
+      }
+    ]
+  },
   "teamsSaving": {
     "title": "Teams saving time with Photo To URL",
     "subtitle": "The numbers speak for themselves.",

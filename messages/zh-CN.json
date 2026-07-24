@@ -180,6 +180,42 @@
       { "title": ".jpg 原生直链", "desc": "无包装页、无广告、无相册。每条图片直链保留原始扩展名——.jpg、.png、.webp、.gif。干净的图片 URL，随处可用。" }
     ]
   },
+  "scenarios": {
+    "title": "Image to URL Converter — 适配每个工作流",
+    "subtitle": "一个链接，贯穿你的日常工具。",
+    "items": [
+      {
+        "emoji": "✍️",
+        "title": "Markdown Image to URL",
+        "desc": "将截图生成图片链接，直接插入 Obsidian、Notion 及任何 Markdown 知识库。本地 Vault 绝不臃肿，图文排版清爽。"
+      },
+      {
+        "emoji": "🎨",
+        "title": "Screenshot to URL for Teams",
+        "desc": "设计稿截图秒变直链，直接丢进 Jira、Figma 或 Linear 工单。无需导出本地文件，一个链接全平台渲染。"
+      },
+      {
+        "emoji": "🛠️",
+        "title": "Photo Link for GitHub Issues",
+        "desc": "报错日志与 Bug 截图生成图片链接，贴入 GitHub Issue 或 PR 评论——复现步骤，交付快一步。"
+      },
+      {
+        "emoji": "🎧",
+        "title": "Image URL for Help Docs",
+        "desc": "步骤截图秒变图片链接，嵌入工单、FAQ 手册与入职文档——轻量且随时可访问。"
+      },
+      {
+        "emoji": "💼",
+        "title": "Photo to URL Without Attachments",
+        "desc": "用图片直链替换邮件大附件，客户秒开演示截图——无需下载，不怕拦截。"
+      },
+      {
+        "emoji": "💬",
+        "title": "Direct Image Link for Social",
+        "desc": "生成图片直链，在 Slack、Discord、X 或论坛轻量分享。无压缩，无预览卡片——只有全尺寸原图。"
+      }
+    ]
+  },
   "teamsSaving": {
     "title": "团队使用 Photo To URL 节省时间",
     "subtitle": "数字自己会说话。",
