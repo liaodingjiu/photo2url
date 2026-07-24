@@ -191,7 +191,7 @@
   },
   "partners": { "title": "全球团队的信赖" },
   "footer": {
-    "brand": { "description": "PhotoToURL 是一款免费的图片转链接工具。上传 JPG、PNG、WEBP，获取直链，适用于文档、聊天、工单和论坛。免费版：每天 15 次上传，单文件 3 MB。付费版享 Cloudflare R2 CDN 链接。" },
+    "brand": { "description": "免费图片转链接工具" },
     "product": { "title": "产品", "pricing": "定价", "upload": "上传" },
     "legal": { "title": "法律", "privacy": "隐私政策", "terms": "服务条款", "refund": "退款政策",
       "reportAbuse": "Report Abuse" },

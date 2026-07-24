@@ -197,7 +197,7 @@
   },
   "footer": {
     "brand": {
-      "description": "PhotoToURL is a free image to URL converter. Upload JPG, PNG, WEBP to get direct image URLs for sharing in docs, chat, tickets, and forums. Free tier: 15 uploads/day, 3 MB per file. Paid plans with CDN links on Cloudflare R2."
+      "description": "Free Photo To URL converter"
     },
     "product": {
       "title": "Product",
