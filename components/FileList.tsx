@@ -54,12 +54,12 @@ function formatDate(dateStr: string): string {
 }
 
 function getViewPreference(): ViewMode {
-  if (typeof window === "undefined") return "list";
+  if (typeof window === "undefined") return "grid";
   try {
     const stored = localStorage.getItem("filelist-view");
     if (stored === "grid" || stored === "list") return stored;
   } catch { /* localStorage not available */ }
-  return "list";
+  return "grid";
 }
 
 function saveViewPreference(mode: ViewMode) {
@@ -186,7 +186,7 @@ export default function FileList({ files: initialFiles, dict }: { files?: FileRe
   const [sortDir, setSortDir] = useState<SortDir>("desc");
 
   // View mode
-  const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [viewMode, setViewMode] = useState<ViewMode>(getViewPreference);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
