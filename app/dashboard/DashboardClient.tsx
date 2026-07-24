@@ -285,9 +285,9 @@ export default function DashboardClient({
         </div>
       </aside>
 
-      {/* Mobile tab bar — P2 #20: middle tab as FAB upload */}
+      {/* Mobile tab bar — 3 tabs + centered Upload FAB */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 border-t bg-background z-40 safe-area-inset-bottom">
-        <div className="flex items-end">
+        <div className="relative flex">
           {tabs.map((t) => (
             <button
               key={t.id}
@@ -299,8 +299,8 @@ export default function DashboardClient({
               {t.label}
             </button>
           ))}
-          {/* Upload FAB — opens inline upload sheet */}
-          <div className="flex-1 flex flex-col items-center gap-1 py-2.5 -mt-3">
+          {/* Centered Upload FAB — button floats above bar, label aligns with tabs */}
+          <div className="absolute left-1/2 -translate-x-1/2 -top-5 flex flex-col items-center gap-1">
             <button
               onClick={() => setShowUploadSheet(true)}
               className="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors active:scale-95"
