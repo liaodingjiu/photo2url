@@ -240,7 +240,7 @@ export default function DashboardClient({
           href="/"
           className="flex items-center gap-2 px-4 py-3.5 border-b text-sm font-semibold hover:bg-muted/50 transition-colors"
         >
-          <Image className="h-5 w-5 text-primary" />
+          <img src="/logo.png" alt="photo2url" className="h-5 w-5" />
           photo2url
         </a>
         <nav className="p-4 space-y-1 flex-1">
@@ -331,7 +331,7 @@ export default function DashboardClient({
         {/* Mobile top bar — logo + theme toggle */}
         <div className="md:hidden flex items-center justify-between mb-4">
           <a href="/" className="flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity">
-            <Image className="h-5 w-5 text-primary" />
+            <img src="/logo.png" alt="photo2url" className="h-5 w-5" />
             photo2url
           </a>
           <button
