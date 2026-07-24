@@ -31,14 +31,16 @@ export default function Scenarios({ dict }: { dict: Dictionary }) {
                 key={item.title}
                 className="group rounded-xl border bg-card p-5 hover:border-primary/30 hover:shadow-sm transition-all"
               >
-                <Icon className="h-5 w-5 text-primary" />
-                <h3 className="mt-3 font-semibold text-sm">{item.title}</h3>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                  <Icon className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="font-semibold text-base">{item.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                   {item.desc}
                 </p>
                 <a
                   href="/#upload-zone"
-                  className="mt-3 inline-block text-xs text-muted-foreground hover:text-primary transition-colors"
+                  className="mt-3 inline-block text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   Try it now →
                 </a>

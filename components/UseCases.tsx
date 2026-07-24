@@ -28,10 +28,10 @@ export default function UseCases({ dict }: { dict: Dictionary }) {
                 key={item.title}
                 className="flex items-start gap-3 rounded-lg border p-4 hover:bg-muted/50 transition-colors"
               >
-                <Icon className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                <Icon className="h-6 w-6 text-primary mt-0.5 shrink-0" />
                 <div>
-                  <h4 className="font-medium text-sm">{item.title}</h4>
-                  <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
+                  <h3 className="font-semibold text-base">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-0.5">{item.desc}</p>
                 </div>
               </div>
             );
