@@ -29,25 +29,45 @@ export default function AboutPhoto2Url({ dict }: { dict: Dictionary }) {
       <div className="mx-auto max-w-3xl px-4">
         <h2 className="text-center text-3xl font-bold mb-8">{t.title}</h2>
 
-        <div className="prose prose-sm prose-neutral dark:prose-invert max-w-none text-muted-foreground space-y-6">
-          {/* Lead */}
-          <p className="text-base leading-relaxed">{t.lead}</p>
+        <article className="prose prose-sm prose-neutral dark:prose-invert max-w-none text-muted-foreground space-y-6">
+          {/* Lead — only if non-empty */}
+          {t.lead && (
+            <p className="text-base leading-relaxed">{t.lead}</p>
+          )}
 
           {/* Problem */}
-          <h3 className="text-lg font-semibold text-foreground mt-10">
-            {t.problemHeading}
-          </h3>
+          {t.problemHeading && (
+            <h3 className="text-lg font-semibold text-foreground mt-10">
+              {t.problemHeading}
+            </h3>
+          )}
           <p className="leading-relaxed">{t.problemBody}</p>
 
           {/* Solution */}
-          <h3 className="text-lg font-semibold text-foreground mt-10">
-            {t.solutionHeading}
-          </h3>
-          <p className="leading-relaxed">{t.solutionBody}</p>
+          {t.solutionHeading && (
+            <h3 className="text-lg font-semibold text-foreground mt-10">
+              {t.solutionHeading}
+            </h3>
+          )}
+          {t.solutionBody && (
+            <p className="leading-relaxed">{t.solutionBody}</p>
+          )}
 
           {/* Tech details */}
-          <p className="leading-relaxed">{t.techBody}</p>
-        </div>
+          {t.techBody && (
+            <p className="leading-relaxed">{t.techBody}</p>
+          )}
+
+          {/* CTA */}
+          <p>
+            <a
+              href="/#upload-zone"
+              className="text-primary hover:underline font-medium"
+            >
+              Try it now →
+            </a>
+          </p>
+        </article>
 
         <script
           type="application/ld+json"

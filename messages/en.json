@@ -51,13 +51,13 @@
     ]
   },
   "about": {
-    "title": "About Photo2URL",
-    "lead": "Photo2URL is a free online photo to url converter — upload a PNG, JPG, WEBP, or GIF and get a photo to url link in one step. No sign-up, no ads, no file picker.",
-    "problemHeading": "Why most image links come with friction",
-    "problemBody": "Other image hosts wrap your upload in a gallery page with ads and comments, hiding the direct URL behind menus. Photo2URL is designed to convert photos to URLs, nothing more.",
-    "solutionHeading": "How Photo2URL turns a photo into a link",
-    "solutionBody": "Drag and drop, paste from clipboard, or click to browse. As soon as you upload a photo, the link generator returns three formats side by side: a direct image URL, a Markdown snippet, and an HTML embed. Copy the one you need — links work on Facebook, Twitter, Reddit, Discord, GitHub, and anywhere that accepts image URLs.",
-    "techBody": "Behind the scenes, every image is stored on Cloudflare R2 and served through a global CDN over HTTPS. The free photo to url plan includes 15 uploads per day at 3 MB per file, stored for 180 days. Paid plans lift all limits and add permanent storage. The interface supports eight languages. Whether you need a PNG to URL converter for a README, a JPG to URL for a blog post, or a quick way to turn a screenshot into a shareable link, Photo2URL is built for that single task."
+    "title": "About Photo2URL — A Photo to URL Converter That Just Works",
+    "lead": "",
+    "problemHeading": "Why Photo2URL exists",
+    "problemBody": "Most image hosts weren't built for links — they were built for page views. They wrap your upload in a gallery with ads and comments, hiding the direct image URL behind menus. Photo2URL strips all of that away. Upload a PNG, JPG, WEBP, or GIF and get a photo to URL link in one step. That's the entire product.",
+    "solutionHeading": "",
+    "solutionBody": "Every image URL is served through a global CDN over HTTPS. Whether you need a PNG to URL converter for a README, or a direct image link for a forum post — it's one paste, one link, no friction.",
+    "techBody": ""
   },
   "dashboard": {
     "title": "Dashboard",

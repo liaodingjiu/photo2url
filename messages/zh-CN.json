@@ -48,13 +48,13 @@
     ]
   },
   "about": {
-    "title": "关于 Photo2URL",
-    "lead": "Photo2URL 是一个免费的在线照片转链接工具 —— 上传 PNG、JPG、WEBP 或 GIF，一步获得图片链接。无需注册，没有广告，不用文件选择器。",
-    "problemHeading": "为什么大多数图片链接充满阻力",
-    "problemBody": "大多数图床把你的图片包装成带广告和评论的图库页面，把直链藏在层层菜单后面。Photo2URL 只做一件事：把照片转成链接。",
-    "solutionHeading": "Photo2URL 如何把照片变成链接",
-    "solutionBody": "拖拽、剪贴板粘贴或点击上传。照片上传后，链接生成器立即返回三种格式：直链、Markdown 代码段和 HTML 嵌入代码。选你需要的复制 —— 链接可用于 Facebook、Twitter、Reddit、Discord、GitHub 等任何支持图片 URL 的平台。",
-    "techBody": "每一张图片都存储在 Cloudflare R2 上，通过全球 CDN 以 HTTPS 提供服务。免费版每天 15 次上传，单文件 3 MB，托管 180 天。付费版解除所有限制并增加永久存储。界面支持 8 种语言。无论你是需要 PNG 转链接贴到 README，还是 JPG 转链接写博客，或是把截图快速变成可分享的链接，Photo2URL 就为这一件事而建。"
+    "title": "关于 Photo2URL — 一个真正好用的图片转链接工具",
+    "lead": "",
+    "problemHeading": "Photo2URL 为什么存在",
+    "problemBody": "大多数图床不是为生成链接而建——它们为页面浏览量而建。把你的图片包装成带广告和评论的图库页面，把直链藏在菜单后面。Photo2URL 去掉所有冗余。上传 PNG、JPG、WEBP 或 GIF，一步获得图片链接。这就是全部。",
+    "solutionHeading": "",
+    "solutionBody": "每张图片链接通过全球 CDN 以 HTTPS 提供服务。无论你需要 PNG 转链接贴到 README，还是用图片直链发论坛帖子——一次粘贴，一条链接，毫无阻力。",
+    "techBody": ""
   },
   "dashboard": {
     "title": "控制台",
