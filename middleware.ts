@@ -78,7 +78,7 @@ function handleLocaleRouting(req: NextRequest) {
 const middleware = BYPASS_AUTH
   ? (req: NextRequest) => handleLocaleRouting(req)
   : clerkMiddleware(async (auth, req) => {
-      const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
+      const isProtectedRoute = createRouteMatcher(["/dashboard(.*)", "/admin(.*)"]);
       if (isProtectedRoute(req)) {
         await auth.protect();
       }
