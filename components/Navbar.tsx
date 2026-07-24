@@ -28,18 +28,19 @@ export default function Navbar({ dict }: { dict?: Dictionary }) {
             alt="photo2url"
             className="h-6 w-6 rounded"
           />
-          <span>photo2url</span>
+          <span className="hidden sm:inline">photo2url</span>
         </Link>
 
         {/* Nav Links */}
         <div className="flex items-center gap-1">
-          <Link href="/">
+          <Link href="/" className="hidden sm:inline-flex">
             <Button variant="ghost" size="sm">
               {n?.home ?? "Home"}
             </Button>
           </Link>
 
-          {/* Tools Dropdown */}
+          {/* Tools Dropdown — hidden on mobile (all coming soon) */}
+          <div className="hidden sm:inline-flex">
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Button variant="ghost" size="sm" className="gap-1">
@@ -60,6 +61,7 @@ export default function Navbar({ dict }: { dict?: Dictionary }) {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          </div>
 
           <Link href="/#pricing">
             <Button variant="ghost" size="sm">
