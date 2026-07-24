@@ -285,10 +285,11 @@ export default function DashboardClient({
         </div>
       </aside>
 
-      {/* Mobile tab bar — 4 equal tabs */}
+      {/* Mobile tab bar — 4 equal tabs: Files | Profile | Upload | Billing */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 border-t bg-background z-40 safe-area-inset-bottom">
         <div className="flex">
-          {tabs.map((t) => (
+          {/* First 2 tabs */}
+          {tabs.slice(0, 2).map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
@@ -299,14 +300,29 @@ export default function DashboardClient({
               {t.label}
             </button>
           ))}
-          {/* Upload tab — opens inline upload sheet */}
-          <button
-            onClick={() => setShowUploadSheet(true)}
-            className="flex-1 flex flex-col items-center gap-1 py-2.5 text-xs font-medium text-muted-foreground"
-          >
-            <Upload className="h-4 w-4" />
-            {d.overview.uploadFab}
-          </button>
+          {/* Upload FAB — floats above its own column (right-two) */}
+          <div className="flex-1 flex flex-col items-center gap-1 pb-2.5 text-xs font-medium text-muted-foreground">
+            <button
+              onClick={() => setShowUploadSheet(true)}
+              className="-mt-3 flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors active:scale-95"
+              aria-label="Upload photo"
+            >
+              <Upload className="h-5 w-5" />
+            </button>
+            <span>{d.overview.uploadFab}</span>
+          </div>
+          {/* Last tab (Billing) */}
+          {(t => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`flex-1 flex flex-col items-center gap-1 py-2.5 text-xs font-medium
+                ${tab === t.id ? "text-primary" : "text-muted-foreground"}`}
+            >
+              <t.icon className="h-4 w-4" />
+              {t.label}
+            </button>
+          ))(tabs[2])}
         </div>
       </div>
 

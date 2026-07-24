@@ -60,7 +60,7 @@
     "title": "控制台",
     "tabs": { "overview": "文件", "profile": "个人信息", "billing": "订阅" },
     "overview": {
-      "heading": "你的照片工作区",
+      "heading": "我的工作区",
       "storage": "存储空间",
       "resources": "我的照片",
       "resourcesDesc": "累计上传照片数量",

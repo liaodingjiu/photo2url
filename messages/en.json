@@ -63,7 +63,7 @@
     "title": "Dashboard",
     "tabs": { "overview": "Files", "profile": "Profile", "billing": "Billing" },
     "overview": {
-      "heading": "Your photo workspace",
+      "heading": "My workspace",
       "storage": "Storage",
       "resources": "My Photos",
       "resourcesDesc": "Total uploaded photos",
