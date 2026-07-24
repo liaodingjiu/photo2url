@@ -19,6 +19,7 @@ import {
   Moon,
   AlertCircle,
   X,
+  Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -262,6 +263,17 @@ export default function DashboardClient({
               )}
             </button>
           ))}
+
+          {/* Admin panel link (visible only to admins) */}
+          {((user as any)?.publicMetadata?.role === "admin") && (
+            <a
+              href="/admin"
+              className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              <Shield className="h-4 w-4" />
+              Admin
+            </a>
+          )}
 
           {/* P2 #25: Dark mode toggle */}
           <button

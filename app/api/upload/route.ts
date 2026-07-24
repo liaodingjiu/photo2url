@@ -69,6 +69,20 @@ export async function POST(request: NextRequest) {
     const planType = clerkUserId ? await getUserPlanType(clerkUserId) : "free";
     const quota = getUploadQuota(planType);
 
+    // Check if user is suspended
+    if (clerkUserId) {
+      const db = (process.env as any).DB;
+      if (db) {
+        const suspended = await db.prepare("SELECT suspended_at FROM users WHERE id = ?").bind(clerkUserId).first();
+        if ((suspended as any)?.suspended_at) {
+          return NextResponse.json(
+            { success: false, error: "suspended", message: "Account suspended. Contact support for details." },
+            { status: 403 }
+          );
+        }
+      }
+    }
+
     // Migrate guest data to user account on first auth'd upload after sign-up
     if (clerkUserId && cookieId) {
       await migrateGuestData(clerkUserId, cookieId);
