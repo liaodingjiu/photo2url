@@ -51,8 +51,8 @@
     ]
   },
   "about": {
-    "title": "About Photo2URL — A Photo to URL Converter That Just Works",
-    "lead": "",
+    "title": "About Photo2URL",
+    "lead": "Photo2URL is a Photo to URL Converter That Just Works.",
     "problemHeading": "Why Photo2URL exists",
     "problemBody": "Most image hosts weren't built for links — they were built for page views. They wrap your upload in a gallery with ads and comments, hiding the direct image URL behind menus. Photo2URL strips all of that away. Upload a PNG, JPG, WEBP, or GIF and get a photo to URL link in one step. That's the entire product.",
     "solutionHeading": "",

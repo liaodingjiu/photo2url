@@ -48,8 +48,8 @@
     ]
   },
   "about": {
-    "title": "关于 Photo2URL — 一个真正好用的图片转链接工具",
-    "lead": "",
+    "title": "关于 Photo2URL",
+    "lead": "Photo2URL — 一个真正好用的图片转链接工具。",
     "problemHeading": "Photo2URL 为什么存在",
     "problemBody": "大多数图床不是为生成链接而建——它们为页面浏览量而建。把你的图片包装成带广告和评论的图库页面，把直链藏在菜单后面。Photo2URL 去掉所有冗余。上传 PNG、JPG、WEBP 或 GIF，一步获得图片链接。这就是全部。",
     "solutionHeading": "",
