@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import type { Dictionary } from "@/lib/i18n";
 import type { AdminUser, AdminUserDetail } from "./AdminClient";
@@ -70,7 +70,27 @@ export default function UsersTab({ dict: _dict }: { dict: Dictionary }) {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-2">User Management</h1>
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="text-2xl font-bold">User Management</h1>
+        <button
+          onClick={async () => {
+            try {
+              const res = await fetch("/api/admin/sync-users", { method: "POST", credentials: "include" });
+              const data = await res.json();
+              if (data.success) {
+                toast.success(`Synced: ${data.created} new, ${data.skipped} existing`);
+                fetchUsers();
+              } else {
+                toast.error(data.error || "Sync failed");
+              }
+            } catch { toast.error("Sync failed"); }
+          }}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/70 transition-colors"
+        >
+          <RefreshCw className="h-3.5 w-3.5" />
+          Sync from Clerk
+        </button>
+      </div>
       <p className="text-sm text-muted-foreground mb-6">
         {total} user{total !== 1 ? "s" : ""} total
       </p>
