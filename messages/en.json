@@ -184,38 +184,32 @@
     ]
   },
   "scenarios": {
-    "title": "Image to URL Converter — Built for Every Workflow",
-    "subtitle": "One link, endless use cases across your daily tools.",
+    "title": "Photo / Image to URL — Core Use Cases",
+    "subtitle": "One link for every role on your team.",
     "items": [
       {
-        "emoji": "✍️",
-        "title": "Markdown Image to URL",
-        "desc": "Convert screenshots into image URLs for Obsidian, Notion, and any Markdown-based knowledge base. No bloated vaults, just clean links."
+        "title": "Design Review",
+        "desc": "Paste screenshots as a photo to URL link into Jira, Figma, or Linear. No exports, no bloat."
       },
       {
-        "emoji": "🎨",
-        "title": "Screenshot to URL for Teams",
-        "desc": "Paste design mockups directly into Jira, Figma, or Linear tickets. No file exports, no storage bloat — one link renders everywhere."
+        "title": "Documentation",
+        "desc": "Generate Markdown & HTML syntax from image to URL links for Notion, Obsidian, or any CMS."
       },
       {
-        "emoji": "🛠️",
-        "title": "Photo Link for GitHub Issues",
-        "desc": "Turn error logs and bug screenshots into a photo URL. Paste into any GitHub Issue or PR comment — reproduction steps, delivered fast."
+        "title": "Dev & QA",
+        "desc": "Turn error screenshots into photo to URL links for GitHub Issues, Jira, or CI/CD reports."
       },
       {
-        "emoji": "🎧",
-        "title": "Image URL for Help Docs",
-        "desc": "Step-by-step screenshots become instant image links. Embed into support tickets, FAQ pages, and onboarding manuals — lightweight and always accessible."
+        "title": "Customer Support",
+        "desc": "Convert troubleshooting guides into image to URL links for helpdesk & FAQ — one click opens."
       },
       {
-        "emoji": "💼",
-        "title": "Photo to URL Without Attachments",
-        "desc": "Replace bulky email attachments with a direct image link. Clients open your demo screenshots instantly — no download, no spam filter."
+        "title": "Sales Communication",
+        "desc": "Share demos as photo to url links in emails & messages — no attachment limits, no spam filters."
       },
       {
-        "emoji": "💬",
-        "title": "Direct Image Link for Social",
-        "desc": "Generate a photo URL and share in Slack, Discord, X, or forums. No compression, no preview cards — just the full-size image."
+        "title": "Community Sharing",
+        "desc": "Share images in Discord, Slack, X with image to URL direct links. No compression, full-size."
       }
     ]
   },

@@ -188,7 +188,7 @@ export interface Dictionary {
   scenarios: {
     title: string;
     subtitle: string;
-    items: { emoji: string; title: string; desc: string }[];
+    items: { title: string; desc: string }[];
   };
   teamsSaving: {
     title: string;

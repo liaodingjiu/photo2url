@@ -181,38 +181,32 @@
     ]
   },
   "scenarios": {
-    "title": "Image to URL Converter — 适配每个工作流",
-    "subtitle": "一个链接，贯穿你的日常工具。",
+    "title": "Photo / Image to URL 核心应用场景",
+    "subtitle": "团队每个角色，一个链接就够了。",
     "items": [
       {
-        "emoji": "✍️",
-        "title": "Markdown Image to URL",
-        "desc": "将截图生成图片链接，直接插入 Obsidian、Notion 及任何 Markdown 知识库。本地 Vault 绝不臃肿，图文排版清爽。"
+        "title": "设计评审",
+        "desc": "截图即链接：将 UI 走查贴入 Jira、Figma 或 Linear。无需导出，一气呵成。"
       },
       {
-        "emoji": "🎨",
-        "title": "Screenshot to URL for Teams",
-        "desc": "设计稿截图秒变直链，直接丢进 Jira、Figma 或 Linear 工单。无需导出本地文件，一个链接全平台渲染。"
+        "title": "文档写作",
+        "desc": "用 Image to URL 生成 Markdown 与 HTML 语法，插入 Notion、Obsidian 或 CMS。"
       },
       {
-        "emoji": "🛠️",
-        "title": "Photo Link for GitHub Issues",
-        "desc": "报错日志与 Bug 截图生成图片链接，贴入 GitHub Issue 或 PR 评论——复现步骤，交付快一步。"
+        "title": "研发与 QA",
+        "desc": "报错截图秒变 Photo to URL Link，贴入 GitHub Issue 或 CI/CD 报告，团队秒懂现场。"
       },
       {
-        "emoji": "🎧",
-        "title": "Image URL for Help Docs",
-        "desc": "步骤截图秒变图片链接，嵌入工单、FAQ 手册与入职文档——轻量且随时可访问。"
+        "title": "客服运维",
+        "desc": "故障步骤生成 Image to URL 链接，嵌入工单与 FAQ，客户一点即开。"
       },
       {
-        "emoji": "💼",
-        "title": "Photo to URL Without Attachments",
-        "desc": "用图片直链替换邮件大附件，客户秒开演示截图——无需下载，不怕拦截。"
+        "title": "销售沟通",
+        "desc": "用 Photo to URL Link 传递演示截图，告别邮件附件超限与拦截。"
       },
       {
-        "emoji": "💬",
-        "title": "Direct Image Link for Social",
-        "desc": "生成图片直链，在 Slack、Discord、X 或论坛轻量分享。无压缩，无预览卡片——只有全尺寸原图。"
+        "title": "社群分享",
+        "desc": "用 Image to URL 直链在 Discord、Slack、X 分享，无压缩，全尺寸加载。"
       }
     ]
   },
