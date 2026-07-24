@@ -79,6 +79,7 @@ export interface Dictionary {
   hero: { title: string; subtitle: string; titleHighlight?: string; trustLine: string };
   upload: {
     title: string;
+    cta: string;
     dragDrop: string;
     pasteHint: string;
     formats: string;
@@ -146,6 +147,7 @@ export interface Dictionary {
       myPhotos: string;
       noFiles: string;
       noFilesHint: string;
+      uploadFab: string;
       uploadCta: string;
       loading: string;
       showingFiles: string;

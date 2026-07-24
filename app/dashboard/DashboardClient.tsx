@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@clerk/nextjs";
 import { UserProfile } from "@clerk/nextjs";
 import { useSearchParams } from "next/navigation";
@@ -18,11 +18,13 @@ import {
   Sun,
   Moon,
   AlertCircle,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import FileList, { type FileRecord } from "@/components/FileList";
+import UploadZone, { type UploadResult } from "@/components/UploadZone";
 import { toast } from "sonner";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -179,8 +181,31 @@ export default function DashboardClient({
   const searchParams = useSearchParams();
   const [tab, setTab] = useState<Tab>("overview");
   const { dark, toggle: toggleDark } = useDarkMode();
+  const [showUploadSheet, setShowUploadSheet] = useState(false);
+  const [clientFiles, setClientFiles] = useState<FileRecord[] | undefined>(files);
   const d = dict.dashboard;
   const dt = d.tabs;
+
+  // Sync server-provided files on initial load
+  useEffect(() => { if (files) setClientFiles(files); }, [files]);
+
+  const refreshFiles = useCallback(async () => {
+    try {
+      const res = await fetch("/api/files", { credentials: "include" });
+      if (res.ok) {
+        const json = await res.json();
+        setClientFiles(json.files || []);
+      }
+    } catch { /* silently ignore */ }
+  }, []);
+
+  const handleUploadSuccess = useCallback(() => {
+    refreshFiles();
+  }, [refreshFiles]);
+
+  const handleUploadResult = useCallback((_result: UploadResult) => {
+    refreshFiles();
+  }, [refreshFiles]);
 
   // P0 #26: Payment success feedback
   useEffect(() => {
@@ -274,21 +299,36 @@ export default function DashboardClient({
               {t.label}
             </button>
           ))}
-          {/* P2 #20: Prominent upload FAB in center */}
-          <div className="flex-1 flex flex-col items-center -mt-3">
-            <a
-              href="/#upload"
+          {/* Upload FAB — opens inline upload sheet */}
+          <div className="flex-1 flex flex-col items-center gap-1 py-2.5 -mt-3">
+            <button
+              onClick={() => setShowUploadSheet(true)}
               className="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors active:scale-95"
               aria-label="Upload photo"
             >
               <Upload className="h-5 w-5" />
-            </a>
+            </button>
+            <span className="text-xs font-medium text-primary">{d.overview.uploadFab}</span>
           </div>
         </div>
       </div>
 
       {/* Content */}
       <main className="flex-1 p-6 pb-24 md:pb-6 overflow-auto">
+        {/* Mobile top bar — logo + theme toggle */}
+        <div className="md:hidden flex items-center justify-between mb-4">
+          <a href="/" className="flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity">
+            <Image className="h-5 w-5 text-primary" />
+            photo2url
+          </a>
+          <button
+            onClick={toggleDark}
+            className="p-2 rounded-lg hover:bg-muted transition-colors"
+            aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+        </div>
         {/* P1 #27: Data loading error banner */}
         {!data && (
           <div className="flex items-center gap-3 p-4 mb-6 rounded-lg border border-destructive/30 bg-destructive/5 text-sm">
@@ -313,7 +353,7 @@ export default function DashboardClient({
         {/* P3 #4: Tab content with fade-in animation */}
         <div key={tab} className="animate-in fade-in slide-in-from-right-2 duration-200">
           {tab === "overview" && (
-            <OverviewTab data={data} plan={plan} planType={planType} storagePct={storagePct} dict={dict} user={user} files={files} />
+            <OverviewTab data={data} plan={plan} planType={planType} storagePct={storagePct} dict={dict} user={user} files={clientFiles} onUploadClick={() => setShowUploadSheet(true)} />
           )}
           {tab === "profile" && <ProfileTab dict={dict} />}
           {tab === "billing" && (
@@ -321,6 +361,44 @@ export default function DashboardClient({
           )}
         </div>
       </main>
+
+      {/* Inline upload bottom sheet */}
+      {showUploadSheet && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 z-50 animate-in fade-in duration-200"
+            onClick={() => setShowUploadSheet(false)}
+          />
+          {/* Sheet */}
+          <div className="fixed bottom-0 left-0 right-0 z-50 bg-background rounded-t-2xl max-h-[90vh] overflow-auto animate-in slide-in-from-bottom duration-300">
+            <div className="flex items-center justify-between p-4 border-b sticky top-0 bg-background z-10">
+              <h2 className="text-lg font-semibold">{dict.upload.title}</h2>
+              <button
+                onClick={() => setShowUploadSheet(false)}
+                className="p-2 rounded-lg hover:bg-muted transition-colors"
+                aria-label="Close upload"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="p-4">
+              <UploadZone
+                dict={dict}
+                planType={planType}
+                onUploadSuccess={() => {
+                  handleUploadSuccess();
+                  setShowUploadSheet(false);
+                }}
+                onUploadResult={(result) => {
+                  handleUploadResult(result);
+                  setShowUploadSheet(false);
+                }}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -335,6 +413,7 @@ function OverviewTab({
   dict,
   user,
   files,
+  onUploadClick,
 }: {
   data: DashboardData | null;
   plan: { storage: number; daily: number; label: string };
@@ -343,6 +422,7 @@ function OverviewTab({
   dict: Dictionary;
   user?: { firstName?: string | null; username?: string | null } | null;
   files?: FileRecord[];
+  onUploadClick?: () => void;
 }) {
   const d = dict.dashboard.overview;
   const planDisplayName = dict.pricing.plans[planType as "enterprise" | "plus" | "free"]?.name || plan.label;
@@ -458,12 +538,10 @@ function OverviewTab({
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">{d.myPhotos}</h2>
-          <a href="/#upload">
-            <Button size="sm">
-              <Upload className="h-4 w-4" />
-              Upload
-            </Button>
-          </a>
+          <Button size="sm" onClick={onUploadClick}>
+            <Upload className="h-4 w-4" />
+            Upload
+          </Button>
         </div>
         <FileList files={files} dict={dict} />
       </div>

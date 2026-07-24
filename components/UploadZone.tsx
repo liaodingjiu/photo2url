@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import { Upload, ClipboardPaste } from "lucide-react";
+import { Upload } from "lucide-react";
 import { toast } from "sonner";
 
 export interface UploadResult {
@@ -256,7 +256,7 @@ export default function UploadZone({
         ) : (
           <>
             {/* Hero title inside card */}
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               {dict.hero.titleHighlight
                 ? (() => {
                     const idx = dict.hero.title.indexOf(dict.hero.titleHighlight);
@@ -273,7 +273,7 @@ export default function UploadZone({
                   })()
                 : dict.hero.title
               }
-            </h2>
+            </h1>
             <p className="mt-2 text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
               {dict.hero.subtitle}
             </p>
@@ -287,7 +287,7 @@ export default function UploadZone({
                 <Upload className="h-10 w-10 text-primary" />
               </div>
               <span className="inline-block rounded-full bg-primary px-5 py-1.5 text-sm font-semibold text-primary-foreground">
-                Upload
+                {u.cta}
               </span>
               {dragActive ? (
                 <p className="font-semibold text-base text-primary">{u.dropHere}</p>
@@ -295,12 +295,14 @@ export default function UploadZone({
                 <>
                   <p className="font-semibold text-base">{u.dragDrop}</p>
                   <p className="text-sm text-muted-foreground">
-                    <kbd className="rounded border bg-muted px-1.5 py-0.5 text-sm font-mono">Ctrl+V</kbd>
+                    <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">Ctrl+V</kbd>
                     {" / "}
-                    <kbd className="rounded border bg-muted px-1.5 py-0.5 text-sm font-mono">Cmd+V</kbd>
-                    {" "}{u.pasteHint} · {u.maxSize}
+                    <kbd className="rounded border bg-muted px-1.5 py-0.5 text-xs font-mono">Cmd+V</kbd>
+                    {" "}{u.pasteHint}
                   </p>
-                  <ClipboardPaste className="h-4 w-4 text-muted-foreground/50 mt-1" />
+                  <p className="text-xs text-muted-foreground">
+                    {u.formats} · {u.maxSize}
+                  </p>
                 </>
               )}
             </div>
@@ -320,7 +322,8 @@ export default function UploadZone({
                   >
                     <img
                       src={url}
-                      alt="Sample"
+                      alt={`Try sample photo ${SAMPLE_URLS.indexOf(url) + 1}`}
+                      loading="lazy"
                       className="w-16 h-auto object-cover"
                     />
                   </button>
