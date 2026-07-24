@@ -51,7 +51,7 @@
     "title": "关于 Photo2URL",
     "lead": "Photo2URL 是一个免费的在线照片转链接工具 —— 上传 PNG、JPG、WEBP 或 GIF，一步获得图片链接。无需注册，没有广告，不用文件选择器。",
     "problemHeading": "为什么大多数图片链接充满阻力",
-    "problemBody": "其他服务为页面浏览量而建，不是为生成链接而建。它们要求你先注册再上传。把你的图片包装成带广告和评论的图库页面，把直链藏在层层菜单后面。和 Imgur 不同 —— 后者把一个简单的上传变成全页面体验 —— Photo2URL 只做一件事：把照片转成链接。",
+    "problemBody": "大多数图床把你的图片包装成带广告和评论的图库页面，把直链藏在层层菜单后面。Photo2URL 只做一件事：把照片转成链接。",
     "solutionHeading": "Photo2URL 如何把照片变成链接",
     "solutionBody": "拖拽、剪贴板粘贴或点击上传。照片上传后，链接生成器立即返回三种格式：直链、Markdown 代码段和 HTML 嵌入代码。选你需要的复制 —— 链接可用于 Facebook、Twitter、Reddit、Discord、GitHub 等任何支持图片 URL 的平台。",
     "techBody": "每一张图片都存储在 Cloudflare R2 上，通过全球 CDN 以 HTTPS 提供服务。免费版每天 15 次上传，单文件 3 MB，托管 180 天。付费版解除所有限制并增加永久存储。界面支持 8 种语言。无论你是需要 PNG 转链接贴到 README，还是 JPG 转链接写博客，或是把截图快速变成可分享的链接，Photo2URL 就为这一件事而建。"
@@ -136,8 +136,8 @@
         "answer": "可以。在这里上传照片，复制直链，粘贴到 Facebook 帖子、评论或私信中即可。同样的链接也适用于 Twitter、LinkedIn、Discord 等任何支持图片 URL 的平台。一个链接，全平台通用。"
       },
       {
-        "question": "Photo To URL 和 Imgur 有什么区别？",
-        "answer": "Imgur 把你的图片包装成一个带广告和评论的图库页面。Photo To URL 给你原始图片 URL —— 没有页面，没有广告，没有杂物。粘贴链接到任何地方，图片直接显示。Markdown 用户还能拿到即用的代码段。"
+        "question": "为什么不用免费的图床网站？",
+        "answer": "大多数免费图床把你的图片包装成带广告、评论和嵌入代码的图库页面——它们靠页面浏览量赚钱，而不是给你一个干净的链接。Photo2URL 给你以 .jpg 或 .png 结尾的原始图片 URL。没有页面，没有广告，没有杂物。只有链接。"
       },
       {
         "question": "如何取消订阅？",

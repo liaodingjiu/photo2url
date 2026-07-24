@@ -54,7 +54,7 @@
     "title": "About Photo2URL",
     "lead": "Photo2URL is a free online photo to url converter — upload a PNG, JPG, WEBP, or GIF and get a photo to url link in one step. No sign-up, no ads, no file picker.",
     "problemHeading": "Why most image links come with friction",
-    "problemBody": "Other services were built for page views, not link generation. They ask for an account before you upload. They wrap your image in a gallery page with ads and comments, hiding the direct URL behind menus. Unlike Imgur — which turns a simple upload into a full-page experience — Photo2URL is designed to convert photos to URLs, nothing more.",
+    "problemBody": "Other image hosts wrap your upload in a gallery page with ads and comments, hiding the direct URL behind menus. Photo2URL is designed to convert photos to URLs, nothing more.",
     "solutionHeading": "How Photo2URL turns a photo into a link",
     "solutionBody": "Drag and drop, paste from clipboard, or click to browse. As soon as you upload a photo, the link generator returns three formats side by side: a direct image URL, a Markdown snippet, and an HTML embed. Copy the one you need — links work on Facebook, Twitter, Reddit, Discord, GitHub, and anywhere that accepts image URLs.",
     "techBody": "Behind the scenes, every image is stored on Cloudflare R2 and served through a global CDN over HTTPS. The free photo to url plan includes 15 uploads per day at 3 MB per file, stored for 180 days. Paid plans lift all limits and add permanent storage. The interface supports eight languages. Whether you need a PNG to URL converter for a README, a JPG to URL for a blog post, or a quick way to turn a screenshot into a shareable link, Photo2URL is built for that single task."
@@ -139,8 +139,8 @@
         "answer": "Yes. Upload your photo here, copy the direct URL, and paste it into a Facebook post, comment, or message. The link works the same way on Twitter, LinkedIn, Discord, and any other platform that supports image URLs. It's one link across every app."
       },
       {
-        "question": "What's the difference between Photo To URL and Imgur?",
-        "answer": "Imgur wraps your image in a gallery page with ads and comments. Photo To URL gives you a raw image URL — no page, no ads, no clutter. Paste the link anywhere and the image shows up directly. For Markdown users, we also give you a ready-to-use snippet."
+        "question": "Why not just use a free image hosting site?",
+        "answer": "Most free image hosts wrap your upload in a gallery page with ads, comments, and embeds — they make money from page views, not from giving you a clean link. Photo2URL gives you a raw image URL that ends in .jpg or .png. No page, no ads, no clutter. Just the link."
       },
       {
         "question": "How do I cancel my subscription?",
